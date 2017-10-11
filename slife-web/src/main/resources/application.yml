@@ -1,0 +1,127 @@
+spring:
+  application:
+    name: slife
+
+  freemarker:
+    template-loader-path: classpath:/templates/
+    prefer-file-system-access: false
+    settings:
+      template_update_delay: 0
+      classic_compatible: true
+      number_format: 0.######
+      template_exception_handler: ignore
+    request-context-attribute: rc
+    charset: UTF-8
+
+  redis:
+    database: 0
+    host: 10.10.20.100
+    port: 6379
+    password: 123456
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 18
+      min-idle: 0
+    timeout: 0
+
+sitemesh:
+  contentPath: /*
+  decoratorPath: classpath:/layouts/default.jsp
+  excludedPaths: /js/*,/assets/*,/css/*
+
+server:
+  port: 8081
+  jsp-servlet:
+    class-name: org.apache.jasper.servlet.JspServlet
+
+
+
+datasource:
+  type: com.alibaba.druid.pool.DruidDataSource
+  readSize: 2
+
+
+writedatasource:
+  url: jdbc:mysql://139.159.224.82:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
+  driverClass: com.mysql.jdbc.Driver
+  username: root
+  password: chen@123
+  initialSize: 1
+  minIdle: 1
+  maxActive: 20
+  testOnBorrow: true
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 300000
+  validationQuery: SELECT 1 FROM DUAL
+  testWhileIdle: true
+  testOnReturn: false
+  poolPreparedStatements: true
+  maxPoolPreparedStatementPerConnectionSize: 20
+  filters: stat,wall,logback
+  #connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  useGlobalDataSourceStat: true
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.slife.entity
+
+
+readdatasource01:
+  url: jdbc:mysql://139.159.224.82:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
+  driverClass: com.mysql.jdbc.Driver
+  username: root
+  password: chen@123
+  initialSize: 1
+  minIdle: 1
+  maxActive: 20
+  testOnBorrow: true
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 300000
+  validationQuery: SELECT 1 FROM DUAL
+  testWhileIdle: true
+  testOnReturn: false
+  poolPreparedStatements: true
+  maxPoolPreparedStatementPerConnectionSize: 20
+  filters: stat,wall,logback
+  #connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  useGlobalDataSourceStat: true
+
+
+readdatasource02:
+  url: jdbc:mysql://139.159.224.82:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
+  driverClass: com.mysql.jdbc.Driver
+  username: root
+  password: chen@123
+  initialSize: 1
+  minIdle: 1
+  maxActive: 20
+  testOnBorrow: true
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 300000
+  validationQuery: SELECT 1 FROM DUAL
+  testWhileIdle: true
+  testOnReturn: false
+  poolPreparedStatements: true
+  maxPoolPreparedStatementPerConnectionSize: 20
+  filters: stat,wall,logback
+  #connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  useGlobalDataSourceStat: true
+
+
+swagger:
+  title: spring-boot-starter-swagger
+  description: Starterforswagger 2.x
+  version: 1.1.0.RELEASE
+  license: ApacheLicense,Version2.0
+  licenseUrl: https://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfServiceUrl: https://github.com/dyc87112/spring-boot-starter-swagger
+  contact:
+    name: 呵呵
+    url: http://blog.didispace.com
+    eamil: 1111@qq.com
+  base-package: com.slife.controller
+  base-path: /**
+  exclude-path: /error, /ops/**
+

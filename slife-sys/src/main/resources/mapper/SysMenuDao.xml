@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slife.dao.SysMenuDao">
+
+
+    <resultMap id="selectMenuList" type="sysMenu">
+        <id property="id" column="sm_id" ></id>
+        <result property="remark" column="sm_remark"></result>
+        <result property="delFlag" column="sm_del_flag"></result>
+        <result property="parentId" column="sm_parent_id"></result>
+        <result property="name" column="sm_name" ></result>
+        <result property="type" column="sm_type" ></result>
+        <result property="href" column="sm_href" ></result>
+        <result property="target" column="sm_target" ></result>
+        <result property="icon" column="sm_icon" ></result>
+        <result property="showFlag" column="sm_show_flag" ></result>
+        <result property="permission" column="sm_permission" ></result>
+        <result property="path" column="sm_path" ></result>
+        <result property="sort" column="sm_sort" ></result>
+
+    </resultMap>
+
+
+    <select id="selectMenusByUserId" resultMap="selectMenuList">
+     SELECT DISTINCT
+     sm.id AS sm_id,sm.remark AS sm_remark, sm.del_flag as sm_del_flag,
+     sm.parent_id AS sm_parent_id,sm.name AS sm_name,sm.type AS sm_type,
+     sm.href AS sm_href,sm.target AS sm_target,sm.icon AS sm_icon,sm.show_flag AS sm_show_flag,
+     sm.permission AS sm_permission,sm.path AS sm_path,sm.sort AS sm_sort
+     FROM sys_role_sys_menu AS srsm
+     LEFT JOIN sys_menu AS sm
+     ON srsm.sys_menu_id=sm.id
+     WHERE srsm.sys_role_id
+     IN(
+     SELECT DISTINCT susr.sys_role_id
+     FROM sys_user_sys_role AS susr
+     LEFT JOIN sys_role AS sr
+     ON sr.id=susr.sys_role_id
+     WHERE susr.sys_user_id=#{userId}
+     AND sr.del_flag='Y' AND sr.useable='Y'
+     )
+     AND sm.del_flag='Y' AND sm.show_flag='Y'
+
+    </select>
+
+
+
+
+</mapper>

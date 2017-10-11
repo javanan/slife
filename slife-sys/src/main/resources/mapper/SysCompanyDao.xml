@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slife.dao.SysCompanyDao">
+
+    <resultMap id="selectCompanyInfo" type="sysCompany">
+
+        <id property="id" column="sc_id"></id>
+        <result property="remark" column="sc_remark"></result>
+        <result property="delFlag" column="sc_del_flag"></result>
+
+        <result property="address" column="sc_address"></result>
+        <result property="zipCode" column="sc_zip_code"></result>
+        <result property="master" column="sc_master"></result>
+        <result property="phone" column="sc_phone"></result>
+        <result property="fax" column="sc_fax"></result>
+        <result property="email" column="sc_email"></result>
+        <result property="copyright" column="sc_copyright"></result>
+        <result property="name" column="sc_name"></result>
+        
+        <association property="sysArea" resultMap="com.slife.dao.SysAreaDao.selectAreaInfoMap"></association>
+    </resultMap>
+
+</mapper>
