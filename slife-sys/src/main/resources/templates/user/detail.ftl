@@ -33,7 +33,6 @@
                           id="slifeForm" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="${sysUser.id}"/>
                         <input type="hidden" name="salt" value="${sysUser.salt}"/>
-
                         <div class="form-group">
                             <label class="col-sm-3 control-label">头像</label>
                             <div class="col-sm-2">
