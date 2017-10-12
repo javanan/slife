@@ -4,6 +4,7 @@ import com.slife.base.entity.ReturnDTO;
 import com.slife.constant.Setting;
 import com.slife.util.FileUtils;
 import com.slife.util.ReturnDTOUtil;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,24 +21,35 @@ import java.util.Map;
 
 
 @Controller
-@RequestMapping(value = "/upload")
-public class UploadFileController {
-    private static Logger logger = LoggerFactory.getLogger(UploadFileController.class);
+@RequestMapping(value = "/file")
+public class FileController {
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
 
 
-
+    @ApiOperation(value = "后台删除文件", notes = "后台删除文件")
+    @PostMapping(value = "/delete")
+    @ResponseBody
+    public ReturnDTO delete(@RequestParam("name") String name) throws IOException {
+        Boolean b = FileUtils.deleteFile(name);
+        if (b) {
+            return ReturnDTOUtil.success();
+        } else {
+            return ReturnDTOUtil.error();
+        }
+    }
 
     /**
      * 后台用户头像上传（图片）
      *
-     * @param file 上传的文件
-     * @param path 文件上传指定根目录下的目录
+     * @param file     上传的文件
+     * @param path     文件上传指定根目录下的目录
      * @param response
      * @param request
      * @throws IOException
      */
-    @PostMapping(value = "/{type}")
+    @ApiOperation(value = "后台上传文件", notes = "后台上传文件")
+    @PostMapping(value = "/upload/{type}")
     @ResponseBody
     public ReturnDTO uploadTransImg(@PathVariable("type") String type, @RequestParam("files") MultipartFile file,
                                     @RequestParam(value = "path", defaultValue = "") String path,
@@ -55,14 +67,14 @@ public class UploadFileController {
             fileName = fileName + "/" + path;
         }
 
-        String savePath = fileName + "/"+type+"/"+ uuid + "." + fileExt;//附件路径+类型（头像、附件等）+名称+扩展名
+        String savePath = fileName + "/" + type + "/" + uuid + "." + fileExt;//附件路径+类型（头像、附件等）+名称+扩展名
         File localFile = FileUtils.saveFileToDisk(file, savePath); //保存到磁盘
 
-        String thumbnailName="";
+        String thumbnailName = "";
         if (FileUtils.getImageFormat(fileExt)) {
             //创建缩略图
-             thumbnailName=fileName + "/"+type+"/s/"+ uuid + "." + fileExt;//附件路径+类型（头像、附件等）+s(文件夹)+名称+扩展名
-            FileUtils.createThumbnail(localFile,thumbnailName);
+            thumbnailName = fileName + "/" + type + "/s/" + uuid + "." + fileExt;//附件路径+类型（头像、附件等）+s(文件夹)+名称+扩展名
+            FileUtils.createThumbnail(localFile, thumbnailName);
         }
 
 
@@ -71,11 +83,11 @@ public class UploadFileController {
         rt.put("uuid", uuid);
         rt.put("path", Setting.BASEFLODER);
         rt.put("ext", fileExt);
-        rt.put("url", "/"+savePath);
-        rt.put("s_url", "/"+thumbnailName);
+        rt.put("url", "/" + savePath);
+        rt.put("s_url", "/" + thumbnailName);
 
-        logger.info("上传的文件地址为 fileName={}",savePath);
-       return ReturnDTOUtil.success(rt);
+        logger.info("上传的文件地址为 fileName={}", savePath);
+        return ReturnDTOUtil.success(rt);
 
     }
 

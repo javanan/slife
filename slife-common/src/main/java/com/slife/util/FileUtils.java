@@ -1,6 +1,8 @@
 package com.slife.util;
 
 import net.coobird.thumbnailator.Thumbnails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
@@ -19,6 +21,7 @@ import java.nio.file.Paths;
  */
 public class FileUtils {
 
+    private static Logger logger = LoggerFactory.getLogger(FileUtils.class);
     /**
      * 获取附件名称 13位时间戳+5位随机数
      *
@@ -60,6 +63,45 @@ public class FileUtils {
         }
     }
 
+    /**
+     * 保存文件到磁盘
+     * @param file
+     * @param filePath
+     * @param fileName
+     * @throws Exception
+     */
+    public static void saveFile(byte[] file, String filePath, String fileName) throws Exception {
+        File targetFile = new File(filePath);
+        if (!targetFile.exists()) {
+            targetFile.mkdirs();
+        }
+        FileOutputStream out = new FileOutputStream(filePath + fileName);
+        out.write(file);
+        out.flush();
+        out.close();
+    }
+
+    /**
+     * 删除文件
+     * @param fileName
+     * @return
+     */
+    public static boolean deleteFile(String fileName) {
+        File file = new File(fileName);
+        // 如果文件路径所对应的文件存在，并且是一个文件，则直接删除
+        if (file.exists() && file.isFile()) {
+            if (file.delete()) {
+                logger.error("删除单个文件-> {}成功！",fileName);
+                return true;
+            } else {
+                logger.error("删除单个文件-> {}失败！",fileName);
+                return false;
+            }
+        } else {
+            logger.info("删除单个文件失败-> {}不存在！",fileName);
+            return false;
+        }
+    }
 
     /**
      * 生成缩略图

@@ -6,14 +6,18 @@ import com.slife.base.controller.BaseController;
 import com.slife.base.entity.ReturnDTO;
 import com.slife.base.vo.DataTable;
 import com.slife.entity.SysUser;
+import com.slife.enums.HttpCodeEnum;
 import com.slife.service.impl.SysRoleService;
 import com.slife.service.impl.SysUserService;
+import com.slife.shiro.ShiroUser;
 import com.slife.shiro.SlifeSysUser;
+import com.slife.util.FileUtils;
 import com.slife.util.ReturnDTOUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -49,7 +53,7 @@ public class SysUserController extends BaseController {
      */
     @PostMapping(value = "/exportUserList")
     @ResponseBody
-    public void exportCollectCustomerList(@RequestBody DataTable dt,HttpServletResponse response) throws Exception {
+    public void exportCollectCustomerList(@RequestBody DataTable dt, HttpServletResponse response) throws Exception {
         List<SysUser> users = sysUserService.pageSearch(dt).getRows();
 
         //导出数据
@@ -57,7 +61,7 @@ public class SysUserController extends BaseController {
         String[] headerTitle = new String[]{"id", "登陆名", "姓名", "邮箱", "工号", "电话", "手机", "描述", "状态"};
         List<String[]> arrayList = new ArrayList<>();
         arrayList.add(headerTitle); //列头
-        if (null!=users && users.size()>0) {
+        if (null != users && users.size() > 0) {
             for (SysUser sysUser : users) {
                 arrayList.add(
                         new String[]{
@@ -69,7 +73,7 @@ public class SysUserController extends BaseController {
                                 sysUser.getPhone(),
                                 sysUser.getMobile(),
                                 sysUser.getRemark(),
-                                sysUser.getLoginFlag().equals("Y")?"正常":"禁用"
+                                sysUser.getLoginFlag().equals("Y") ? "正常" : "禁用"
                         });
             }
         }
@@ -77,12 +81,27 @@ public class SysUserController extends BaseController {
     }
 
 
+    @ApiOperation(value = "删除头像", notes = "删除头像")
+    @PostMapping(value = "/delete/photo")
+    public ReturnDTO deletePhoto(@RequestParam("name") String name) {
 
+        String defaluePhoto = "/img/log9.png";
+        if (defaluePhoto.equals(name)) {
+            logger.info("默认头像不可删除！");
+            return ReturnDTOUtil.custom(HttpCodeEnum.DELETE_DEFAULT_PHOTO_ERR);
+        }
+        Long userId = SlifeSysUser.id();
+        SysUser sysUser = sysUserService.selectById(userId);
+        if (ObjectUtils.isEmpty(sysUser)) {
+            return ReturnDTOUtil.notFound();
+        }
+        sysUser.setPhoto(defaluePhoto);
+        sysUserService.updateById(sysUser);
 
+        FileUtils.deleteFile(name);//删除文件
+        return ReturnDTOUtil.success();
+    }
 
-    /**
-     *
-     */
     @ApiOperation(value = "进入用户列表", notes = "进入用户列表")
     @GetMapping(value = "")
     public String list(Model model, HttpServletRequest request) {

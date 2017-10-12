@@ -39,25 +39,22 @@
                             <div class="col-sm-2">
                                 <div id="localImag" style="margin-left:15px;">
                                     <div class="img_box" id="imgBox_${image.id}">
-                                        <a class="fancybox" rel="img" <#if sysUser.photo?if_exists >
-                                           href="${base}${sysUser.photo}"
+                                        <a class="fancybox" rel="img" <#if sysUser.photo?if_exists > href="${base}${sysUser.photo}"
                                            <#else>href="${base}/img/log9.png" </#if>>
-                                            <img style="width: 60px" src="${sysUser.photo}" onerror="this
-                                                    .src='${base}/img/log9.png'"
-                                                 class="img_file img-rounded"/></a>
+                                            <img style="width: 60px" src="${sysUser.photo}" onerror="this.src='${base}/img/log9.png'" class="img_file img-rounded"/></a>
                                         <div class="img_edit_box">
-                                            <!--<a class="img_desr" href="javascript:doDelete(${image.id})">删除</a>-->
+                                            <a class="img_desr" href="javascript:doDeleteImg()">删除</a>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                             <div class="col-sm-3">
                                 <span class="btn green btn-file fileinput-button input-group-btn" style="width: 180px;">
-                                	<span>上传头像</span><input id="files" type="file" name="files"
-                                                            onchange="javascript:setImagePreview('files' ,'showIcon' ,'localImag' ,'74px' ,'74px' ,'74px' ,'74px')"/>
-                                		<input id="photo" class="form-control" type="hidden" name="photo"
-                                               value="${sysUser.photo}/type=image"/>
+                                	<span>上传头像</span>
+                                    <input id="files" type="file" name="files" onchange="javascript:setImagePreview('files' ,'showIcon' ,'localImag' ,'74px' ,'74px' ,'74px' ,'74px')"/>
+                                		<input id="photo" class="form-control" type="hidden" name="photo" value="${sysUser.photo}"/>
                                	 	</span>
                                 <label class="col-sm-2 input-group" style="width:400px;" id="imgType"></label>
                                 </span>
@@ -181,6 +178,33 @@
 <script type="text/javascript">
 
 
+    function doDeleteImg() {
+
+        var name=$("#photo").val();
+        layer.confirm('确定要删除头像吗？', {
+            btn: ['确定', '取消']
+        }, function () {
+            $.ajax({
+                url: url + "delete/photo",
+                type: "POST",
+                data: {
+                    'name': name
+                },
+                success: function (r) {
+                    if (r.code == 200) {
+                        $("#photo").val("/img/log9.png");
+                        $("#imgId").attr('src',"/img/log9.png");
+                        $("#imgId").attr('src',"/img/log9.png");
+                    } else {
+                        layer.msg(r.error);
+                    }
+                }
+            });
+        })
+
+
+    }
+    
 /*
     /!*上传头像*!/
     $('#files').fileupload({

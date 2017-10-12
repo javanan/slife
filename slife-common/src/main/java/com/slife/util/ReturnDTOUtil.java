@@ -19,14 +19,6 @@ public class ReturnDTOUtil {
     }
 
     /**
-     * 操作失败
-     * @return
-     */
-    public static ReturnDTO fail() {
-        return new ReturnDTO(HttpCodeEnum.FAIL.getCode(), HttpCodeEnum.FAIL.getMessage());
-    }
-
-    /**
      * 成功请求
      *
      * @param data
@@ -36,7 +28,30 @@ public class ReturnDTOUtil {
         return new ReturnDTO(HttpCodeEnum.OK.getCode(), null,data);
     }
 
+    /**
+     * 操作失败
+     * @return
+     */
+    public static ReturnDTO fail() {
+        return new ReturnDTO(HttpCodeEnum.FAIL.getCode(), HttpCodeEnum.FAIL.getMessage());
+    }
+    /**
+     * 服务器错误
+     * @return
+     */
+    public static ReturnDTO error() {
+        return new ReturnDTO(HttpCodeEnum.INTERNAL_SERVER_ERROR.getCode(),HttpCodeEnum.INTERNAL_SERVER_ERROR.getMessage());
+    }
 
+
+    /**
+     * 服务器错误
+     * @param data
+     * @return
+     */
+    public static ReturnDTO error(Object data) {
+        return new ReturnDTO(HttpCodeEnum.INTERNAL_SERVER_ERROR.getCode(),HttpCodeEnum.INTERNAL_SERVER_ERROR.getMessage(), data);
+    }
     /**
      * 参数错误
      * @return
@@ -166,23 +181,6 @@ public class ReturnDTOUtil {
     }
 
 
-    /**
-     * 服务器错误
-     * @return
-     */
-    public static ReturnDTO error() {
-        return new ReturnDTO(HttpCodeEnum.INTERNAL_SERVER_ERROR.getCode(),HttpCodeEnum.INTERNAL_SERVER_ERROR.getMessage());
-    }
-
-
-    /**
-     * 服务器错误
-     * @param data
-     * @return
-     */
-    public static ReturnDTO error(Object data) {
-        return new ReturnDTO(HttpCodeEnum.INTERNAL_SERVER_ERROR.getCode(),HttpCodeEnum.INTERNAL_SERVER_ERROR.getMessage(), data);
-    }
 
     /**
      * 未知错误
@@ -202,6 +200,14 @@ public class ReturnDTOUtil {
     }
 
 
+    /**
+     * 自定义返回
+     * @param e
+     * @return
+     */
+    public static ReturnDTO custom(HttpCodeEnum e) {
+        return new ReturnDTO(e.getCode(),e.getMessage());
+    }
     /**
      * 自定义返回
      * @param error

@@ -2,7 +2,7 @@
  * 请求 成功 返回的 操作
  * @param r
  */
-function rep_message(r) {
+function dataTable_rep_message(r) {
     if (r.code == 200) {
         layer.msg(r.message);
         re_load();
@@ -10,6 +10,8 @@ function rep_message(r) {
         layer.msg(r.error);
     }
 }
+
+
 
 /**
  * 批量删除
@@ -36,7 +38,7 @@ function batch_remove() {
             data: {"ids": ids},
             url: url + "delete",
             success: function (r) {
-                rep_message(r)
+                dataTable_rep_message(r)
             }
         });
     }, function () {
@@ -62,7 +64,7 @@ function remove(id) {
                 'ids': id
             },
             success: function (r) {
-                rep_message(r)
+                dataTable_rep_message(r)
             }
         });
     })

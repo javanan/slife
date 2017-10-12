@@ -16,3 +16,7 @@
 .required {
     color: red;
 }
+
+.layui-layer-shade{
+   opacity: -1!important;
+}
