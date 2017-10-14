@@ -73,7 +73,7 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
             jt.setId(sysDict.getId().toString());
             jt.setParent(sysDict.getParentId().compareTo(0L) > 0 ? sysDict.getParentId().toString() : "#");
             jt.setText(sysDict.getJvalue());
-            if (sysDict.getType().equals("C")) {
+            if ("C".equals(sysDict.getType())) {
                 jt.setIcon("fa fa-home");
             } else {
                 jt.setIcon("glyphicon glyphicon-tint");

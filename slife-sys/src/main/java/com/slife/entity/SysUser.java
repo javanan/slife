@@ -85,6 +85,7 @@ public class SysUser extends CompanyLinkEntity<SysUser> {
     }
 
 
+    @Override
     public Long getId() {
         return id;
     }
@@ -159,6 +160,7 @@ public class SysUser extends CompanyLinkEntity<SysUser> {
     }
 
 
+    @Override
     public Date getCreateDate() {
         return createDate;
     }

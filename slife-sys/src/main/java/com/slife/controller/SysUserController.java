@@ -73,7 +73,7 @@ public class SysUserController extends BaseController {
                                 sysUser.getPhone(),
                                 sysUser.getMobile(),
                                 sysUser.getRemark(),
-                                sysUser.getLoginFlag().equals("Y") ? "正常" : "禁用"
+                                "Y".equals(sysUser.getLoginFlag()) ? "正常" : "禁用"
                         });
             }
         }
@@ -102,7 +102,7 @@ public class SysUserController extends BaseController {
         return ReturnDTOUtil.success();
     }
 
-    @ApiOperation(value = "进入用户列表", notes = "进入用户列表")
+    @ApiOperation(value = "进入用户列表界面", notes = "进入用户列表界面")
     @GetMapping(value = "")
     public String list(Model model, HttpServletRequest request) {
         model.addAttribute("url", request.getContextPath() + "/sys/user/");
@@ -116,8 +116,8 @@ public class SysUserController extends BaseController {
      * @param request
      * @return
      */
-    @SLog("获取用户列表")
-    @ApiOperation(value = "获取用户列表", notes = "获取用户列表:使用约定的DataTable")
+    @SLog("获取用户列表数据")
+    @ApiOperation(value = "获取用户列表数据", notes = "获取用户列表:使用约定的DataTable")
     @PostMapping(value = "/list")
     @ResponseBody
     public DataTable<SysUser> list(@RequestBody DataTable dt, ServletRequest request) {
@@ -126,47 +126,50 @@ public class SysUserController extends BaseController {
 
 
     /**
-     * 获取用户详情
+     * 查看用户详情界面
      *
      * @param id
      * @param model
      * @return
      */
     @GetMapping(value = "/detail/{id}")
-    public String detailForm(@PathVariable("id") Long id, Model model) {
+    public String detailForm(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
         model.addAttribute("action", "detail");
         SysUser sysUser = sysUserService.selectById(id);
         model.addAttribute("sysUser", sysUser);
         model.addAttribute("roles", sysRoleService.ListSysRoleUseable());
+        model.addAttribute("url", request.getContextPath() + "/sys/user/");
         return "user/detail";
     }
 
 
     /**
-     * 进入新增用户界面
+     * 进入创建用户界面
      *
      * @param model
      * @return
      */
     @GetMapping(value = "/insert")
-    public String createForm(Model model) {
+    public String createForm(Model model, HttpServletRequest request) {
         model.addAttribute("action", "insert");
         SysUser sysUser = new SysUser();
         sysUser.setId(0L);
         //  sysUser.setSalt(Encodes.encodeHex(Digests.generateSalt(ResourceService.SALT_SIZE)));
         model.addAttribute("sysUser", sysUser);
         model.addAttribute("roles", sysRoleService.ListSysRoleUseable());
+        model.addAttribute("url", request.getContextPath() + "/sys/user/");
         return "user/detail";
     }
 
     /**
-     * 创建用户
+     * 创建用户操作
      *
      * @param sysUser
      * @return
      */
     @PostMapping(value = "/insert")
-    public String create(@Valid SysUser sysUser, @RequestParam(value = "ids", defaultValue = "") Long[] ids, RedirectAttributes
+    public String create(@Valid @RequestBody SysUser sysUser, @RequestParam(value = "ids", defaultValue = "") Long[] ids,
+                         RedirectAttributes
             redirectAttributes) {
         sysUser.setId(null);
         sysUserService.insertSysUser(sysUser, ids);
@@ -175,7 +178,7 @@ public class SysUserController extends BaseController {
     }
 
     /**
-     * 更新用户
+     * 更新用户界面
      *
      * @param id
      * @return
@@ -192,7 +195,7 @@ public class SysUserController extends BaseController {
     }
 
     /**
-     * 更新用户
+     * 更新用户操作
      *
      * @param sysUser
      * @return

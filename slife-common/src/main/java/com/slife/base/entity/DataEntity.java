@@ -5,6 +5,7 @@ package com.slife.base.entity;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.enums.FieldFill;
 import com.baomidou.mybatisplus.enums.FieldStrategy;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,13 +22,13 @@ public abstract class DataEntity<T extends Model> extends BaseEntity<T> {
 
 	private static final long serialVersionUID = 1L;
 
-	@TableField(value = "create_id",validate= FieldStrategy.IGNORED)
+	@TableField(value = "create_id",fill= FieldFill.INSERT)
 	protected Long createId;	// 创建者
-	@TableField(value = "create_date",validate=FieldStrategy.IGNORED)
+	@TableField(value = "create_date",fill= FieldFill.INSERT)
 	protected Date createDate;	// 创建日期
-	@TableField(value = "update_id",validate=FieldStrategy.IGNORED)
+	@TableField(value = "update_id",fill= FieldFill.INSERT_UPDATE)
 	protected Long updateId;	// 更新者
-	@TableField(value = "update_date",validate=FieldStrategy.IGNORED)
+	@TableField(value = "update_date",fill= FieldFill.INSERT_UPDATE)
 	protected Date updateDate;	// 更新日期
 	@TableField(value = "del_flag")
 	protected String delFlag; 	// 删除标记（Y：正常；N：删除；A：审核；）

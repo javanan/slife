@@ -68,11 +68,13 @@ public class SysRole extends CompanyLinkEntity<SysRole> {
         this.sysMenus = sysMenus;
     }
 
+    @Override
     @JsonIgnore
     public SysCompany getSysCompany() {
         return sysCompany;
     }
 
+    @Override
     public void setSysCompany(SysCompany sysCompany) {
         this.sysCompany = sysCompany;
     }

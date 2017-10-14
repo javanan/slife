@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 
 @Aspect
@@ -20,7 +21,9 @@ public class SLogAspect {
     /**
      * 保存日志到数据库的线程池
      */
-    ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+    ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newSingleThreadExecutor();
+
+   // ScheduledExecutorService
 
     @Pointcut("@annotation(com.slife.annotation.SLog)")
     public void logPointCut() {

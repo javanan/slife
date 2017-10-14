@@ -42,12 +42,7 @@ public abstract class BaseEntity<T extends Model> extends Model<T>  {
      *
      * @return
      */
-/*    public boolean getIsNewRecord() {
-        return isNewRecord || StringUtils.isBlank(getId());
-    }
-    public void setIsNewRecord(boolean isNewRecord) {
-        this.isNewRecord = isNewRecord;
-    }*/
+
     public BaseEntity() {
 
     }

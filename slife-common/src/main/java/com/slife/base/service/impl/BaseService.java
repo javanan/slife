@@ -71,7 +71,7 @@ public class BaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> i
             StringBuffer stringBuffer = new StringBuffer();
             sorts.forEach((k, v) -> {
                 stringBuffer.append(k);
-                stringBuffer.append(v.toLowerCase().equals("asc") ? " ASC , " : " DESC ,");
+                stringBuffer.append("asc".equals(v.toLowerCase()) ? " ASC , " : " DESC ,");
             });
             cnd.orderBy(stringBuffer.toString().trim().substring(0, stringBuffer.length() - 1));
         }

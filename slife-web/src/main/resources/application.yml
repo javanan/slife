@@ -43,7 +43,7 @@ datasource:
 
 
 writedatasource:
-  url: jdbc:mysql://139.159.224.82:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
+  url: jdbc:mysql://xx.xx.xx.xx:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
   driverClass: com.mysql.jdbc.Driver
   username: root
   password: chen@123
@@ -69,7 +69,7 @@ mybatis:
 
 
 readdatasource01:
-  url: jdbc:mysql://139.159.224.82:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
+  url: jdbc:mysql://xx.xx.xx.xx:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
   driverClass: com.mysql.jdbc.Driver
   username: root
   password: chen@123
@@ -90,7 +90,7 @@ readdatasource01:
 
 
 readdatasource02:
-  url: jdbc:mysql://139.159.224.82:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
+  url: jdbc:mysql://xx.xx.xx.xx:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
   driverClass: com.mysql.jdbc.Driver
   username: root
   password: chen@123

@@ -161,6 +161,7 @@ public class FieldMatcher {
     public static FieldMatcher simple(String... fields) {
         final HashSet m = new HashSet(Arrays.asList(fields));
         return new FieldMatcher() {
+            @Override
             public boolean match(String str) {
                 return m.contains(str);
             }

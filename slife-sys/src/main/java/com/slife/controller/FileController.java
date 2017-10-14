@@ -11,12 +11,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -51,14 +54,21 @@ public class FileController {
     @ApiOperation(value = "后台上传文件", notes = "后台上传文件")
     @PostMapping(value = "/upload/{type}")
     @ResponseBody
-    public ReturnDTO uploadTransImg(@PathVariable("type") String type, @RequestParam("files") MultipartFile file,
+    public ReturnDTO uploadTransImg(@PathVariable("type") String type, @RequestParam("file") MultipartFile file,
                                     @RequestParam(value = "path", defaultValue = "") String path,
                                     HttpServletResponse response, HttpServletRequest request) throws IOException {
 
         response.setContentType("text/html; charset=UTF-8");
 
-        String uuid = FileUtils.createFileName();//创建文件名称
+        List<Map<String, String> > rt=new ArrayList<>();
 
+        rt.add( upload( type, path, file));
+
+        return ReturnDTOUtil.success(rt);
+    }
+
+    private Map upload(String type,String path,MultipartFile file){
+        String uuid = FileUtils.createFileName();//创建文件名称
 
         String fileExt = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1).toLowerCase();//扩展名
 
@@ -87,9 +97,10 @@ public class FileController {
         rt.put("s_url", "/" + thumbnailName);
 
         logger.info("上传的文件地址为 fileName={}", savePath);
-        return ReturnDTOUtil.success(rt);
-
+        return rt;
     }
+
+
 
 
 }

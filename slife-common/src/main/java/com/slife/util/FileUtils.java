@@ -167,7 +167,7 @@ public class FileUtils {
                     //
                     in.close();
                     if(deleFile){
-                        Thread.sleep(1000l);
+                        Thread.sleep(1000L);
                         File file=new File(fileLocal);
                         file.delete();
                     }

@@ -9,17 +9,20 @@
     <link href="${base}/css/slife.css" rel="stylesheet">
     <link href="${base}/css/plugins/select2/select2.css" rel="stylesheet">
 
+    <link href="${base}/css/plugins/dropzone/dropzone.css" rel="stylesheet">
     <!-- 全局js -->
     <script src="${base}/js/jquery.min.js?v=2.1.4"></script>
     <script src="${base}/js/bootstrap.min.js?v=3.3.6"></script>
     <script src="${base}/js/plugins/validate/jquery.validate.min.js"></script>
     <script src="${base}/js/plugins/validate/messages_zh.min.js"></script>
-
+    <script src="${base}/js/plugins/layer/layer.min.js"></script>
     <script src="${base}/js/jquery.form.js"></script>
 
-  <script src="${base}/js/plugins/select2/select2.min.js"></script>
-
-
+    <script src="${base}/js/plugins/select2/select2.min.js"></script>
+    <script src="${base}/js/plugins/dropzone/dropzone.min.js"></script>
+    <script>
+        var url = "${url}";
+    </script>
 </head>
 
 <body class="gray-bg">
@@ -33,31 +36,27 @@
                           id="slifeForm" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="${sysUser.id}"/>
                         <input type="hidden" name="salt" value="${sysUser.salt}"/>
+                        <input type="hidden" name="photo" value="${sysUser.photo}" id="photo"/>
+
                         <div class="form-group">
                             <label class="col-sm-3 control-label">头像</label>
                             <div class="col-sm-2">
                                 <div id="localImag" style="margin-left:15px;">
-                                    <div class="img_box" id="imgBox_${image.id}">
-                                        <a class="fancybox" rel="img" <#if sysUser.photo?if_exists > href="${base}${sysUser.photo}"
-                                           <#else>href="${base}/img/log9.png" </#if>>
-                                            <img style="width: 60px" src="${sysUser.photo}" onerror="this.src='${base}/img/log9.png'" class="img_file img-rounded"/></a>
-                                        <div class="img_edit_box">
+                                    <div class="img_box" id="imgBox">
+                                            <img id="imgshowdiv" style="width: 60px" src="${sysUser.photo}"
+                                                 onerror="javascript:errimg()" class="img_file img-rounded"/>
+
+                              <#--          <div class="img_edit_box">
                                             <a class="img_desr" href="javascript:doDeleteImg()">删除</a>
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
-
                             </div>
-
-                            <div class="col-sm-3">
-                                <span class="btn green btn-file fileinput-button input-group-btn" style="width: 180px;">
-                                	<span>上传头像</span>
-                                    <input id="files" type="file" name="files" onchange="javascript:setImagePreview('files' ,'showIcon' ,'localImag' ,'74px' ,'74px' ,'74px' ,'74px')"/>
-                                		<input id="photo" class="form-control" type="hidden" name="photo" value="${sysUser.photo}"/>
-                               	 	</span>
-                                <label class="col-sm-2 input-group" style="width:400px;" id="imgType"></label>
-                                </span>
+                        <#if action !='detail'>
+                            <div class="col-sm-4">
+                                <div id="mydropzone" class="dropzone"></div>
                             </div>
+                        </#if>
                         </div>
 
 
@@ -65,7 +64,7 @@
                             <label class="col-sm-3 control-label">登录名<span class="required">*</span></label>
                             <div class="col-sm-8">
                                 <input type="text" class="form-control" name="loginName" placeholder="请输入登录名"
-                                       value="${sysUser.loginName}" required aria-required="true" />
+                                       value="${sysUser.loginName}" required aria-required="true"/>
                             </div>
                         </div>
 
@@ -176,10 +175,18 @@
 
 <script type="text/javascript">
 
+    function errimg() {
+        $("#photo").val("/img/log9.png");
+        $("#imgshowdiv").attr('src', "/img/log9.png");
+    }
+
+    /**
+     * 删除头像
+     */
 
     function doDeleteImg() {
 
-        var name=$("#photo").val();
+        var name = $("#photo").val();
         layer.confirm('确定要删除头像吗？', {
             btn: ['确定', '取消']
         }, function () {
@@ -191,9 +198,8 @@
                 },
                 success: function (r) {
                     if (r.code == 200) {
-                        $("#photo").val("/img/log9.png");
-                        $("#imgId").attr('src',"/img/log9.png");
-                        $("#imgId").attr('src',"/img/log9.png");
+                        errimg();
+
                     } else {
                         layer.msg(r.error);
                     }
@@ -201,30 +207,51 @@
             });
         })
 
-
     }
-    
-/*
-    /!*上传头像*!/
-    $('#files').fileupload({
-        autoUpload: true,
-        method: 'POST',
-        url: '${base}/upload/file/img',
-        singleFileUploads: true,
-        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-        maxFileSize: 2 * 1024 * 1024,
-        success: function (a) {
-            $("#photo").val(a['url']);
-            $("#localImag").empty();
-            $("#localImag").append("<div class='img_box' id='imgBox_" + a['id'] + "'><img " +
-                    "src='${base}" + a['url'] + "/type=image'" +
-                    "class='img_file img-rounded'/><div class='img_edit_box'></div></div>");
+
+    var myDropzone = new Dropzone("div#mydropzone", {
+        url: "/file/upload/avatar",
+        filesizeBase: 1024,//定义字节算法 默认1000
+        maxFiles: 2,//最大文件数量
+        maxFilesize: 100, //MB
+        fallback: function () {
+            layer.alert('暂不支持您的浏览器上传!');
+        },
+        uploadMultiple: false,
+        addRemoveLinks: true,
+        dictFileTooBig: '您的文件超过' + 100 + 'MB!',
+        dictInvalidInputType: '不支持您上传的类型',
+        dictMaxFilesExceeded: '您的文件超过1个!',
+        init: function () {
+            this.on('queuecomplete', function (files) {
+               // layer.alert('上传成功');
+            });
+            this.on('success', function (uploadimfo,result) {
+                console.info(result);
+                $("#photo").val(result.message[0].s_url);
+                $("#imgshowdiv").attr('src', result.message[0].s_url);
+                 layer.alert('上传成功');
+            });
+            this.on('error', function (a, errorMessage, result) {
+                if (!result) {
+                    layer.alert(result.error || '上传失败');
+                }
+            });
+            this.on('maxfilesreached', function () {
+                this.removeAllFiles(true);
+                layer.alert('文件数量超出限制');
+            });
+            this.on('removedfile', function () {
+                $("#photo").val("${sysUser.photo}");
+                $("#imgshowdiv").attr('src'," {sysUser.photo}");
+                layer.alert('删除成功');
+            });
+
         }
     });
-*/
+
 
     var select = $(".select").select2();
-
 
     <#if action =='update'>
     $("select[name=status] option[value='${sysUser.status}']").attr("selected", "selected");
@@ -284,6 +311,7 @@
             form.submit();
         }
     });
+
 
 
 </script>

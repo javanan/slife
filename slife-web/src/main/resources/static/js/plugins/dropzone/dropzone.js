@@ -309,7 +309,7 @@
                     autoQueue: true,
                     addRemoveLinks: false,
                     previewsContainer: null,
-                    dictDefaultMessage: "Drop files here to upload",
+                    dictDefaultMessage: "拖动或者点击这里上传",
                     dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
                     dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
                     dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",

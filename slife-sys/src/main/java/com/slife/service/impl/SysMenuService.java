@@ -33,6 +33,7 @@ public class SysMenuService extends ServiceImpl<SysMenuDao, SysMenu> implements 
      * @param userId
      * @return
      */
+    @Override
     public List<SysMenu> selectMenusByUserId(Long userId){
        return this.baseMapper.selectMenusByUserId(userId);
     }
@@ -42,6 +43,7 @@ public class SysMenuService extends ServiceImpl<SysMenuDao, SysMenu> implements 
      * @param userId
      * @return
      */
+    @Override
     public List<SysMenu> CaseMenu(Long userId){
         Map<Long,List<SysMenu>> map= Maps.newHashMap();
 
@@ -77,6 +79,7 @@ public class SysMenuService extends ServiceImpl<SysMenuDao, SysMenu> implements 
      * 菜单管理 菜单树
      * @return
      */
+    @Override
     public List<JsTree> getMenuTree(){
 
         List<SysMenu> sysMenus=selectList(null);
