@@ -15,6 +15,7 @@ public class LambdaTest {
     public static void main(String[] args) {
         List<String> list = Arrays.asList("3", "1", "2");
         //循环输出
+
         list.forEach(e -> System.out.println(e));
 
 
