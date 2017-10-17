@@ -35,7 +35,6 @@
                     <form action="${base}/sys/user/${action}" class="form-horizontal form-bordered" method="POST"
                           id="slifeForm" enctype="multipart/form-data">
                         <input type="hidden" name="id" value="${sysUser.id}"/>
-                        <input type="hidden" name="salt" value="${sysUser.salt}"/>
                         <input type="hidden" name="photo" value="${sysUser.photo}" id="photo"/>
 
                         <div class="form-group">
@@ -159,7 +158,7 @@
                     <#if action !='detail'>
                         <div class="form-actions fluid">
                             <div class="col-md-offset-3 col-md-9">
-                                <button type="submit" class="btn green">保存</button>
+                                <button type="button" class="btn green" onclick="saveForm()">保存</button>
 
                             </div>
                         </div>
@@ -174,6 +173,32 @@
 
 
 <script type="text/javascript">
+
+    function saveForm() {
+        $.ajax({
+            cache : true,
+            type : "POST",
+            url : "${base}/sys/user/${action}",
+            data : $('#slifeForm').serialize(),// 你的formid
+            async : false,
+            error : function(request) {
+                parent.layer.alert("Connection error");
+            },
+            success : function(data) {
+                if (data.code == 200) {
+                    parent.layer.msg("操作成功");
+                    parent.re_load();
+                    var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
+                    parent.layer.close(index);
+
+                } else {
+                    parent.layer.alert(data.error)
+                }
+
+            }
+        });
+
+    }
 
     function errimg() {
         $("#photo").val("/img/log9.png");
@@ -209,56 +234,17 @@
 
     }
 
-    var myDropzone = new Dropzone("div#mydropzone", {
-        url: "/file/upload/avatar",
-        filesizeBase: 1024,//定义字节算法 默认1000
-        maxFiles: 2,//最大文件数量
-        maxFilesize: 100, //MB
-        fallback: function () {
-            layer.alert('暂不支持您的浏览器上传!');
-        },
-        uploadMultiple: false,
-        addRemoveLinks: true,
-        dictFileTooBig: '您的文件超过' + 100 + 'MB!',
-        dictInvalidInputType: '不支持您上传的类型',
-        dictMaxFilesExceeded: '您的文件超过1个!',
-        init: function () {
-            this.on('queuecomplete', function (files) {
-               // layer.alert('上传成功');
-            });
-            this.on('success', function (uploadimfo,result) {
-                console.info(result);
-                $("#photo").val(result.message[0].s_url);
-                $("#imgshowdiv").attr('src', result.message[0].s_url);
-                 layer.alert('上传成功');
-            });
-            this.on('error', function (a, errorMessage, result) {
-                if (!result) {
-                    layer.alert(result.error || '上传失败');
-                }
-            });
-            this.on('maxfilesreached', function () {
-                this.removeAllFiles(true);
-                layer.alert('文件数量超出限制');
-            });
-            this.on('removedfile', function () {
-                $("#photo").val("${sysUser.photo}");
-                $("#imgshowdiv").attr('src'," {sysUser.photo}");
-                layer.alert('删除成功');
-            });
-
-        }
-    });
 
 
     var select = $(".select").select2();
 
-    <#if action =='update'>
+    <#if action !='insert'>
     $("select[name=status] option[value='${sysUser.status}']").attr("selected", "selected");
     var data = [];
         <#list sysUser.sysRoles as r>
         data.push({id:${r.id}, text: '${r.name}'});
         </#list>
+
     select.select2("data", data);
     </#if>
 
@@ -291,6 +277,10 @@
             password: {
                 maxlength: 16,
                 required: true
+            },
+            no: {
+                maxlength: 100,
+                required: true
             }
         },
         invalidHandler: function (event, validator) {
@@ -312,6 +302,47 @@
         }
     });
 
+
+    var myDropzone = new Dropzone("div#mydropzone", {
+        url: "/file/upload/avatar",
+        filesizeBase: 1024,//定义字节算法 默认1000
+        maxFiles: 2,//最大文件数量
+        maxFilesize: 100, //MB
+        fallback: function () {
+            layer.alert('暂不支持您的浏览器上传!');
+        },
+        uploadMultiple: false,
+        addRemoveLinks: true,
+        dictFileTooBig: '您的文件超过' + 100 + 'MB!',
+        dictInvalidInputType: '不支持您上传的类型',
+        dictMaxFilesExceeded: '您的文件超过1个!',
+        init: function () {
+            this.on('queuecomplete', function (files) {
+                // layer.alert('上传成功');
+            });
+            this.on('success', function (uploadimfo,result) {
+                console.info(result);
+                $("#photo").val(result.message[0].s_url);
+                $("#imgshowdiv").attr('src', result.message[0].s_url);
+                layer.alert('上传成功');
+            });
+            this.on('error', function (a, errorMessage, result) {
+                if (!result) {
+                    layer.alert(result.error || '上传失败');
+                }
+            });
+            this.on('maxfilesreached', function () {
+                this.removeAllFiles(true);
+                layer.alert('文件数量超出限制');
+            });
+            this.on('removedfile', function () {
+                $("#photo").val("${sysUser.photo}");
+                $("#imgshowdiv").attr('src'," {sysUser.photo}");
+                layer.alert('删除成功');
+            });
+
+        }
+    });
 
 
 </script>

@@ -99,7 +99,6 @@ public class SysUser extends CompanyLinkEntity<SysUser> {
     }
 
     @JsonIgnore
-    @Length(min = 1, max = 100, message = "密码长度必须介于 1 和 100 之间")
     public String getPassword() {
         return password;
     }

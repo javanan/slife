@@ -75,28 +75,6 @@
                     <div class="logo-element">Slife</div>
                 </li>
 
-         <#--       <li>
-                    <a href="#"> <i class="fa fa-home"></i> <span
-                        class="nav-label">主页</span> <span class="fa arrow"></span>
-                </a>
-                    <ul class="nav nav-second-level">
-                        <li><a id="index001" class="J_menuItem" href="index_v1.html" data-index="0" href="@{/main}">了解BootDo</a></li>
-                    </ul>
-                </li>
-
-                <li th:each="menu : ${menus}"><a href="#"> <i
-                        class="fa fa fa-bar-chart-o"
-                        th:class="${menu.attributes.icon}"></i> <span
-                        class="nav-label" th:text="${menu.text}">基础信息</span> <span
-                        class="fa arrow"></span>
-                </a>
-                    <ul class="nav nav-second-level">
-                        <li th:each="cmenu : ${menu.children}"><a class="J_menuItem"
-                                                                  href="graph_echarts.html" th:text="${cmenu.text}"
-                                                                  th:href="${cmenu.attributes.url}">系统管理</a></li>
-                    </ul>
-                </li>-->
-
 
             <#if menus??>
             <#else>
@@ -220,36 +198,17 @@
                             class="right-sidebar-toggle" aria-expanded="false"> <i
                             class="fa fa-tasks"></i> 主题
                     </a></li>
+                    <li class="dropdown hidden-xs">
+                        <a href="${base}/logout" class="right-sidebar-toggle" aria-expanded="false"> <i
+                                class="fa fa-tasks"></i> 退出</a>
+                    </li>
                 </ul>
             </nav>
         </div>
 
-        <div class="row content-tabs">
-            <button class="roll-nav roll-left J_tabLeft">
-                <i class="fa fa-backward"></i>
-            </button>
-            <nav class="page-tabs J_menuTabs">
-                <div class="page-tabs-content">
-                    <a href="${base}/index" class="active J_menuTab">首页</a>
-                </div>
-            </nav>
-            <button class="roll-nav roll-right J_tabRight">
-                <i class="fa fa-forward"></i>
-            </button>
-            <div class="btn-group roll-nav roll-right">
-                <button class="dropdown J_tabClose" data-toggle="dropdown">
-                    关闭操作<span class="caret"></span>
+        <div class="row content-tabs" style="height: 0!important;">
 
-                </button>
-                <ul role="menu" class="dropdown-menu dropdown-menu-right">
-                    <li class="J_tabShowActive"><a>定位当前选项卡</a></li>
-                    <li class="divider"></li>
-                    <li class="J_tabCloseAll"><a>关闭全部选项卡</a></li>
-                    <li class="J_tabCloseOther"><a>关闭其他选项卡</a></li>
-                </ul>
-            </div>
-            <a href="${base}/logout" class="roll-nav roll-right J_tabExit"><i
-                    class="fa fa fa-sign-out"></i> 退出</a>
+
         </div>
 
         <div class="row" id="content-main" style="overflow: scroll">

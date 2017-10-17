@@ -124,7 +124,7 @@
                 field: 'id',
                 align: 'center',
                 formatter: function (value, row, index) {
-                    return dt_delete_button(row.id);
+                    return dt_delete_button(row);
                 }
             }];
 

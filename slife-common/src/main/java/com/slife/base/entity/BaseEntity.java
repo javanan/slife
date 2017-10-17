@@ -75,6 +75,7 @@ public abstract class BaseEntity<T extends Model> extends Model<T>  {
 
     /**
      * 插入之前执行方法，子类实现
+     * @param insertUserId
      */
     public abstract void preInsert(Long insertUserId);
 

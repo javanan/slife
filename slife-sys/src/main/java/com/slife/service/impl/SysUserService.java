@@ -2,20 +2,16 @@ package com.slife.service.impl;
 
 
 import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.google.common.base.Strings;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.DataTable;
 import com.slife.dao.SysUserDao;
 import com.slife.entity.SysUser;
-import com.slife.entity.SysUserRole;
 import com.slife.util.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,7 +29,7 @@ public class SysUserService extends BaseService<SysUserDao, SysUser> {
 
 
     @Autowired
-    private SysUserRoleService sysUserRoleService;
+    private SysRoleService sysRoleService;
 
     // @Cacheable(cacheNames = "user:", key = "#id")
     public SysUser getById(String id) {
@@ -113,22 +109,6 @@ public class SysUserService extends BaseService<SysUserDao, SysUser> {
 
         }
 
-        boolean asc = false;
-      /*  if ("asc".equals(dt.getsSortDir_0())) {
-            asc = true;
-        }
-        String[] column = new String[]{"", "photo", "login_name", "name", "email", "no", "phone", "mobile",
-                "remark", "login_flag"};
-        cnd.orderBy(column[Integer.parseInt(dt.getiSortCol_0())], asc);
-
-
-        Page<SysUser> userPage = new Page<SysUser>(dt.pageNo(), dt.getiDisplayLength());
-        selectPage(userPage, cnd);
-
-        dt.setiTotalDisplayRecords(userPage.getTotal());
-        dt.setiTotalRecords(userPage.getTotal());
-        dt.setAaData(userPage.getRecords());*/
-
         return dt;
     }
 
@@ -145,7 +125,7 @@ public class SysUserService extends BaseService<SysUserDao, SysUser> {
     }
 
     /**
-     * 创建一个用户
+     * 创建一个用户 或者更新一个用户
      *
      * @param sysUser
      * @param ids
@@ -156,19 +136,23 @@ public class SysUserService extends BaseService<SysUserDao, SysUser> {
         //保存用户
         sysUser.setPassword(PasswordUtils.entryptPassword(sysUser.getPassword()));
         insert(sysUser);
+        //操作角色
+        sysRoleService.insertSysRole(sysUser.getId(), ids);
 
-        //删除现有的用户角色
-        sysUserRoleService.delete(Condition.create().eq("sys_user_id", sysUser.getId()));
+    }
 
-        if (null!=ids&& ids.length>0){
-            List<SysUserRole> sysUserRoles=new ArrayList<SysUserRole>();
-            for (Long roleId:ids ){
-                sysUserRoles.add(new SysUserRole(sysUser.getId(),roleId));
-            }
-            //保存用户角色
-            sysUserRoleService.insertBatch(sysUserRoles);
-        }
+    /**
+     * 更新用户
+     *
+     * @param sysUser
+     * @param ids
+     */
+    @Transactional(readOnly = false)
+    public void updateSysUser(SysUser sysUser, Long[] ids) {
 
+        updateById(sysUser);
+        //操作角色
+        sysRoleService.insertSysRole(sysUser.getId(), ids);
 
     }
 

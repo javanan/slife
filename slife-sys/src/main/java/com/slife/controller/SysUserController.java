@@ -7,12 +7,14 @@ import com.slife.base.entity.ReturnDTO;
 import com.slife.base.vo.DataTable;
 import com.slife.entity.SysUser;
 import com.slife.enums.HttpCodeEnum;
+import com.slife.exception.SlifeException;
 import com.slife.service.impl.SysRoleService;
 import com.slife.service.impl.SysUserService;
-import com.slife.shiro.ShiroUser;
 import com.slife.shiro.SlifeSysUser;
 import com.slife.util.FileUtils;
+import com.slife.util.PasswordUtils;
 import com.slife.util.ReturnDTOUtil;
+import com.slife.util.StringUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -133,11 +135,11 @@ public class SysUserController extends BaseController {
      * @return
      */
     @GetMapping(value = "/detail/{id}")
-    public String detailForm(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
+    public String detail(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
         model.addAttribute("action", "detail");
-        SysUser sysUser = sysUserService.selectById(id);
+        SysUser sysUser = sysUserService.selectUserAllInfoById(id);
         model.addAttribute("sysUser", sysUser);
-        model.addAttribute("roles", sysRoleService.ListSysRoleUseable());
+        model.addAttribute("roles", sysUser.getSysRoles());
         model.addAttribute("url", request.getContextPath() + "/sys/user/");
         return "user/detail";
     }
@@ -150,31 +152,14 @@ public class SysUserController extends BaseController {
      * @return
      */
     @GetMapping(value = "/insert")
-    public String createForm(Model model, HttpServletRequest request) {
+    public String create(Model model, HttpServletRequest request) {
         model.addAttribute("action", "insert");
         SysUser sysUser = new SysUser();
         sysUser.setId(0L);
-        //  sysUser.setSalt(Encodes.encodeHex(Digests.generateSalt(ResourceService.SALT_SIZE)));
         model.addAttribute("sysUser", sysUser);
         model.addAttribute("roles", sysRoleService.ListSysRoleUseable());
         model.addAttribute("url", request.getContextPath() + "/sys/user/");
         return "user/detail";
-    }
-
-    /**
-     * 创建用户操作
-     *
-     * @param sysUser
-     * @return
-     */
-    @PostMapping(value = "/insert")
-    public String create(@Valid @RequestBody SysUser sysUser, @RequestParam(value = "ids", defaultValue = "") Long[] ids,
-                         RedirectAttributes
-            redirectAttributes) {
-        sysUser.setId(null);
-        sysUserService.insertSysUser(sysUser, ids);
-        redirectAttributes.addFlashAttribute("message", "新建用户成功!");
-        return "redirect:/sys/user";
     }
 
     /**
@@ -184,7 +169,7 @@ public class SysUserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "update/{id}")
-    public String updateForm(@PathVariable("id") Long id, Model model) {
+    public String update(@PathVariable("id") Long id, Model model) {
         model.addAttribute("action", "update");
         SysUser sysUser = sysUserService.selectUserAllInfoById(id);
         sysUser.setPassword(null);
@@ -194,18 +179,37 @@ public class SysUserController extends BaseController {
         return "user/detail";
     }
 
-    /**
-     * 更新用户操作
-     *
-     * @param sysUser
-     * @return
-     */
-    @RequestMapping(value = "update")
-    public String update(@Valid @ModelAttribute("user") SysUser sysUser, @RequestParam(value = "ids", defaultValue = "") Long[]
-            ids, RedirectAttributes redirectAttributes) {
-     /*   rs.SaveKnUser(user,ids);
-        redirectAttributes.addFlashAttribute("message","更新用户成功");*/
-        return "redirect:/sys/user";
+    @ApiOperation(value = "创建用户操作", notes = "创建用户操作")
+    @PostMapping(value = "/insert")
+    @ResponseBody
+    public ReturnDTO create(@Valid SysUser sysUser, @RequestParam(value = "ids", defaultValue = "") Long[] roleIds) {
+        sysUser.setId(null);
+        sysUserService.insertSysUser(sysUser, roleIds);
+
+        return ReturnDTOUtil.success();
+    }
+
+
+    @ApiOperation(value = "更新用户", notes = "更新用户")
+    @PostMapping(value = "/update")
+    public ReturnDTO update(@Valid SysUser sysUser, @RequestParam(value = "ids", defaultValue = "") Long[] roleIds) {
+
+        SysUser sysUserDb = sysUserService.selectById(sysUser.getId());
+        if (ObjectUtils.isEmpty(sysUserDb)) {
+            throw new SlifeException(HttpCodeEnum.NOT_FOUND);
+        }
+
+        sysUser.setId(sysUserDb.getId());
+        sysUser.setCreateDate(sysUserDb.getCreateDate());
+        sysUser.setCreateId(sysUserDb.getCreateId());
+        if (StringUtils.isNotBlank(sysUser.getPassword())) {
+            sysUser.setPassword(PasswordUtils.entryptPassword(sysUser.getPassword()));
+        } else {
+            sysUser.setPassword(sysUserDb.getPassword());
+        }
+
+        sysUserService.updateSysUser(sysUser, roleIds);
+        return ReturnDTOUtil.success();
     }
 
     /**
@@ -229,5 +233,18 @@ public class SysUserController extends BaseController {
     public ReturnDTO selectUserSideMenu() {
 
         return ReturnDTOUtil.success(sysUserService.selectUserAllInfoById(SlifeSysUser.id()));
+    }
+
+    @SLog("批量删除用户")
+    @ApiOperation(value = "批量删除用户", notes = "批量删除用户")
+    @PostMapping(value = "/delete")
+    @ResponseBody
+    public ReturnDTO delete(@RequestParam("ids") List<Long> ids, ServletRequest request) {
+        boolean success = sysUserService.deleteBatchIds(ids);
+        if (success) {
+            return ReturnDTOUtil.success();
+        }
+        return ReturnDTOUtil.fail();
+
     }
 }
