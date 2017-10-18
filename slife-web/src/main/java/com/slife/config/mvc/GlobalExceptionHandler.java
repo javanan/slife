@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
  * <p>
  * Describe: 全局统一异常处理
  */
+/*
 @ControllerAdvice
 public class GlobalExceptionHandler {
     public static final String DEFAULT_ERROR_VIEW = "error";
@@ -28,3 +29,4 @@ public class GlobalExceptionHandler {
 
 
 }
+*/

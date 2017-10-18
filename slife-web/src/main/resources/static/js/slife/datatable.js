@@ -53,7 +53,7 @@ function batch_remove() {
  */
 function remove(id) {
 
-    console.info(url);
+
     layer.confirm('确定要删除选中的记录？', {
         btn: ['确定', '取消']
     }, function () {
@@ -93,7 +93,6 @@ function re_load() {
 function export_data(columns, sorts) {
     var searchParams = {};
     $("#exampleToolbar ._search").each(function () {
-        console.info($(this).val());
         searchParams[$(this).attr('name')] = $(this).val();
     });
 
@@ -105,7 +104,6 @@ function export_data(columns, sorts) {
 
     }
   //  JSON.stringify(GetJsonData())
-   console.info(searchParams);
     $.ajax({
         type: "POST",  //提交方式
         url: url + "exportUserList", // 服务器数据的加载地址
@@ -137,7 +135,6 @@ function export_data(columns, sorts) {
  * @param columns
  */
 function load_data(columns, sorts) {
-    console.info("表格拉数据....");
     $('#exampleTable').bootstrapTable(
         {
             method: 'post', // 服务器数据的请求方式 get or post
@@ -162,12 +159,9 @@ function load_data(columns, sorts) {
             sidePagination: "server", // 设置在哪里进行分页，可选值为"client" 或者
             // "server"
             queryParams: function (params) {
-                console.info(this);
-                console.info(params);
 
                 var searchParams = {};
                 $("#exampleToolbar ._search").each(function () {
-                    console.info($(this).val());
                     searchParams[$(this).attr('name')] = $(this).val();
                 });
 

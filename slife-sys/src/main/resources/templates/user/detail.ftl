@@ -20,9 +20,11 @@
 
     <script src="${base}/js/plugins/select2/select2.min.js"></script>
     <script src="${base}/js/plugins/dropzone/dropzone.min.js"></script>
+
     <script>
-        var url = "${url}";
+        var url = "${url}",  action = "${action}";
     </script>
+    <script src="${base}/js/slife/slife.js"></script>
 </head>
 
 <body class="gray-bg">
@@ -32,8 +34,7 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
 
-                    <form action="${base}/sys/user/${action}" class="form-horizontal form-bordered" method="POST"
-                          id="slifeForm" enctype="multipart/form-data">
+                    <form class="form-horizontal form-bordered" id="slifeForm">
                         <input type="hidden" name="id" value="${sysUser.id}"/>
                         <input type="hidden" name="photo" value="${sysUser.photo}" id="photo"/>
 
@@ -42,12 +43,12 @@
                             <div class="col-sm-2">
                                 <div id="localImag" style="margin-left:15px;">
                                     <div class="img_box" id="imgBox">
-                                            <img id="imgshowdiv" style="width: 60px" src="${sysUser.photo}"
-                                                 onerror="javascript:errimg()" class="img_file img-rounded"/>
+                                        <img id="imgshowdiv" style="width: 60px" src="${sysUser.photo}"
+                                             onerror="javascript:errimg()" class="img_file img-rounded"/>
 
-                              <#--          <div class="img_edit_box">
-                                            <a class="img_desr" href="javascript:doDeleteImg()">删除</a>
-                                        </div>-->
+                                    <#--          <div class="img_edit_box">
+                                                  <a class="img_desr" href="javascript:doDeleteImg()">删除</a>
+                                              </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +86,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">密码<#if action =='insert'><span
+                            <label class="col-sm-3 control-label">密码<#if action !='update'><span
                                     class="required">*</span></#if></label>
 
                             <div class="col-sm-8">
@@ -97,7 +98,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">工号</label>
+                            <label class="col-sm-3 control-label">工号<span class="required">*</span></label>
 
                             <div class="col-sm-8">
                                 <input name="no" type="text" class="form-control" value="${sysUser.no}"
@@ -158,8 +159,7 @@
                     <#if action !='detail'>
                         <div class="form-actions fluid">
                             <div class="col-md-offset-3 col-md-9">
-                                <button type="button" class="btn green" onclick="saveForm()">保存</button>
-
+                                <button type="submit" class="btn green">保存</button>
                             </div>
                         </div>
                     </#if>
@@ -174,43 +174,21 @@
 
 <script type="text/javascript">
 
-    function saveForm() {
-        $.ajax({
-            cache : true,
-            type : "POST",
-            url : "${base}/sys/user/${action}",
-            data : $('#slifeForm').serialize(),// 你的formid
-            async : false,
-            error : function(request) {
-                parent.layer.alert("Connection error");
-            },
-            success : function(data) {
-                if (data.code == 200) {
-                    parent.layer.msg("操作成功");
-                    parent.re_load();
-                    var index = parent.layer.getFrameIndex(window.name); // 获取窗口索引
-                    parent.layer.close(index);
 
-                } else {
-                    parent.layer.alert(data.error)
-                }
-
-            }
-        });
-
-    }
-
+    /**
+     * 错误图片的默认处理
+     */
     function errimg() {
         $("#photo").val("/img/log9.png");
         $("#imgshowdiv").attr('src', "/img/log9.png");
     }
+
 
     /**
      * 删除头像
      */
 
     function doDeleteImg() {
-
         var name = $("#photo").val();
         layer.confirm('确定要删除头像吗？', {
             btn: ['确定', '取消']
@@ -234,17 +212,13 @@
 
     }
 
-
-
     var select = $(".select").select2();
-
     <#if action !='insert'>
     $("select[name=status] option[value='${sysUser.status}']").attr("selected", "selected");
     var data = [];
         <#list sysUser.sysRoles as r>
         data.push({id:${r.id}, text: '${r.name}'});
         </#list>
-
     select.select2("data", data);
     </#if>
 
@@ -274,35 +248,20 @@
             active: {
                 required: true
             },
+        <#if action !='update'>
             password: {
                 maxlength: 16,
                 required: true
             },
+        </#if>
             no: {
                 maxlength: 100,
                 required: true
             }
-        },
-        invalidHandler: function (event, validator) {
-            error.show();
-            Metronic.scrollTo(error, -200);
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error');
-        },
-        unhighlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-error');
-        },
-        success: function (label) {
-            label.closest('.form-group').removeClass('has-error');
-        },
-        submitHandler: function (form) {
-            error.hide();
-            form.submit();
         }
     });
 
-
+    Dropzone.autoDiscover = false;
     var myDropzone = new Dropzone("div#mydropzone", {
         url: "/file/upload/avatar",
         filesizeBase: 1024,//定义字节算法 默认1000
@@ -320,7 +279,7 @@
             this.on('queuecomplete', function (files) {
                 // layer.alert('上传成功');
             });
-            this.on('success', function (uploadimfo,result) {
+            this.on('success', function (uploadimfo, result) {
                 console.info(result);
                 $("#photo").val(result.message[0].s_url);
                 $("#imgshowdiv").attr('src', result.message[0].s_url);
@@ -337,7 +296,7 @@
             });
             this.on('removedfile', function () {
                 $("#photo").val("${sysUser.photo}");
-                $("#imgshowdiv").attr('src'," {sysUser.photo}");
+                $("#imgshowdiv").attr('src', " {sysUser.photo}");
                 layer.alert('删除成功');
             });
 
@@ -346,8 +305,5 @@
 
 
 </script>
-
-
 </body>
-
 </html>

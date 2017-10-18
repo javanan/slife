@@ -192,6 +192,7 @@ public class SysUserController extends BaseController {
 
     @ApiOperation(value = "更新用户", notes = "更新用户")
     @PostMapping(value = "/update")
+    @ResponseBody
     public ReturnDTO update(@Valid SysUser sysUser, @RequestParam(value = "ids", defaultValue = "") Long[] roleIds) {
 
         SysUser sysUserDb = sysUserService.selectById(sysUser.getId());
@@ -207,7 +208,6 @@ public class SysUserController extends BaseController {
         } else {
             sysUser.setPassword(sysUserDb.getPassword());
         }
-
         sysUserService.updateSysUser(sysUser, roleIds);
         return ReturnDTOUtil.success();
     }

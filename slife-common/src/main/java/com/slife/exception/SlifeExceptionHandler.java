@@ -2,12 +2,14 @@ package com.slife.exception;
 
 
 import com.slife.base.entity.ReturnDTO;
+import com.slife.enums.HttpCodeEnum;
 import com.slife.util.ReturnDTOUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,6 +26,15 @@ import java.sql.SQLException;
 public class SlifeExceptionHandler {
 
     Logger logger = LoggerFactory.getLogger(getClass());
+
+
+
+        @ExceptionHandler(BindException.class)
+        public  ResponseEntity<ReturnDTO> bindExceptionHandler(BindException e){
+            return new ResponseEntity(ReturnDTOUtil.custom(HttpCodeEnum.INVALID_REQUEST.getCode(),e.getMessage()),
+                    HttpStatus.BAD_REQUEST);
+        }
+
 
     /**
      * 业务异常

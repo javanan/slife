@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
  * Describe:
  */
 public class DataSourceContextHolder {
-    private static final ThreadLocal<String> local = new ThreadLocal<String>();
+    private static final ThreadLocal<String> LOCAL = new ThreadLocal<String>();
 
     private static Logger logger = LoggerFactory.getLogger(DataSourceContextHolder.class);
 
     public static ThreadLocal<String> getLocal() {
-        return local;
+        return LOCAL;
     }
 
     /**
@@ -24,7 +24,7 @@ public class DataSourceContextHolder {
      */
     public static void read() {
 
-        local.set(DataSourceType.read.getType());
+        LOCAL.set(DataSourceType.read.getType());
     }
 
     /**
@@ -32,10 +32,10 @@ public class DataSourceContextHolder {
      */
     public static void write() {
         logger.debug("writewritewrite");
-        local.set(DataSourceType.write.getType());
+        LOCAL.set(DataSourceType.write.getType());
     }
 
     public static String getJdbcType() {
-        return local.get();
+        return LOCAL.get();
     }
 }

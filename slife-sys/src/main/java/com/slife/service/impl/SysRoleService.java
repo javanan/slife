@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -105,10 +102,16 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
         sysUserRoleService.delete(Condition.create().eq("sys_user_id", userId));
         if (null != ids && ids.length > 0) {
 
-            List<SysUserRole> sysUserRoles = new ArrayList<SysUserRole>();
+  /*          List<SysUserRole> sysUserRoles = new ArrayList<SysUserRole>();
             for (Long roleId : ids) {
                 sysUserRoles.add(new SysUserRole(userId, roleId));
-            }
+            }*/
+
+            List<SysUserRole> sysUserRoles =Arrays.stream(ids).parallel().map(roleId->{
+                return new  SysUserRole(userId, roleId);
+            }).collect(Collectors.toList());
+
+
             //保存用户角色
             sysUserRoleService.insertBatch(sysUserRoles);
         }
