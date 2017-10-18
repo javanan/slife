@@ -115,6 +115,7 @@ function export_data(columns, sorts) {
         }
 
     });
+    
 
     var from = $("#export");
     $("input,select").each(function () {
