@@ -53,15 +53,7 @@ public class SysArea extends BaseEntity<SysArea> {
         this.jkey = jkey;
     }
 
-    @Override
-    public void preInsert(Long insertUserId) {
 
-    }
-
-    @Override
-    public void preUpdate(Long updateUserId) {
-
-    }
 
     @Override
     protected Serializable pkVal() {

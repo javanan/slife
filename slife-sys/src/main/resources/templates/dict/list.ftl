@@ -63,7 +63,7 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">名称</label>
+                                            <label class="col-sm-3 control-label">名称<span class="required">*</span></label>
 
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="dicValue"
@@ -75,7 +75,7 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label">编码</label>
+                                            <label class="col-sm-3 control-label">编码<span class="required">*</span></label>
 
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" name="dicKey"
@@ -87,7 +87,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">状态</label>
+                                            <label class="control-label col-md-3">状态<span class="required">*</span></label>
 
                                             <div class="col-md-9">
                                                 <select name="invalid" class="form-control" disabled="disabled">
@@ -100,7 +100,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label col-md-3">类型</label>
+                                            <label class="control-label col-md-3">类型<span class="required">*</span></label>
 
                                             <div class="col-md-9">
                                                 <select id="type" name="type" class="form-control" disabled="disabled"
@@ -227,7 +227,7 @@
     var error = $('.alert-danger', form);
     form.validate({
         errorElement: 'span',
-        errorClass: 'help-block help-block-error',
+        errorClass: 'error',
         focusInvalid: false,
         rules: {
             name: {
@@ -244,29 +244,6 @@
             active: {
                 required: true
             }
-        },
-        invalidHandler: function (event, validator) {
-            error.show();
-            Metronic.scrollTo(error, -200);
-        },
-        errorPlacement: function (e, element) {
-            var icon = $(element).parent('.input-icon').children('i');
-            icon.removeClass('fa-check').addClass("fa-warning");
-            icon.attr("data-original-title", e.text()).tooltip({'container': 'body'});
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').removeClass("has-success").addClass('has-error');
-        },
-        unhighlight: function (element) {
-        },
-        success: function (label, element) {
-            var icon = $(element).parent('.input-icon').children('i');
-            $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-            icon.removeClass("fa-warning").addClass("fa-check");
-        },
-        submitHandler: function (form) {
-            error.hide();
-            form.submit();
         }
     });
     $('.btn-parent').click(function () {
@@ -326,12 +303,12 @@
     });
 
     $('.btn-rush').click(function () {
-        bootbox.alert('刷新成功');
+
         $.ajax({
             url: '${base}/sys/dict/rush',
             type: 'GET',
             success: function (data) {
-                bootbox.alert('刷新成功');
+               layer.msg('刷新成功');
             }
         });
     });

@@ -22,7 +22,7 @@ public interface ISysDictService extends IBaseService<SysDict> {
 
     List<JsTree> getDictTree();
 
-    SysDict selectById(Long id);
+
 
      PCAjaxVO delete(Long id);
 }

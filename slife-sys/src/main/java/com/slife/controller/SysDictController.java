@@ -57,11 +57,7 @@ public class SysDictController extends BaseController {
             logger.info("更新字典 id={}", id);
             boolean success = sysDictService.update(id, dicKey, dicValue, type, desc, sort, invalid);
             redirectAttributes.addFlashAttribute("message", "更新数据字典成功");
-            /*if (success) {
-                redirectAttributes.addFlashAttribute("message", "更新数据字典成功");
-            } else {
-                redirectAttributes.addFlashAttribute("message", "更新数据字典失败");
-            }*/
+
         } else {
             sysDictService.insert(dicKey, dicValue, dicPid, type, desc, sort, invalid, path);
             redirectAttributes.addFlashAttribute("message", "保存数据字典成功");

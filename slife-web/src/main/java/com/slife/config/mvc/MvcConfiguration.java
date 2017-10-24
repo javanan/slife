@@ -1,5 +1,10 @@
 package com.slife.config.mvc;
 
+import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.serializer.ToStringSerializer;
+import com.alibaba.fastjson.support.config.FastJsonConfig;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.slife.config.sitemesh.WebSiteMeshFilter;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
@@ -8,8 +13,12 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.math.BigInteger;
+import java.util.List;
 
 /**
  * Created by chen on 2017/7/17.
@@ -57,37 +66,18 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
 
-
-    // Will map to the JSP page: "WEB-INF/views/accounts/list.jsp"
-    /*@Bean(name="jspViewResolver")*/
-/*    @Bean
-    public ViewResolver getJspViewResolver() {
-        InternalResourceViewResolver resolver =
-                new InternalResourceViewResolver();
-        resolver.setPrefix("/");
-        resolver.setSuffix(".jsp");
-        resolver.setOrder(1);
-        return resolver;
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
+        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        SerializeConfig serializeConfig = SerializeConfig.globalInstance;
+        serializeConfig.put(BigInteger.class, ToStringSerializer.instance);
+        serializeConfig.put(Long.class, ToStringSerializer.instance);
+        serializeConfig.put(Long.TYPE, ToStringSerializer.instance);
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
+        fastJsonConfig.setSerializeConfig(serializeConfig);
+        fastConverter.setFastJsonConfig(fastJsonConfig);
+        converters.add(fastConverter);
     }
 
-    @Bean
-    public FreeMarkerViewResolver freeMarkerViewResolver(){
-        FreeMarkerViewResolver freeMarkerViewResolver=new FreeMarkerViewResolver();
-        freeMarkerViewResolver.setCache(true);
-        freeMarkerViewResolver.setPrefix("");
-        freeMarkerViewResolver.setSuffix(".ftl");
-        freeMarkerViewResolver.setContentType("text/html;charset=UTF-8");
-        freeMarkerViewResolver.setOrder(0);
-        return freeMarkerViewResolver;
-    }
-
-    @Bean
-    public FreeMarkerConfigurer freeMarkerConfig() throws IOException, TemplateException {
-        FreeMarkerConfigurationFactory factory=new FreeMarkerConfigurationFactory();
-        factory.setTemplateLoaderPath("classpath:/templates/");
-        factory.setDefaultEncoding("UTF-8");
-        FreeMarkerConfigurer freeMarkerConfigurer=new FreeMarkerConfigurer();
-        freeMarkerConfigurer.setConfiguration(factory.createConfiguration());
-        return freeMarkerConfigurer;
-    }*/
 }

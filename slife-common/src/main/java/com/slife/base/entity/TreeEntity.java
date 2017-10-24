@@ -34,7 +34,7 @@ public abstract class TreeEntity<T extends Model> extends DataEntity<T> {
     /**
      * varchar(100)NULL图标
      */
-    private String icon;
+    protected String icon;
 
     @Length(min = 0, max = 1000, message = "icon长度必须介于 1 和 1000 之间")
     public String getIcon() {
@@ -54,7 +54,6 @@ public abstract class TreeEntity<T extends Model> extends DataEntity<T> {
         super(id);
     }
 
-    @Length(min = 0, max = 64, message = "父id长度必须介于 1 和 64 之间")
     public Long getParentId() {
         return parentId;
     }
@@ -63,7 +62,7 @@ public abstract class TreeEntity<T extends Model> extends DataEntity<T> {
         this.parentId = parentId;
     }
 
-    @Length(min = 0, max = 1000, message = "路径长度必须介于 1 和 1000 之间")
+    @Length( max = 1000, message = "路径长度必须介于 1 和 1000 之间")
     public String getPath() {
         return path;
     }
@@ -72,7 +71,6 @@ public abstract class TreeEntity<T extends Model> extends DataEntity<T> {
         this.path = path;
     }
 
-    @Length(min = 0, max = 11, message = "排序长度必须介于 1 和 11 之间")
     public Integer getSort() {
         return sort;
     }

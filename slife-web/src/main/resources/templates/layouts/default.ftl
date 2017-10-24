@@ -5,7 +5,9 @@
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <title>呵呵 | S Life 企业级管理平台 | <sitemesh:write property='title'/></title>
+    <title>呵呵 | S Life 企业级管理平台 |
+        <sitemesh:write property='title'/>
+    </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta name="renderer" content="webkit">
@@ -13,15 +15,15 @@
     <meta name="description" content="slife，....">
 
     <!--[if lt IE 9]>
-    <meta http-equiv="refresh" content="0;ie.html" />
+    <meta http-equiv="refresh" content="0;ie.html"/>
     <![endif]-->
     <sitemesh:write property='head'/>
     <link rel="shortcut icon" href="favicon.ico">
     <link href="${base}/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="${base}/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" />
-    <link href="${base}/css/animate.css" rel="stylesheet" />
-    <link href="${base}/css/style.css?v=4.1.0" rel="stylesheet" />
-    <link href="${base}/css/slife.css" rel="stylesheet" />
+    <link href="${base}/css/font-awesome.min.css?v=4.4.0" rel="stylesheet"/>
+    <link href="${base}/css/animate.css" rel="stylesheet"/>
+    <link href="${base}/css/style.css?v=4.1.0" rel="stylesheet"/>
+    <link href="${base}/css/slife.css" rel="stylesheet"/>
 
     <script src="${base}/js/jquery.min.js?v=2.1.4"></script>
     <script src="${base}/js/bootstrap.min.js?v=3.3.6"></script>
@@ -33,7 +35,13 @@
     <script src="${base}/js/hplus.js?v=4.1.0"></script>
     <script type="text/javascript" src="${base}/js/contabs.js"></script>
 
+    <script src="${base}/js/websocket/sockjs.min.js" type="text/javascript"></script>
+    <script src="${base}/js/websocket/stomp.min.js" type="text/javascript"></script>
+    <script src="${base}/js/websocket/sliescoket.js" type="text/javascript"></script>
 
+<script>
+    var slifebase="${base}";
+</script>
     <script src="${base}/js/plugins/pace/pace.min.js"></script>
     <script src="${base}/js/slife/slife.js"></script>
 </head>
@@ -52,22 +60,22 @@
                 <li class="nav-header">
                     <div class="dropdown profile-element">
 							<span>
-                                <img alt="image" class="img-circle" src="${base}/img/log9.png" />
+                                <img alt="image" class="img-circle" src="${base}/img/log9.png"/>
                             </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear">
                                 <span class="block m-t-xs">
-                                    <strong class="font-bold" >${slife.name}</strong>
+                                    <strong class="font-bold">${slife.name}</strong>
                                 </span>
 
 							</span>
-                    </a>
+                        </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
                             <li><a class="J_menuItem" href="form_avatar.html">修改头像</a>
                             </li>
                             <li><a class="J_menuItem" href="profile.html">个人资料</a></li>
                             <li><a class="J_menuItem" href="contacts.html">联系我们</a></li>
-                            <li><a class="J_menuItem" href="mailbox.html">信箱</a></li>
+                            <li><a class="J_menuItem" href="mailbox.html" id="connect">信箱</a></li>
                             <li class="divider"></li>
                             <li><a href="${base}/logout">安全退出</a></li>
                         </ul>
@@ -78,7 +86,7 @@
 
             <#if menus??>
             <#else>
-                <script>location.href='${base}/login'</script>
+                <script>location.href = '${base}/login'</script>
             </#if>
 
 
@@ -90,11 +98,13 @@
                     </li>
                 <#else>
                     <li class="${url?starts_with(menu.href)?string('active open','')}">
-                        <a href="javascript:void(0);"><i class="${menu.icon}"></i><span class="title">${menu.name}</span>
+                        <a href="javascript:void(0);"><i class="${menu.icon}"></i><span
+                                class="title">${menu.name}</span>
                             <#if menu.href?starts_with(url)>
                                 <span class='selected'></span>
                             </#if>
-                            <span class="arrow ${menu.href?starts_with(url)?string('open','')}"></span> <span class="fa arrow">
+                            <span class="arrow ${menu.href?starts_with(url)?string('open','')}"></span> <span
+                                    class="fa arrow">
                         </a>
                         <ul class='nav nav-second-level'>
                             <#list menu.children as ch >
@@ -139,8 +149,10 @@
                                                                                    class="img-circle" src="">
                                     </a>
                                     <div class="media-body">
-                                        <small class="pull-right">1小时前</small> <strong>张三</strong>
-                                        这个需求半小时内完成 <br> <small class="text-muted">xxx</small>
+                                        <small class="pull-right">1小时前</small>
+                                        <strong>张三</strong>
+                                        这个需求半小时内完成 <br>
+                                        <small class="text-muted">xxx</small>
                                     </div>
                                 </div>
                             </li>
@@ -151,8 +163,10 @@
                                                                                    class="img-circle" src="">
                                     </a>
                                     <div class="media-body ">
-                                        <small class="pull-right text-navy">2小时前</small> <strong>李四</strong>
-                                        有客户要见你<br> <small class="text-muted">昨天</small>
+                                        <small class="pull-right text-navy">2小时前</small>
+                                        <strong>李四</strong>
+                                        有客户要见你<br>
+                                        <small class="text-muted">昨天</small>
                                     </div>
                                 </div>
                             </li>
@@ -164,7 +178,8 @@
                                     </a>
                                 </div>
                             </li>
-                        </ul></li>
+                        </ul>
+                    </li>
                     <li class="dropdown"><a class="dropdown-toggle count-info"
                                             data-toggle="dropdown" href="#"> <i class="fa fa-bell"></i> <span
                             class="label label-primary">8</span>
@@ -191,7 +206,8 @@
                                     </a>
                                 </div>
                             </li>
-                        </ul></li>
+                        </ul>
+                    </li>
                     <li class="hidden-xs"><a href="" class="J_menuItem"
                                              data-index="0"><i class="fa fa-qq"></i> 联系我</a></li>
                     <li class="dropdown hidden-xs"><a
@@ -241,7 +257,8 @@
                             <i class="fa fa-comments-o"></i> 主题设置
                         </h3>
                         <small><i class="fa fa-tim"></i>
-                            你可以从这里选择和预览主题的布局和样式，这些设置会被保存在本地，下次打开的时候会直接应用这些设置。</small>
+                            你可以从这里选择和预览主题的布局和样式，这些设置会被保存在本地，下次打开的时候会直接应用这些设置。
+                        </small>
                     </div>
                     <div class="skin-setttings">
                         <div class="title">主题设置</div>
@@ -332,10 +349,9 @@
 </div>
 
 
-
 <!--业务js  -->
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         //	$("#index001").click();
     });
     function devPeing() {
@@ -346,13 +362,13 @@
 <script type="text/javascript">
     console.log("===========================");
     console.log(window.location.href);
-    if(typeof console=="object"){
-       /* if($.browser.safari){
-            console.info("%c SB 的 life ","color: #0677c8; font-size: 18px; font-family: 'Helvetica-Neue', Helvetica, Arial, sans-serif;");
-        }else{*/
+    if (typeof console == "object") {
+        /* if($.browser.safari){
+             console.info("%c SB 的 life ","color: #0677c8; font-size: 18px; font-family: 'Helvetica-Neue', Helvetica, Arial, sans-serif;");
+         }else{*/
         console.info("SB 的 life ");
         console.info("系统博客地址 http://guan2ye.com");
-       /* }*/
+        /* }*/
     }
 
 </script>

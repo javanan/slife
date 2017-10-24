@@ -25,16 +25,7 @@ public abstract class BaseEntity<T extends Model> extends Model<T>  {
 
     protected Long id;
 
-    /**
-     * 自定义SQL（SQL标识，SQL内容）
-     */
-   /* protected Map<String, String> sqlMap;*/
 
-    /**
-     * 是否是新记录（默认：false），调用setIsNewRecord()设置新记录，使用自定义ID。
-     * 设置为true后强制执行插入语句，ID不会自动生成，需从手动传入。
-     */
-  /*  protected boolean isNewRecord = false;*/
 
     /**
      * 是否是新记录（默认：false），调用setIsNewRecord()设置新记录，使用自定义ID。
@@ -60,29 +51,7 @@ public abstract class BaseEntity<T extends Model> extends Model<T>  {
         this.id = id;
     }
 
-  /*  @JsonIgnore
-    @XmlTransient
-    public Map<String, String> getSqlMap() {
-        if (sqlMap == null) {
-            sqlMap = Maps.newHashMap();
-        }
-        return sqlMap;
-    }
 
-    public void setSqlMap(Map<String, String> sqlMap) {
-        this.sqlMap = sqlMap;
-    }*/
-
-    /**
-     * 插入之前执行方法，子类实现
-     * @param insertUserId
-     */
-    public abstract void preInsert(Long insertUserId);
-
-    /**
-     * 更新之前执行方法，子类实现
-     */
-    public abstract void preUpdate(Long updateUserId);
 
     /**
      * 是否是新记录（默认：false），调用setIsNewRecord()设置新记录，使用自定义ID。

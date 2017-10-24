@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.JsTree;
 import com.slife.base.vo.PCAjaxVO;
+import com.slife.constant.Global;
 import com.slife.dao.SysDictDao;
 import com.slife.entity.SysDict;
 import com.slife.service.ISysDictService;
@@ -24,11 +25,8 @@ import java.util.List;
  * Describe:
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true, rollbackFor = Exception.class)
 public class SysDictService extends BaseService<SysDictDao, SysDict> implements ISysDictService {
-
-
-
 
 
     /**
@@ -43,7 +41,7 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
      * @param invalid
      */
     @Override
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public boolean update(Long id, String dicKey, String dicValue, String type, String desc, String sort, String invalid) {
         SysDict sysDict = selectById(id);
         if (null == sysDict) {
@@ -59,7 +57,7 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
         }
         sysDict.setRemark(desc);
         sysDict.setInvalid(invalid);
-        this.baseMapper.updateById(sysDict);
+        updateById(sysDict);
         return true;
     }
 
@@ -93,7 +91,7 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
      * @param sort
      */
     @Override
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void insert(String dicKey, String dicValue, Long dicPid, String type, String desc, String
             sort, String invalid, String path) {
         SysDict sysDict = new SysDict();
@@ -113,33 +111,19 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
         }
         sysDict.setRemark(desc);
         sysDict.setInvalid(invalid);
-        this.baseMapper.insert(sysDict);
+        insert(sysDict);
 
-        if (sysDict.getParentId().equals(0L)) {
+        if (Global.TOP_TREE_NODE.equals(sysDict.getParentId())) {
             sysDict.setPath(sysDict.getId() + ".");
         } else {
 
-           /* SysDict supSysDict = sysDictDao.selectById(sysDict.getParentId());
-            sysDict.setPath(supSysDict.getPath() + sysDict.getId() + ".");*/
             sysDict.setPath(path + sysDict.getId() + ".");
         }
 
-        this.baseMapper.updateById(sysDict);
+        updateById(sysDict);
 
     }
 
-
-
-    /**
-     * 根据id 查询
-     *
-     * @param id
-     * @return
-     */
-    @Override
-    public SysDict selectById(Long id) {
-        return this.baseMapper.selectById(id);
-    }
 
     /**
      * 删除节点和子节点
@@ -152,11 +136,11 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
     public PCAjaxVO delete(Long id) {
         PCAjaxVO status = new PCAjaxVO(true);
         //是否为类，以及类下是否有引用
-        SysDict sysDict = this.baseMapper.selectById(id);
+        SysDict sysDict = selectById(id);
 
         if (sysDict != null) {
             //删除
-            this.baseMapper.delete(Condition.create().like("path", sysDict.getPath(), SqlLike.RIGHT));
+            delete(Condition.create().like("path", sysDict.getPath(), SqlLike.RIGHT));
 
         } else {
             status.setSuccess(false);

@@ -23,8 +23,10 @@
 
     <script>
         var url = "${url}",  action = "${action}";
+
     </script>
     <script src="${base}/js/slife/slife.js"></script>
+    <script src="${base}/js/slife/slifeform.js"></script>
 </head>
 
 <body class="gray-bg">
@@ -226,7 +228,7 @@
     var error = $('.alert-danger', form);
     form.validate({
         errorElement: 'span',
-        errorClass: 'help-block help-block-error',
+        errorClass: 'error',
         focusInvalid: true,
         messages: {
             loginName: {remote: "登陆名已经存在"}

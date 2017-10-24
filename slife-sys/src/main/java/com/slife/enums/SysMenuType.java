@@ -9,10 +9,8 @@ package com.slife.enums;
  */
 public enum SysMenuType {
     MENU,//菜单
-    URL, //ajax地址
+
     BUTTON,
-    MOBILE,
-    API,
-    MODULE,
-    FUNCTION
+
+    API
 }

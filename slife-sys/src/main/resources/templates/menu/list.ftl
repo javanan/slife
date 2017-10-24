@@ -57,10 +57,11 @@
 
                         </div>
                         <div class="portlet-body form" id="menu_edit_table">
-                            <form id="resourceForm" action="${base}/sys/menu/save" class="form-horizontal form-bordered"
+                            <form id="resourceForm" action="${base}/sys/menu/insert" class="form-horizontal form-bordered"
                                   method="POST">
                                 <input type="hidden" name="id"/>
-                                <input type="hidden" name="supId" value="0"/>
+                                <input type="hidden" name="parentId" value="0"/>
+                                <input type="hidden" name="path"/>
 
                                 <div class="form-body">
 
@@ -81,11 +82,11 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="col-md-2 control-label">菜单简称<span
+                                                <label class="col-md-2 control-label">权限标识<span
                                                         class="required">*</span></label>
 
                                                 <div class="col-md-10">
-                                                    <input type="text" class="form-control" name="code"
+                                                    <input type="text" class="form-control" name="permission"
                                                            readonly="true"/>
                                                 </div>
                                             </div>
@@ -102,7 +103,8 @@
                                                            class="form-control mess_text" placeholder="请选择系统图标">
                                                 </div>
                                             <span class="input-group-btn">
-                                                <button id="icon_add"  class="btn btn-default" onclick="showIconModul()" type="button"><i
+                                                <button id="icon_add" disabled="disabled"  class="btn btn-default"
+                                                        onclick="showIconModul()" type="button"><i
                                                         class="fa fa-check"></i>选择</button>
                                             </span>
                                             </div>
@@ -117,7 +119,7 @@
 
                                                 <div class="col-md-10">
                                                     <select name="type" class="form-control" disabled="disabled">
-                                                    <#list resourceTypes as rt>
+                                                    <#list menuTypes as rt>
                                                         <option value="${rt}">${rt}</option>
                                                     </#list>
                                                     </select>
@@ -129,11 +131,11 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="col-md-2 control-label">属性&nbsp;<span
+                                                <label class="col-md-2 control-label">URL&nbsp;<span
                                                         class="required">*</span></label>
 
                                                 <div class="col-md-10">
-                                                    <input type="text" class="form-control" name="url"
+                                                    <input type="text" class="form-control" name="href"
                                                            readonly="true"/>
                                                 </div>
                                             </div>
@@ -148,8 +150,7 @@
 
                                                 <div class="col-md-10">
                                                     <div class="input-icon right">
-                                                        <i class="fa"></i>
-                                                        <input type="text" class="form-control" name="seq"
+                                                        <input type="text" class="form-control" name="sort"
                                                                readonly="true"/>
                                                     </div>
                                                 </div>
@@ -160,14 +161,13 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="col-md-2 control-label">状态&nbsp;<span
-                                                        class="required">*</span></label>
+                                                <label class="col-md-2 control-label">状态&nbsp;<span class="required">*</span></label>
 
                                                 <div class="col-md-10">
                                                     <div class="input-icon right">
-                                                        <select name="active" class="form-control" disabled="disabled">
-                                                            <option value="ENABLE">启用</option>
-                                                            <option value="DISABLE">不启用</option>
+                                                        <select name="showFlag" class="form-control" disabled="disabled">
+                                                            <option value="Y">启用</option>
+                                                            <option value="N">不启用</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -194,7 +194,7 @@
         </div>
     </div>
 
-    <div id="icon_add_div" class="modal fade" tabindex="-1" aria-hidden="true">
+    <div id="icon_add_div" class="modal fade" tabindex="-1" aria-hidden="true" style="height: 1000px">
         <div class="modal-dialog" style="width:900px;">
             <div class="modal-content">
                 <div class="modal-header" style="border-bottom:none;">
@@ -281,7 +281,7 @@
                 "icons": true
             },
             "check_callback": true,
-            'data':${resourceTree}
+            'data':${menuTree}
         },
         "types": {
             "default": {
@@ -290,27 +290,38 @@
         },
         "plugins": ["wholerow"]
     }).on("select_node.jstree", function (node, selectd) {
-        rid = selectd.node.id;
+        menuid = selectd.node.id;
         text = selectd.node.text;
-        if (rid) {
+        if (menuid) {
             $.ajax({
-                url: '${base}/sys/menu/read/' + rid,
+                url: '${base}/sys/menu/select/' + menuid,
                 type: 'GET',
                 success: function (data) {
+                    form.resetForm();
+                    data=data.menu;
                     $('input[name=id]').val(data.id);
-                    $('input[name=supId]').val(data.supId);
+                    $('input[name=parentId]').val(data.parentId);
                     $('input[name=name]').val(data.name);
-                    $('input[name=code]').val(data.code);
+                    $('input[name=permission]').val(data.permission);
                     $('input[name=icon]').val(data.icon);
                     $('#iconImg').attr("class", data.icon)
+
+                    $('input[name=path]').val(data.path);
+
                     $("select[name=type] option[value='" + data.type + "']").attr("selected", "selected");
-                    $('input[name=url]').val(data.url);
-                    $('input[name=seq]').val(data.seq);
-                    $("select[name=active] option[value='" + data.active + "']").attr("selected", "selected");
+                    $("select[name=type] option[value!='" + data.type + "']").attr("selected", false);
+
+                    $('input[name=href]').val(data.href);
+                    $('input[name=sort]').val(data.sort);
+
+                    $("select[name=showFlag] option[value='" + data.showFlag + "']").attr("selected", "selected");
+                    $("select[name=showFlag] option[value!='" + data.showFlag + "']").attr("selected", false);
+
                     $('#resourceForm :input').each(function (a) {
                         $(this).attr('disabled', "disabled");
                         $(this).attr("readonly", "true");
                     });
+
                     $('.btn-children').enable();
                     $('.btn-edit').enable();
                     $('.btn-delete').enable();
@@ -318,10 +329,14 @@
             });
         }
     });
-    var error = $('.alert-danger', form);
+
+
+
+
     form.validate({
         errorElement: 'span',
-        errorClass: 'help-block help-block-error',
+        errorClass: 'error',
+        ignore: "",
         focusInvalid: false,
         rules: {
             name: {
@@ -329,62 +344,44 @@
                 maxlength: 30,
                 required: true
             },
-            code: {
+            permission: {
                 required: true
             },
             type: {
                 required: true
             },
-            url: {
+            href: {
                 required: true
             },
-            seq: {
+            sort: {
                 required: true,
                 number: true
             },
-            active: {
+            showFlag: {
+                required: true
+            },
+            icon: {
                 required: true
             }
-        },
-        invalidHandler: function (event, validator) {
-            error.show();
-            Metronic.scrollTo(error, -200);
-        },
-        errorPlacement: function (e, element) {
-            var icon = $(element).parent('.input-icon').children('i');
-            icon.removeClass('fa-check').addClass("fa-warning");
-            icon.attr("data-original-title", e.text()).tooltip({'container': 'body'});
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').removeClass("has-success").addClass('has-error');
-        },
-        unhighlight: function (element) {
-        },
-        success: function (label, element) {
-            var icon = $(element).parent('.input-icon').children('i');
-            $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-            icon.removeClass("fa-warning").addClass("fa-check");
-        },
-        submitHandler: function (form) {
-            error.hide();
-            form.submit();
         }
     });
+
     $('.btn-parent').click(function () {
         form.resetForm();
         $('input[name=id]').val("");
-        $('input[name=supId]').val(0);
+        $('input[name=parentId]').val(0);
         $('#resourceForm :input').each(function (a) {
             $(this).enable();
             $(this).attr("readonly", false);
         });
         $('.btn-edit').attr('disabled', "disabled");
         $('.btn-delete').attr('disabled', "disabled");
+
     });
     $('.btn-children').click(function () {
         form.resetForm();
         $('input[name=id]').val("");
-        $('input[name=supId]').val(rid);
+        $('input[name=parentId]').val(menuid);
         $('#resourceForm :input').each(function (a) {
             $(this).enable();
             $(this).attr("readonly", false);
@@ -396,6 +393,7 @@
         $('#resourceForm :input').each(function (a) {
             $(this).enable();
             $(this).attr("readonly", false);
+
         });
     });
     $('.btn-cancel').click(function () {
@@ -407,16 +405,26 @@
         $('div.alert-danger').css('display', 'none');
     });
     $('.btn-delete').click(function () {
-        if (rid)
-            if (confirm("确认要禁用此菜单及其下级所有资源吗？"))
+        if (menuid){
+            layer.confirm('确认要禁用此菜单及其下级所有资源吗？', {
+                btn: ['确定', '取消']
+            }, function () {
                 $.ajax({
-                    url: '${base}/sys/menu/disable/' + rid,
-                    type: 'POST',
-                    success: function () {
+                    url: '${base}/sys/menu/disable/' + menuid,
+                    type: "POST",
+
+                    success: function (r) {
                         window.location.reload();
                     }
                 });
+            })
+        }
+
     });
+
+
+
+
 
 
     /**获取所有的功能****/
@@ -425,7 +433,7 @@
     var totalPages = 0;
     //分页查询
     var queryByPage = function () {
-        start_request_load();
+       // start_request_load();
         $.ajax({
             dataType: "json",
             cache: true,
@@ -433,7 +441,7 @@
             url: "${base}/js/icon.json",
             traditional: true,
             success: function (data) {
-                stop_request_load();
+              //  stop_request_load();
                 var checkIcon = $("#_dlgCheckIcon").val();
                 data = data[checkIcon];
                 //删除所有子项
@@ -478,10 +486,10 @@
                         queryByPage(currentPage, pageCount);
                     }
                 }
-                $('#iconPager').bootstrapPaginator(options);
+
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                bootbox.alert("网络异常,数据不能成功返回");
+                layer.msg("网络异常,数据不能成功返回");
             }
         });
     }
@@ -490,15 +498,15 @@
     //翻页
     $("#gotoMPage").bind("click", function () {
         if ($("#toMPage").val() == null || "" == $("#toMPage").val()) {
-            bootbox.alert("请输入跳转页码");
+            layer.msg("请输入跳转页码");
             return;
         }
         var thisPage = parseInt($("#toMPage").val());
         if (!( thisPage > 0 && thisPage <= totalPages)) {
-            bootbox.alert("请输入正确跳转页码");
+            layer.msg("请输入正确跳转页码");
             return;
         }
-        $('#iconPager').bootstrapPaginator("show", thisPage);
+        //$('#iconPager').bootstrapPaginator("show", thisPage);
         currentPage = thisPage;
         queryByPage(currentPage, pageCount);
     });
@@ -516,6 +524,7 @@
         $('#icon').val(data);
         $('#icon_add_div').modal('hide');
     }
+
 
 </script>
 </body>

@@ -21,7 +21,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
@@ -169,8 +168,9 @@ public class SysUserController extends BaseController {
      * @return
      */
     @RequestMapping(value = "update/{id}")
-    public String update(@PathVariable("id") Long id, Model model) {
+    public String update(@PathVariable("id") Long id, Model model,HttpServletRequest request) {
         model.addAttribute("action", "update");
+        model.addAttribute("url", request.getContextPath() + "/sys/user/");
         SysUser sysUser = sysUserService.selectUserAllInfoById(id);
         sysUser.setPassword(null);
         logger.info(JSON.toJSONString(sysUser));
@@ -247,4 +247,6 @@ public class SysUserController extends BaseController {
         return ReturnDTOUtil.fail();
 
     }
+
+
 }

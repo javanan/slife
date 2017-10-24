@@ -35,6 +35,11 @@ public interface SysUserDao extends CrudDao<SysUser> {
     List<SysUser> selectSysUserBySysOfficeId(@Param("sysOfficeId") String sysOfficeId, @Param("delFlag") String delFlag);
 
 
+    /**
+     * 根据  LoginName 查询用户
+     * @param loginName
+     * @return
+     */
     SysUser selectByLoginName(@Param("loginName") String loginName);
 
 
@@ -44,5 +49,7 @@ public interface SysUserDao extends CrudDao<SysUser> {
      * @return
      */
     SysUser selectUserAllInfoById(@Param("id") Long id);
+
+
 
 }
