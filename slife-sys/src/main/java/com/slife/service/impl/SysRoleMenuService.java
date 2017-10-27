@@ -1,21 +1,21 @@
 package com.slife.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.slife.dao.SysUserRoleDao;
-import com.slife.entity.SysUserRole;
+import com.slife.dao.SysRoleMenuDao;
+import com.slife.entity.SysRoleMenu;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author chen
- * @date 2017/9/1
+ * @date 2017/10/26
  * <p>
  * Email 122741482@qq.com
  * <p>
- * Describe: 系统用户角色中间表
+ * Describe:
  */
 @Service
 @Transactional(readOnly = true, rollbackFor = Exception.class)
-public class SysUserRoleService extends ServiceImpl<SysUserRoleDao, SysUserRole> {
+public class SysRoleMenuService  extends ServiceImpl<SysRoleMenuDao, SysRoleMenu> {
 }

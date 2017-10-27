@@ -57,7 +57,7 @@
 
                         </div>
                         <div class="portlet-body form" id="menu_edit_table">
-                            <form id="resourceForm" action="${base}/sys/menu/insert" class="form-horizontal form-bordered"
+                            <form id="menuForm" action="${base}/sys/menu/insert" class="form-horizontal form-bordered"
                                   method="POST">
                                 <input type="hidden" name="id"/>
                                 <input type="hidden" name="parentId" value="0"/>
@@ -271,7 +271,7 @@
 <script type="text/javascript">
 
 
-    var form = $('#resourceForm'), rid, text;
+    var form = $('#menuForm'), menuid, text;
     $("#resTree").jstree({
         "core": {
             "animation": 0,
@@ -317,7 +317,7 @@
                     $("select[name=showFlag] option[value='" + data.showFlag + "']").attr("selected", "selected");
                     $("select[name=showFlag] option[value!='" + data.showFlag + "']").attr("selected", false);
 
-                    $('#resourceForm :input').each(function (a) {
+                    $('#menuForm :input').each(function (a) {
                         $(this).attr('disabled', "disabled");
                         $(this).attr("readonly", "true");
                     });
@@ -325,6 +325,8 @@
                     $('.btn-children').enable();
                     $('.btn-edit').enable();
                     $('.btn-delete').enable();
+
+
                 }
             });
         }
@@ -370,7 +372,7 @@
         form.resetForm();
         $('input[name=id]').val("");
         $('input[name=parentId]').val(0);
-        $('#resourceForm :input').each(function (a) {
+        $('#menuForm :input').each(function (a) {
             $(this).enable();
             $(this).attr("readonly", false);
         });
@@ -382,7 +384,7 @@
         form.resetForm();
         $('input[name=id]').val("");
         $('input[name=parentId]').val(menuid);
-        $('#resourceForm :input').each(function (a) {
+        $('#menuForm :input').each(function (a) {
             $(this).enable();
             $(this).attr("readonly", false);
         });
@@ -390,14 +392,14 @@
         $('.btn-delete').attr('disabled', "disabled");
     });
     $('.btn-edit').click(function () {
-        $('#resourceForm :input').each(function (a) {
+        $('#menuForm :input').each(function (a) {
             $(this).enable();
             $(this).attr("readonly", false);
 
         });
     });
     $('.btn-cancel').click(function () {
-        $('#resourceForm :input').each(function (a) {
+        $('#menuForm :input').each(function (a) {
             $(this).attr('disabled', "disabled");
             $(this).attr("readonly", "true");
         });

@@ -167,7 +167,7 @@ public class SysUserController extends BaseController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "update/{id}")
+    @GetMapping(value = "update/{id}")
     public String update(@PathVariable("id") Long id, Model model,HttpServletRequest request) {
         model.addAttribute("action", "update");
         model.addAttribute("url", request.getContextPath() + "/sys/user/");

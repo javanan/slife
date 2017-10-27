@@ -79,15 +79,7 @@ public class DruidAutoConfiguration {
     }
 
 
-    @Bean(name = "writeDataSource1")
-    @Primary
-    // @ConfigurationProperties(prefix = "writedatasource")
-    public DataSource writeDataSource() {
-        logger.info("-------------------- writeDataSource init ---------------------");
-        // return DataSourceBuilder.create().type(dataSourceType).build();
 
-        return dataSource(writeProperties);
-    }
 
     /**
      * 有多少个从库就要配置多少个
@@ -98,7 +90,6 @@ public class DruidAutoConfiguration {
     // @ConfigurationProperties(prefix = "readdatasource01")
     public DataSource readDataSourceOne() {
         logger.info("-------------------- readDataSourceOne init ---------------------");
-        // DataSource dataSource= DataSourceBuilder.create().type(dataSourceType).build();
         return dataSource(readProperties1);
     }
 
@@ -106,7 +97,6 @@ public class DruidAutoConfiguration {
     // @ConfigurationProperties(prefix = "readdatasource02")
     public DataSource readDataSourceTwo() {
         logger.info("-------------------- readDataSourceTwo init ---------------------");
-        //  return DataSourceBuilder.create().type(dataSourceType).build();
         return dataSource(readProperties2);
     }
 
@@ -116,5 +106,12 @@ public class DruidAutoConfiguration {
         dataSources.add(readDataSourceOne());
         dataSources.add(readDataSourceTwo());
         return dataSources;
+    }
+
+    @Bean(name = "writeDataSource1")
+    @Primary
+    public DataSource writeDataSource() {
+        logger.info("-------------------- writeDataSource init ---------------------");
+        return dataSource(writeProperties);
     }
 }

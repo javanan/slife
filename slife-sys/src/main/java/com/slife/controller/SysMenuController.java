@@ -32,8 +32,7 @@ import java.util.Map;
 @RequestMapping(value = "/sys/menu")
 public class SysMenuController extends BaseController{
 
-    @Autowired
-    private SysRoleService sysRoleService;
+
     @Autowired
     private ISysMenuService sysMenuService;
 
@@ -93,6 +92,12 @@ public class SysMenuController extends BaseController{
         return "redirect:/sys/menu";
     }
 
+
+    /**
+     * 设置为不可用
+     * @param id
+     * @return
+     */
     @PostMapping(value="disable/{id}")
     @ResponseBody
     public ReturnDTO disable(@PathVariable("id") Long id){

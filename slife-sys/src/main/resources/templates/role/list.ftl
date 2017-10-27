@@ -24,7 +24,7 @@
                         <input type="text" class="form-filter input-sm _search" name="search_like_name">
                     </label>
                     <label style="margin-left: 10px;">
-                        角色代码：
+                        角色编码：
                         <input type="text" class="form-filter input-sm _search" name="search_like_code">
                     </label>
                     <label style="margin-left: 10px;">
@@ -43,7 +43,7 @@
                         <button type="button" class="btn  btn-danger" onclick="batch_remove()">
                             <i class="fa fa-trash" aria-hidden="true"></i>删除
                         </button>
-                        <button  type="button" class="btn  btn-info" onclick="add()">
+                        <button  type="button" class="btn  btn-info" onclick="dt_insert()">
                             <i class="fa fa-plus-square" aria-hidden="true"></i>添加
                         </button>
                     </label>
@@ -87,7 +87,7 @@
             },
             {
                 field: 'code',
-                title: '代码'
+                title: '编码'
             },
 
             {

@@ -176,6 +176,9 @@
 
 <script type="text/javascript">
 
+    function  cusFunction() {
+        console.info("提交之前，最后执行自定义的函数");
+    }
 
     /**
      * 错误图片的默认处理

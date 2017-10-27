@@ -90,12 +90,10 @@ public class MybatisPlusConfig {
 	@Bean
 	public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean() {
 		MybatisSqlSessionFactoryBean mybatisPlus = new MybatisSqlSessionFactoryBean();
-		//mybatisPlus.setDataSource(dataSource);
 
 		mybatisPlus.setDataSource(roundRobinDataSouceProxy());
-
-
 		mybatisPlus.setVfs(SpringBootVFS.class);
+
 		if (StringUtils.hasText(this.properties.getConfigLocation())) {
 			mybatisPlus.setConfigLocation(this.resourceLoader.getResource(this.properties.getConfigLocation()));
 		}
@@ -140,10 +138,10 @@ public class MybatisPlusConfig {
 
 		BlifeAbstractRoutingDataSource proxy = new BlifeAbstractRoutingDataSource(size);
 		Map<Object, Object> targetDataSources = new HashMap<Object, Object>();
-		// DataSource writeDataSource = SpringContextHolder.getBean("writeDataSource");
+
 		// 写
 		targetDataSources.put(DataSourceType.write.getType(),writeDataSource);
-		// targetDataSources.put(DataSourceType.read.getType(),readDataSource);
+
 		//多个读数据库时
 		for (int i = 0; i < size; i++) {
 			targetDataSources.put(i, readDataSources.get(i));

@@ -2,35 +2,91 @@ package com.slife.service.impl;
 
 import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.toolkit.ArrayUtils;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.DataTable;
+import com.slife.base.vo.JsTree;
+import com.slife.base.vo.JsTreeState;
 import com.slife.constant.Global;
 import com.slife.dao.SysRoleDao;
+import com.slife.entity.SysMenu;
 import com.slife.entity.SysRole;
+import com.slife.entity.SysRoleMenu;
 import com.slife.entity.SysUserRole;
 import com.slife.vo.SysRoleVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Created by chen on 2017/4/24.
+ * @author chen
+ * @date 2017/4/24
  * <p>
  * Email 122741482@qq.com
  * <p>
  * Describe: sys 角色 服务
  */
 @Service
-@Transactional(readOnly = true)
+@Transactional(readOnly = true, rollbackFor = Exception.class)
 public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
 
     @Autowired
     private SysUserRoleService sysUserRoleService;
+    @Autowired
+    private SysRoleMenuService sysRoleMenuService;
+    @Autowired
+    private SysMenuService sysMenuService;
+
+    @Autowired
+    private SysRoleDao sysRoleDao;
+
+    /**
+     * 获取角色选中的菜单树
+     *
+     * @param roleId
+     * @return
+     */
+    public List<JsTree> selectMenuTreeHasSelectDis(Long roleId,Boolean disable) {
+
+        List<SysRoleMenu> sysRoleMenus = sysRoleMenuService.selectList(Condition.create().eq("sys_role_id", roleId));
+
+        Map<Long, Long> map = Maps.newHashMap();
+        sysRoleMenus.stream().parallel().forEach(sysRoleMenu -> map.put(sysRoleMenu.getSysMenuId(), sysRoleMenu.getSysMenuId()));
+
+        List<SysMenu> list =  sysMenuService.selectList(null);
+
+        List<JsTree> jts = list.stream().parallel().map(sysMenu -> {
+            JsTree jt = new JsTree();
+            jt.setId(sysMenu.getId().toString());
+            jt.setParent(sysMenu.getParentId() == null ? "#" : (sysMenu.getParentId().compareTo(0L) > 0 ? sysMenu.getParentId()
+                    .toString() : "#"));
+            jt.setText(sysMenu.getName());
+            JsTreeState jtState = new JsTreeState();
+            if (disable){
+                jtState.setDisabled(disable);
+            }
+
+            //一级节点除了主页,都是未选中状态
+            if ((sysMenu.getParentId() == null || 0L == sysMenu.getParentId()) && !"/index".equalsIgnoreCase(sysMenu.getHref())) {
+                jtState.setSelected(false);
+            } else {
+                jtState.setSelected(map.get(sysMenu.getId()) != null);
+            }
+            jt.setState(jtState);
+            return jt;
+        }).collect(Collectors.toList());
+
+        return jts;
+    }
 
     /**
      * 获取用户的角色和菜单
@@ -95,25 +151,62 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
      * @param userId
      * @param ids
      */
-    @Transactional(readOnly = false)
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void insertSysRole(Long userId, Long[] ids) {
 
         //删除现有的用户角色
         sysUserRoleService.delete(Condition.create().eq("sys_user_id", userId));
         if (null != ids && ids.length > 0) {
-
-  /*          List<SysUserRole> sysUserRoles = new ArrayList<SysUserRole>();
-            for (Long roleId : ids) {
-                sysUserRoles.add(new SysUserRole(userId, roleId));
-            }*/
-
-            List<SysUserRole> sysUserRoles =Arrays.stream(ids).parallel().map(roleId->{
-                return new  SysUserRole(userId, roleId);
+            List<SysUserRole> sysUserRoles = Arrays.stream(ids).parallel().map(roleId -> {
+                return new SysUserRole(userId, roleId);
             }).collect(Collectors.toList());
-
-
             //保存用户角色
             sysUserRoleService.insertBatch(sysUserRoles);
         }
     }
+
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    public void tf() {
+        SysRole s=new SysRole();
+        s.setName("ddddd");
+        this.baseMapper.insert(s);
+        double d=1/0;
+    }
+
+    /**
+     * 保存角色和对应的菜单
+     *
+     * @param sysRole
+     * @param menuIds
+     */
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    public void insertSysRole(SysRole sysRole, Long[] menuIds) {
+
+        insertOrUpdate(sysRole);
+        Long roleId = sysRole.getId();
+        //删除现有的 角色 菜单
+        sysRoleMenuService.delete(Condition.create().eq("sys_role_id", roleId));
+        if (null != menuIds && menuIds.length > 0) {
+            List<SysRoleMenu> sysRoleMenu = Arrays.stream(menuIds).parallel().map(menuId -> {
+                return new SysRoleMenu(menuId, roleId);
+            }).collect(Collectors.toList());
+            //角色关联的菜单
+            sysRoleMenuService.insertBatch(sysRoleMenu);
+        }
+    }
+
+    /**
+     * 检测角色编码是否存在
+     *
+     * @param code
+     * @param id
+     * @return
+     */
+    public Boolean checkRoleCode(String code, Long id) {
+        SysRole sysRole = selectOne(Condition.create().eq("code", code));
+        return sysRole == null || !id.equals(0L) && sysRole.getId().equals(id);
+    }
+
+
+
 }

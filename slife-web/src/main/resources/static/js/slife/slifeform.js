@@ -7,7 +7,7 @@ $.validator.setDefaults({
  * 提交表单
  */
 function saveForm() {
-
+    cusFunction();
     $.ajax({
         cache: true,
         type: "POST",

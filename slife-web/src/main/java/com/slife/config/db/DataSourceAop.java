@@ -24,7 +24,8 @@ public class DataSourceAop {
         logger.info("dataSource切换到：Read");
     }
 
-    @Before("execution(* com.slife.dao..*.insert*(..)) || execution(* com.slife.dao..*.update*(..))")
+    @Before("execution(* com.slife.dao..*.insert**(..)) || execution(* com.slife.dao..*.update*(..)) || execution(* " +
+            "com.slife.dao..*.delete*(..))")
     public void setWriteDataSourceType() {
         DataSourceContextHolder.write();
         logger.info("dataSource切换到：write");
