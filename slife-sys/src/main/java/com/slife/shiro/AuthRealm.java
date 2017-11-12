@@ -69,7 +69,6 @@ public class AuthRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String loginName=((UsernamePasswordToken) token).getUsername();
         ISysUserService sysUserService = ApplicationContextRegister.getBean(ISysUserService.class);
-
         SysUser sysUser = sysUserService.getByLoginName(loginName);
         if (sysUser != null) {
             logger.info(sysUser.getName()+"登录");
