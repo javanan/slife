@@ -1,7 +1,7 @@
 package com.slife.controller;
 
 import com.slife.base.controller.BaseController;
-import com.slife.service.impl.SysUserService;
+import com.slife.service.ISysUserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SignController extends BaseController{
 
     @Autowired
-    private SysUserService sysUserService;
+    private ISysUserService sysUserService;
 
 
     /**

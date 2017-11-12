@@ -8,7 +8,6 @@ package com.slife.config.shiro;
  * Describe:
  */
 
-
 import com.slife.shiro.AuthRealm;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
@@ -32,15 +31,16 @@ import java.util.LinkedHashMap;
  * @author Administrator
  *
  */
+
 @Configuration
-@Order(1)
-public class ShiroConfiguration {
+public class ShiroConfig {
 
 
-    Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
+   private Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
 
-    @Bean(name="shiroFilter")
-    public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") SecurityManager manager) {
+    @Bean
+    public ShiroFilterFactoryBean shiroFilter(@Qualifier("authRealm")AuthRealm authRealm) {
+        SecurityManager manager= securityManager(authRealm);
         ShiroFilterFactoryBean bean=new ShiroFilterFactoryBean();
         bean.setSecurityManager(manager);
         //配置登录的url和登录成功的url
@@ -69,9 +69,18 @@ public class ShiroConfiguration {
         bean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return bean;
     }
+
+/*    @Bean
+    public AuthRealm authRealm(){
+        AuthRealm authRealm=new AuthRealm();
+        authRealm.setCacheManager(getEhCacheManager());
+        return authRealm;
+    }*/
+
     //配置核心安全事务管理器
-    @Bean(name="securityManager")
-    public SecurityManager securityManager(@Qualifier("authRealm") AuthRealm authRealm) {
+    @Bean
+    public SecurityManager securityManager(@Qualifier("authRealm")AuthRealm authRealm) {
+
        logger.info("--------------shiro已经加载----------------");
         DefaultWebSecurityManager manager=new DefaultWebSecurityManager();
         // 设置realm.
@@ -79,7 +88,7 @@ public class ShiroConfiguration {
 
         //注入缓存管理器;
         //注意:开发时请先关闭，如不关闭热启动会报错
-        manager.setCacheManager(ehCacheManager());//这个如果执行多次，也是同样的一个对象;
+        manager.setCacheManager(getEhCacheManager());//这个如果执行多次，也是同样的一个对象;
         //注入记住我管理器;
         manager.setRememberMeManager(rememberMeManager());
 
@@ -95,12 +104,13 @@ public class ShiroConfiguration {
      *
      * @return
      */
-   @Bean(name ="ehCacheManager" )
-    public EhCacheManager ehCacheManager(){
-       logger.info("--------------ehCacheManager init---------------");
+
+    @Bean
+    public EhCacheManager getEhCacheManager() {
+        logger.info("--------------ehCacheManager init---------------");
         EhCacheManager cacheManager = new EhCacheManager();
         cacheManager.setCacheManagerConfigFile("classpath:cache/ehcache-shiro.xml");
-       logger.info("--------------ehCacheManager init---------------"+cacheManager);
+        logger.info("--------------ehCacheManager init---------------"+cacheManager);
         return cacheManager;
     }
 
@@ -108,9 +118,8 @@ public class ShiroConfiguration {
      * cookie对象;
      * @return
      * */
-    @Bean(name = "rememberMeCookie")
+    @Bean
     public SimpleCookie rememberMeCookie(){
-        //System.out.println("ShiroConfiguration.rememberMeCookie()");
         //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
         //<!-- 记住我cookie生效时间30天 ,单位秒;-->
@@ -123,9 +132,8 @@ public class ShiroConfiguration {
      * cookie管理对象;
      * @return
      */
-   @Bean(name = "rememberMeManager")
+    @Bean
     public CookieRememberMeManager rememberMeManager(){
-        //System.out.println("ShiroConfiguration.rememberMeManager()");
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
         cookieRememberMeManager.setCookie(rememberMeCookie());
 
@@ -154,7 +162,8 @@ public class ShiroConfiguration {
         return creator;
     }
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager") SecurityManager manager) {
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("authRealm")AuthRealm authRealm) {
+        SecurityManager manager= securityManager(authRealm);
         AuthorizationAttributeSourceAdvisor advisor=new AuthorizationAttributeSourceAdvisor();
         advisor.setSecurityManager(manager);
         return advisor;

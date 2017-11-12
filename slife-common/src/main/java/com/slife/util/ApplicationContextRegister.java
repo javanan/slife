@@ -9,14 +9,16 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by chen on 2017/9/4.
+ *
+ * @author chen
+ * @date 2017/9/4
  * <p>
  * Email 122741482@qq.com
  * <p>
  * Describe:
  */
 @Component
-@Lazy(false)
+//@Lazy(false)
 public class ApplicationContextRegister implements ApplicationContextAware {
     private static Logger logger = LoggerFactory.getLogger(ApplicationContextRegister.class);
     private static ApplicationContext APPLICATION_CONTEXT;

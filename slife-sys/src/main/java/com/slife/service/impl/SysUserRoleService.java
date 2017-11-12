@@ -1,8 +1,9 @@
 package com.slife.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.slife.base.service.impl.BaseService;
 import com.slife.dao.SysUserRoleDao;
 import com.slife.entity.SysUserRole;
+import com.slife.service.ISysUserRoleService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,5 +18,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true, rollbackFor = Exception.class)
-public class SysUserRoleService extends ServiceImpl<SysUserRoleDao, SysUserRole> {
+public class SysUserRoleService extends BaseService<SysUserRoleDao, SysUserRole> implements ISysUserRoleService {
 }

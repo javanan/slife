@@ -2,8 +2,6 @@ package com.slife.service.impl;
 
 import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.DataTable;
 import com.slife.base.vo.JsTree;
@@ -14,17 +12,18 @@ import com.slife.entity.SysMenu;
 import com.slife.entity.SysRole;
 import com.slife.entity.SysRoleMenu;
 import com.slife.entity.SysUserRole;
+import com.slife.service.ISysMenuService;
+import com.slife.service.ISysRoleMenuService;
+import com.slife.service.ISysRoleService;
+import com.slife.service.ISysUserRoleService;
 import com.slife.vo.SysRoleVO;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -37,17 +36,31 @@ import java.util.stream.Collectors;
  */
 @Service
 @Transactional(readOnly = true, rollbackFor = Exception.class)
-public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
+public class SysRoleService extends BaseService<SysRoleDao, SysRole>  implements ISysRoleService {
 
     @Autowired
-    private SysUserRoleService sysUserRoleService;
+    private ISysUserRoleService sysUserRoleService;
     @Autowired
-    private SysRoleMenuService sysRoleMenuService;
+    private ISysRoleMenuService sysRoleMenuService;
     @Autowired
-    private SysMenuService sysMenuService;
+    private ISysMenuService sysMenuService;
 
     @Autowired
-    private SysRoleDao sysRoleDao;
+    private  SysRoleDao sysRoleDao;
+
+    @Override
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    public void tf() {
+        logger.info("----------------------------------------------------------");
+        System.out.println(sysRoleDao);
+        System.out.println(AopUtils.isAopProxy(sysRoleDao));
+        System.out.println(AopUtils.isCglibProxy(sysRoleDao));
+        System.out.println(AopUtils.isJdkDynamicProxy(sysRoleDao));
+        SysRole s=new SysRole();
+        s.setName("ddddd");
+        insert(s);
+        double d=1/0;
+    }
 
     /**
      * 获取角色选中的菜单树
@@ -55,11 +68,12 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
      * @param roleId
      * @return
      */
+    @Override
     public List<JsTree> selectMenuTreeHasSelectDis(Long roleId,Boolean disable) {
 
         List<SysRoleMenu> sysRoleMenus = sysRoleMenuService.selectList(Condition.create().eq("sys_role_id", roleId));
 
-        Map<Long, Long> map = Maps.newHashMap();
+        Map<Long, Long> map = new HashMap<>();
         sysRoleMenus.stream().parallel().forEach(sysRoleMenu -> map.put(sysRoleMenu.getSysMenuId(), sysRoleMenu.getSysMenuId()));
 
         List<SysMenu> list =  sysMenuService.selectList(null);
@@ -94,6 +108,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
      * @param userId
      * @return
      */
+    @Override
     public List<SysRoleVO> selectRoleByUserId(Long userId) {
         return this.baseMapper.selectRoleByUserId(userId);
     }
@@ -103,6 +118,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
      *
      * @return
      */
+    @Override
     public List<SysRole> ListSysRoleUseable() {
         return selectList(Condition.create().eq("del_flag", Global.DEL_FLAG_NORMAL).eq("useable", Global.YES));
     }
@@ -114,6 +130,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
      * @param dt
      * @return
      */
+    @Override
     public DataTable<SysRole> PageSysRole(Map<String, Object> searchParams, DataTable<SysRole> dt) {
         Condition cnd = Condition.create();
 
@@ -132,6 +149,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
      * @param userId
      * @return
      */
+    @Override
     public List<SysRole> listSysRoleByUser(Long userId) {
         List<SysUserRole> sysUserRoles = sysUserRoleService.selectList(Condition.create().eq("sys_user_id", userId));
 
@@ -151,6 +169,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
      * @param userId
      * @param ids
      */
+    @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void insertSysRole(Long userId, Long[] ids) {
 
@@ -165,13 +184,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
         }
     }
 
-    @Transactional(readOnly = false, rollbackFor = Exception.class)
-    public void tf() {
-        SysRole s=new SysRole();
-        s.setName("ddddd");
-        this.baseMapper.insert(s);
-        double d=1/0;
-    }
+
 
     /**
      * 保存角色和对应的菜单
@@ -179,6 +192,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
      * @param sysRole
      * @param menuIds
      */
+    @Override
     @Transactional(readOnly = false, rollbackFor = Exception.class)
     public void insertSysRole(SysRole sysRole, Long[] menuIds) {
 
@@ -202,6 +216,7 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole> {
      * @param id
      * @return
      */
+    @Override
     public Boolean checkRoleCode(String code, Long id) {
         SysRole sysRole = selectOne(Condition.create().eq("code", code));
         return sysRole == null || !id.equals(0L) && sysRole.getId().equals(id);

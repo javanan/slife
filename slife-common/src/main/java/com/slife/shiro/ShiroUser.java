@@ -1,8 +1,9 @@
 package com.slife.shiro;
 
-import com.google.common.base.Objects;
+
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * 自定义Authentication对象，使得Subject除了携带用户的登录名外还可以携带更多信息.

@@ -24,7 +24,7 @@
         <commons-lang3.version>3.4</commons-lang3.version>
         <slife.version>1.0-SNAPSHOT</slife.version>
         <swagger.version>2.7.0</swagger.version>
-        <druid.version>1.0.18</druid.version>
+        <druid.version>1.1.1</druid.version>
         <mybatis-plus.version>2.1.0</mybatis-plus.version>
         <activiti.version>5.22.0</activiti.version>
         <commons-codec.version>1.10</commons-codec.version>
@@ -32,6 +32,7 @@
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <fastjson.version>1.2.36</fastjson.version>
         <sitemesh.version>3.0.1</sitemesh.version>
+        <mybatisplus-spring-boot-starter.version>1.0.4</mybatisplus-spring-boot-starter.version>
     </properties>
 
     <!--系统模板-->
@@ -47,6 +48,7 @@
 
     <!--全局依赖-->
     <dependencies>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -56,6 +58,12 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${swagger.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -91,14 +99,10 @@
             <artifactId>shiro-ehcache</artifactId>
             <version>${shiro.version}</version>
         </dependency>
-
+        <!-- ehchache -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -113,32 +117,46 @@
             <artifactId>mybatis-plus</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatisplus-spring-boot-starter</artifactId>
+            <version>${mybatisplus-spring-boot-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
         </dependency>
-        <!-- spring boot jsp -->
+
         <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId>
-            <scope>provided</scope>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-        </dependency>
-        <!--
-        <dependency>
-            <groupId>com.didispace</groupId>
-            <artifactId>spring-boot-starter-swagger</artifactId>
-            <version>1.1.0.RELEASE</version>
-         </dependency>
-          -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
 
     </dependencies>
 
@@ -228,27 +246,25 @@
                 <artifactId>activiti-spring-boot-starter-basic</artifactId>
                 <version>${activiti.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.activiti</groupId>
                 <artifactId>activiti-spring-boot-starter-rest-api</artifactId>
                 <version>${activiti.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.activiti</groupId>
                 <artifactId>activiti-spring-boot-starter-actuator</artifactId>
                 <version>${activiti.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.sitemesh</groupId>
                 <artifactId>sitemesh</artifactId>
                 <version>${sitemesh.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjweaver</artifactId>
-                <version>${aspectjweaver.version}</version>
-            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -269,7 +285,12 @@
                     <useIncrementalCompilation>false</useIncrementalCompilation>
                 </configuration>
             </plugin>
+
+
+
         </plugins>
     </build>
+
+
 
 </project>

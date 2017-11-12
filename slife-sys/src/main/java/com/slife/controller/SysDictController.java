@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.slife.base.controller.BaseController;
 import com.slife.base.vo.PCAjaxVO;
 import com.slife.service.ISysDictService;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,9 +34,14 @@ public class SysDictController extends BaseController {
      */
     @GetMapping(value = "")
     public String list(Model model) {
+        System.out.println(sysDictService);
+        System.out.println(AopUtils.isAopProxy(sysDictService));
+        System.out.println(AopUtils.isCglibProxy(sysDictService));
+        System.out.println(AopUtils.isJdkDynamicProxy(sysDictService));
         model.addAttribute("dictTrees", JSON.toJSON(sysDictService.getDictTree()).toString());
         return "dict/list";
     }
+
 
 
     /**

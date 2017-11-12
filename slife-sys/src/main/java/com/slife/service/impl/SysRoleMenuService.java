@@ -1,8 +1,9 @@
 package com.slife.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.slife.base.service.impl.BaseService;
 import com.slife.dao.SysRoleMenuDao;
 import com.slife.entity.SysRoleMenu;
+import com.slife.service.ISysRoleMenuService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,5 +18,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(readOnly = true, rollbackFor = Exception.class)
-public class SysRoleMenuService  extends ServiceImpl<SysRoleMenuDao, SysRoleMenu> {
+public class SysRoleMenuService  extends BaseService<SysRoleMenuDao, SysRoleMenu> implements ISysRoleMenuService {
 }

@@ -244,6 +244,22 @@
             active: {
                 required: true
             }
+        },
+        invalidHandler:function(event,validator){
+            error.show();
+        },
+        highlight:function(element){
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight:function(element){
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        success:function(label){
+            label.closest('.form-group').removeClass('has-error');
+        },
+        submitHandler:function(form){
+            error.hide();
+            form.submit();
         }
     });
     $('.btn-parent').click(function () {

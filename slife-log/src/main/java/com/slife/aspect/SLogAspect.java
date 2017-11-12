@@ -1,7 +1,7 @@
 package com.slife.aspect;
 
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+
 import com.slife.util.IPUtils;
 import com.slife.util.ServletUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.*;
 
@@ -40,7 +40,6 @@ public class SLogAspect {
         // 执行时长(毫秒)
         long time = System.currentTimeMillis() - beginTime;
 
-
         // 获取request
         HttpServletRequest request = ServletUtils.getHttpServletRequest();
         //获取请求的ip
@@ -48,7 +47,6 @@ public class SLogAspect {
         SaveLogTask saveLogTask = new SaveLogTask(point, time, ip);
         //保存日志到数据库
         executor.execute(saveLogTask);
-        //executor.shutdown();
 
         return result;
     }

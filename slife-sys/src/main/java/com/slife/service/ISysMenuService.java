@@ -1,6 +1,7 @@
 package com.slife.service;
 
 import com.baomidou.mybatisplus.service.IService;
+import com.slife.base.service.IBaseService;
 import com.slife.base.vo.JsTree;
 import com.slife.entity.SysMenu;
 
@@ -15,7 +16,8 @@ import java.util.List;
  * <p>
  * Describe:
  */
-public interface ISysMenuService extends IService<SysMenu> {
+public interface ISysMenuService extends IBaseService<SysMenu> {
+
      List<SysMenu> selectMenusByUserId(Long userId);
 
      List<SysMenu> CaseMenu(Long userId);

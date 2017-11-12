@@ -1,17 +1,18 @@
 package com.slife.base.service;
 
-import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.service.IService;
 import com.slife.base.vo.DataTable;
 
 /**
- * Created by chen on 2017/9/21.
+ *
+ * @author chen
+ * @date 2017/9/21
  * <p>
  * Email 122741482@qq.com
  * <p>
  * Describe:
  */
-public interface IBaseService<T> extends IService<T> {
+public interface IBaseService<T> extends IService<T>{
 
     /**
      * DateTable 分页查询

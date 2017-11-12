@@ -13,27 +13,19 @@ import org.sitemesh.config.ConfigurableSiteMeshFilter;
 public class WebSiteMeshFilter extends ConfigurableSiteMeshFilter {
 
     /** 需要装饰的访问路径 */
-    //@Value("${sitemesh.contentPath}")
+
     private String contentPath="/sys/user,/sys/menu,/sys/dict,/sys/role,/sys/,/index,/monitor/*,/404";
 
     /** 装饰器页面路径 */
-    //@Value("${sitemesh.decoratorPath}")
-  /*  private String decoratorPath="/assets/layouts/default.jsp";*/
+
     private String decoratorPath="/layouts";
 
     /** 不需要装饰的访问路径,多个之间用英文逗号分隔 */
-    //@Value("${sitemesh.excludedPaths}")
-/*    private String excludedPaths="/js*//**,/css*//**,/img*//**,/fonts*//**,/login,/layouts,/logout,/api,/f1*//**,/webjars*//**," +
-            "/v2*//**," +
-            "/swagger*//**,/swagger-ui.html,/sys*//**//*insert,/sys*//**//*detail";*/
+
     private String excludedPaths="";
 
     @Override
     protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
-        //程序写死
-        //builder.addDecoratorPath("/admin/*", "/admin/index").addExcludedPath("/admin/index").addExcludedPath("/plugin/*");
-
-
 
         // 通过配置文件
         if (contentPath == null) {

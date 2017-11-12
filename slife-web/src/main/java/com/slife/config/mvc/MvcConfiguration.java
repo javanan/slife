@@ -68,7 +68,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
+        /*FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         SerializeConfig serializeConfig = SerializeConfig.globalInstance;
         serializeConfig.put(BigInteger.class, ToStringSerializer.instance);
@@ -77,7 +77,15 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         fastJsonConfig.setSerializerFeatures(SerializerFeature.WriteMapNullValue);
         fastJsonConfig.setSerializeConfig(serializeConfig);
         fastConverter.setFastJsonConfig(fastJsonConfig);
-        converters.add(fastConverter);
+        converters.add(fastConverter);*/
+
+
+        FastJsonHttpMessageConverter fastJsonConverter = new FastJsonHttpMessageConverter();
+        FastJsonConfig fjc = new FastJsonConfig();
+        //1、序列化重点
+        fjc.setSerializerFeatures(SerializerFeature.BrowserCompatible);
+        fastJsonConverter.setFastJsonConfig(fjc);
+        converters.add(fastJsonConverter);
     }
 
 }

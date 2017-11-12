@@ -24,9 +24,6 @@
     </select>
 
 
-    <select id="selectByLoginName" resultType="sysUser">
-        <include refid="base_select"></include>	 WHERE a.login_name = #{loginName} AND
-    </select>
 
 
 

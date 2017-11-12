@@ -11,6 +11,7 @@ import java.util.Date;
 
 /**
  * mybatisplus自定义填充公共字段 ,即没有传的字段自动填充
+ * @author chen
  */
 @Component
 public class SysMetaObjectHandler extends MetaObjectHandler {
@@ -26,7 +27,6 @@ public class SysMetaObjectHandler extends MetaObjectHandler {
         Object updateDate = metaObject.getValue("updateDate");
         Object updateId = metaObject.getValue("updateId");
 
-        // TODO  获取当前登录用户
 
         if (null == createDate) {
             metaObject.setValue("createDate", new Date());

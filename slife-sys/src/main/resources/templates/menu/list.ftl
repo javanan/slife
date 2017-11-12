@@ -270,6 +270,7 @@
 <script type="text/javascript">
 
 
+
     var form = $('#menuForm'), menuid, text;
     $("#resTree").jstree({
         "core": {
@@ -296,7 +297,6 @@
                 url: '${base}/sys/menu/select/' + menuid,
                 type: 'GET',
                 success: function (data) {
-                    form.resetForm();
                     data=data.menu;
                     $('input[name=id]').val(data.id);
                     $('input[name=parentId]').val(data.parentId);
@@ -325,7 +325,6 @@
                     $('.btn-edit').enable();
                     $('.btn-delete').enable();
 
-
                 }
             });
         }
@@ -333,7 +332,7 @@
 
 
 
-
+    var error=$('.alert-danger',form);
     form.validate({
         errorElement: 'span',
         errorClass: 'error',
@@ -364,6 +363,22 @@
             icon: {
                 required: true
             }
+        },
+        invalidHandler:function(event,validator){
+            error.show();
+        },
+        highlight:function(element){
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight:function(element){
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        success:function(label){
+            label.closest('.form-group').removeClass('has-error');
+        },
+        submitHandler:function(form){
+            error.hide();
+            form.submit();
         }
     });
 

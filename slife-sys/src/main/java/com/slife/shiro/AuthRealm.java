@@ -1,15 +1,19 @@
 package com.slife.shiro;
 
 import com.slife.constant.Global;
+import com.slife.constant.Setting;
 import com.slife.entity.SysUser;
-import com.slife.service.impl.SysRoleService;
-import com.slife.service.impl.SysUserService;
+import com.slife.service.ISysRoleService;
+import com.slife.service.ISysUserService;
+import com.slife.util.ApplicationContextRegister;
 import com.slife.util.Encodes;
 import com.slife.vo.SysRoleVO;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -17,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
@@ -31,30 +36,28 @@ import javax.annotation.PostConstruct;
 @Component(value = "authRealm")
 public class AuthRealm extends AuthorizingRealm {
 
-    public static final String HASH_ALGORITHM = "SHA-1";
-    public static final int HASH_INTERATIONS = 1024;
-    public static final int SALT_SIZE = 8;
+
+
+/*    @Autowired
+    private ISysUserService sysUserService;
+    @Autowired
+    private ISysRoleService sysRoleService;*/
+
+    private  Logger logger= LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private SysUserService sysUserService;
-    @Autowired
-    private SysRoleService sysRoleService;
+    public void setCacheManager(EhCacheManager ehCacheManager) {
+        super.setCacheManager(ehCacheManager);
 
-    Logger logger= LoggerFactory.getLogger(getClass());
-/*
-    public AuthRealm(SysUserService sysUserService, SysRoleService sysRoleService) {
-        this.sysUserService = sysUserService;
-        this.sysRoleService = sysRoleService;
     }
-*/
 
     /**
      * 设定密码校验的Hash算法与迭代次数
      */
     @PostConstruct
     public void initCredentialsMatcher() {
-        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(HASH_ALGORITHM);
-        matcher.setHashIterations(HASH_INTERATIONS);
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(Setting.HASH_ALGORITHM);
+        matcher.setHashIterations(Setting.HASH_INTERATIONS);
         setCredentialsMatcher(matcher);
         logger.info("---------密码校验器  -matcher----------------");
     }
@@ -65,6 +68,8 @@ public class AuthRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String loginName=((UsernamePasswordToken) token).getUsername();
+        ISysUserService sysUserService = ApplicationContextRegister.getBean(ISysUserService.class);
+
         SysUser sysUser = sysUserService.getByLoginName(loginName);
         if (sysUser != null) {
             logger.info(sysUser.getName()+"登录");
@@ -89,6 +94,9 @@ public class AuthRealm extends AuthorizingRealm {
         logger.info("登录授权");
         ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+
+        ISysRoleService sysRoleService = ApplicationContextRegister.getBean(ISysRoleService.class);
+
         for (SysRoleVO sysRoleVO : sysRoleService.selectRoleByUserId(shiroUser.id)) {
             // 基于Role的权限信息
             info.addRole(sysRoleVO.getCode());

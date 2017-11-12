@@ -2,11 +2,12 @@ package com.slife.entity;
 
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.google.common.collect.Lists;
+
 import com.slife.base.entity.TreeEntity;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,7 +52,7 @@ public class SysMenu extends TreeEntity<SysMenu> implements Comparable<SysMenu> 
     private String sysCompanyId;
 
     @TableField(exist=false)
-    public List<SysMenu> children= Lists.newArrayList();
+    public List<SysMenu> children= new ArrayList();
 
     public List<SysMenu> getChildren() {
         return children;

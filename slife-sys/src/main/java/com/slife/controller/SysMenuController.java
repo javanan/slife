@@ -6,10 +6,9 @@ import com.slife.base.entity.ReturnDTO;
 import com.slife.entity.SysMenu;
 import com.slife.enums.SysMenuType;
 import com.slife.service.ISysMenuService;
-import com.slife.service.impl.SysRoleService;
 import com.slife.shiro.SlifeSysUser;
 import com.slife.util.ReturnDTOUtil;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,6 +58,15 @@ public class SysMenuController extends BaseController{
         model.addAttribute("menuTree", JSON.toJSONString(sysMenuService.getMenuTree()));
         model.addAttribute("menuTypes", SysMenuType.values());
 
+        System.out.println(this);
+        System.out.println(AopUtils.isAopProxy(this));
+        System.out.println(AopUtils.isCglibProxy(this));
+        System.out.println(AopUtils.isJdkDynamicProxy(this));
+
+        System.out.println(sysMenuService);
+        System.out.println(AopUtils.isAopProxy(sysMenuService));
+        System.out.println(AopUtils.isCglibProxy(sysMenuService));
+        System.out.println(AopUtils.isJdkDynamicProxy(sysMenuService));
         return "menu/list";
     }
 

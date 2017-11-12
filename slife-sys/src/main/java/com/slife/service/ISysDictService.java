@@ -1,5 +1,6 @@
 package com.slife.service;
 
+import com.baomidou.mybatisplus.service.IService;
 import com.slife.base.service.IBaseService;
 import com.slife.base.vo.JsTree;
 import com.slife.base.vo.PCAjaxVO;
@@ -8,7 +9,9 @@ import com.slife.entity.SysDict;
 import java.util.List;
 
 /**
- * Created by chen on 2017/9/21.
+ *
+ * @author chen
+ * @date 2017/9/21
  * <p>
  * Email 122741482@qq.com
  * <p>
@@ -23,6 +26,7 @@ public interface ISysDictService extends IBaseService<SysDict> {
     List<JsTree> getDictTree();
 
 
-
      PCAjaxVO delete(Long id);
+
+
 }

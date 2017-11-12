@@ -3,6 +3,7 @@ package com.slife.controller;
 import com.slife.base.controller.BaseController;
 import com.slife.service.ISysMenuService;
 import com.slife.shiro.SlifeSysUser;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

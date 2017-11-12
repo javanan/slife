@@ -6,13 +6,11 @@ import com.slife.base.controller.BaseController;
 import com.slife.base.entity.ReturnDTO;
 import com.slife.base.vo.DataTable;
 import com.slife.entity.SysRole;
-import com.slife.entity.SysUser;
 import com.slife.service.ISysMenuService;
-import com.slife.service.impl.SysRoleService;
+import com.slife.service.ISysRoleService;
 import com.slife.util.ReturnDTOUtil;
-import com.slife.util.ServletUtils;
 import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Map;
 
 /**
  * Created by chen on 2017/9/19.
@@ -34,10 +31,29 @@ import java.util.Map;
 @RequestMapping(value = "/sys/role")
 public class SysRoleController extends BaseController {
     @Autowired
-    private SysRoleService sysRoleService;
+    private ISysRoleService sysRoleService;
     @Autowired
     private ISysMenuService sysMenuService;
 
+
+    @PostMapping(value = "/tf")
+    @ResponseBody
+    public ReturnDTO tf() {
+        System.out.println("==================");
+        System.out.println(sysRoleService);
+        System.out.println(AopUtils.isAopProxy(sysRoleService));
+        System.out.println(AopUtils.isCglibProxy(sysRoleService));
+        System.out.println(AopUtils.isJdkDynamicProxy(sysRoleService));
+
+        System.out.println("==================");
+        System.out.println(this);
+        System.out.println(AopUtils.isAopProxy(this));
+        System.out.println(AopUtils.isCglibProxy(this));
+        System.out.println(AopUtils.isJdkDynamicProxy(this));
+        sysRoleService.tf();
+
+        return ReturnDTOUtil.success();
+    }
     /**
      * 进入系统角色列表
      *
@@ -144,10 +160,4 @@ public class SysRoleController extends BaseController {
     }
 
 
-    @PostMapping(value = "/tf")
-    @ResponseBody
-    public ReturnDTO tf() {
-        sysRoleService.tf();
-        return ReturnDTOUtil.success();
-    }
 }

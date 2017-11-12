@@ -2,8 +2,7 @@ package com.slife.service.impl;
 
 import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.Condition;
-import com.google.common.base.Strings;
-import com.google.common.collect.Lists;
+
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.JsTree;
 import com.slife.base.vo.PCAjaxVO;
@@ -11,14 +10,17 @@ import com.slife.constant.Global;
 import com.slife.dao.SysDictDao;
 import com.slife.entity.SysDict;
 import com.slife.service.ISysDictService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.assertj.core.util.Lists;
+import org.assertj.core.util.Strings;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 /**
- * Created by chen on 2017/8/9.
+ *
+ * @author chen
+ * @date 2017/8/9
  * <p>
  * Email 122741482@qq.com
  * <p>
@@ -27,6 +29,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true, rollbackFor = Exception.class)
 public class SysDictService extends BaseService<SysDictDao, SysDict> implements ISysDictService {
+
 
 
     /**
@@ -149,5 +152,6 @@ public class SysDictService extends BaseService<SysDictDao, SysDict> implements 
         status.setMessage("删除成功");
         return status;
     }
+
 
 }

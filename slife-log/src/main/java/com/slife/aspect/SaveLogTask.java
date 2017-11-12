@@ -17,7 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 /**
- * Created by chen on 2017/9/19.
+ *
+ * @author chen
+ * @date 2017/9/19
  * <p>
  * Email 122741482@qq.com
  * <p>
@@ -95,6 +97,8 @@ public class SaveLogTask implements Runnable {
         }
 
         slifeLog.setUseTime(time);
+System.out.println("-------------------------->>>>>>>>>>>>>>>>>>");
+        System.out.println(slifeLogDao);
 
         // 保存系统日志
         slifeLogDao.insert(slifeLog);

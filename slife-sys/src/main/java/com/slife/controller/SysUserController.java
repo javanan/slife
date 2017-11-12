@@ -8,14 +8,15 @@ import com.slife.base.vo.DataTable;
 import com.slife.entity.SysUser;
 import com.slife.enums.HttpCodeEnum;
 import com.slife.exception.SlifeException;
-import com.slife.service.impl.SysRoleService;
-import com.slife.service.impl.SysUserService;
+import com.slife.service.ISysRoleService;
+import com.slife.service.ISysUserService;
 import com.slife.shiro.SlifeSysUser;
 import com.slife.util.FileUtils;
 import com.slife.util.PasswordUtils;
 import com.slife.util.ReturnDTOUtil;
 import com.slife.util.StringUtils;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,9 +42,9 @@ import java.util.List;
 public class SysUserController extends BaseController {
 
     @Autowired
-    private SysUserService sysUserService;
+    private ISysUserService sysUserService;
     @Autowired
-    private SysRoleService sysRoleService;
+    private ISysRoleService sysRoleService;
 
 
     /**
@@ -122,6 +123,10 @@ public class SysUserController extends BaseController {
     @PostMapping(value = "/list")
     @ResponseBody
     public DataTable<SysUser> list(@RequestBody DataTable dt, ServletRequest request) {
+        System.out.println(sysUserService);
+        System.out.println(AopUtils.isAopProxy(sysUserService));
+        System.out.println(AopUtils.isCglibProxy(sysUserService));
+        System.out.println(AopUtils.isJdkDynamicProxy(sysUserService));
         return sysUserService.pageSearch(dt);
     }
 

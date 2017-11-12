@@ -4,7 +4,6 @@ package com.slife.dao;
 import com.slife.base.dao.CrudDao;
 import com.slife.entity.SysRole;
 import com.slife.vo.SysRoleVO;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,6 +14,7 @@ import java.util.List;
  * <p>
  * Describe: 角色 dao接口
  */
+
 public interface SysRoleDao extends CrudDao<SysRole> {
 
 

@@ -16,6 +16,11 @@
             <groupId>com.slife</groupId>
             <artifactId>slife-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+        </dependency>
     </dependencies>
 
 

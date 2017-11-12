@@ -3,9 +3,7 @@ package com.slife.service.impl;
 
 import com.baomidou.mybatisplus.enums.SqlLike;
 import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.JsTree;
 import com.slife.constant.Global;
 import com.slife.dao.SysMenuDao;
@@ -16,10 +14,7 @@ import com.slife.service.ISysMenuService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author chen
@@ -31,7 +26,7 @@ import java.util.Optional;
  */
 @Service
 @Transactional(readOnly = true, rollbackFor = Exception.class)
-public class SysMenuService extends ServiceImpl<SysMenuDao, SysMenu> implements ISysMenuService {
+public class SysMenuService extends BaseService<SysMenuDao, SysMenu> implements ISysMenuService {
 
 
     /**
@@ -103,14 +98,14 @@ public class SysMenuService extends ServiceImpl<SysMenuDao, SysMenu> implements 
      */
     @Override
     public List<SysMenu> CaseMenu(Long userId) {
-        Map<Long, List<SysMenu>> map = Maps.newHashMap();
+        Map<Long, List<SysMenu>> map = new HashMap();
 
         List<SysMenu> sysMenus = this.baseMapper.selectMenusByUserId(userId);
 
         for (SysMenu sysMenu : sysMenus) {
             List<SysMenu> parentMenu = map.get(sysMenu.getParentId());
             if (parentMenu == null) {
-                parentMenu = Lists.newArrayList();
+                parentMenu = new ArrayList();
             }
             parentMenu.add(sysMenu);
             map.put(sysMenu.getParentId(), parentMenu);
@@ -122,7 +117,7 @@ public class SysMenuService extends ServiceImpl<SysMenuDao, SysMenu> implements 
 
 
     public List<SysMenu> MakeMenu(Map<Long, List<SysMenu>> map, Long supId) {
-        List<SysMenu> sysMenus = Lists.newArrayList();
+        List<SysMenu> sysMenus = new ArrayList();
         List<SysMenu> menuList = map.get(supId);
         if (menuList != null) {
             for (SysMenu me : menuList) {
@@ -143,7 +138,7 @@ public class SysMenuService extends ServiceImpl<SysMenuDao, SysMenu> implements 
 
         List<SysMenu> sysMenus = selectList(null);
 
-        List<JsTree> res = Lists.newArrayList();
+        List<JsTree> res = new ArrayList();
         for (SysMenu sysMenu : sysMenus) {
             JsTree jt = new JsTree();
             jt.setId(sysMenu.getId().toString());
