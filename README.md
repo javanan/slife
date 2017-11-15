@@ -161,24 +161,56 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
 
 # 项目截图介绍
 
+## 系统用户管理
 ![](https://github.com/javanan/slife/blob/master/dec/1.jpg?raw=true)
+![](https://github.com/javanan/slife/blob/master/dec/1-1.jpg?raw=true)
+
+
+## 系统菜单管理
+![](https://github.com/javanan/slife/blob/master/dec/2.jpg?raw=true)
+![](https://github.com/javanan/slife/blob/master/dec/2-2.jpg?raw=true)
+
+
+## 系统角色管理
+
+    RBAC权限管理模型
+
+![](https://github.com/javanan/slife/blob/master/dec/3.jpg?raw=true)
+
+
+## 日志监控
+
+    系统自定义注解，结合AOP，监控用户操作行为
+
+![](https://github.com/javanan/slife/blob/master/dec/4.jpg?raw=true)
+
+
+## API文档
+
+    swaggerUi接口文档展示
+
+![](https://github.com/javanan/slife/blob/master/dec/5.jpg?raw=true)
+
+
+## 数据库监控
+
+    使用druid监控数据库健康。本来这里是三个数据源的，使用aop动态的书写切换。没上传到git，需要的同学可以私我
+
+![](https://github.com/javanan/slife/blob/master/dec/6.jpg?raw=true)
 
 
 
+## maven构建 多模块开发
 
+    根据不同的业务，不在不同的业务模块中开发，如果基本的用户、组织等的管理在 sys模块
+    日志的业务逻辑在 log模块
 
+![](https://github.com/javanan/slife/blob/master/dec/7.jpg?raw=true)
 
+**可插拔式部署**
+    把不同的模块打包成jar，对应的freemark文件也打包在对应的模块jar中。实现了功能模块的可插拔式部署。
 
-
-
-
-
-
-
-
-
-
-
+![](https://github.com/javanan/slife/blob/master/dec/8.jpg?raw=true)
 
 
 
