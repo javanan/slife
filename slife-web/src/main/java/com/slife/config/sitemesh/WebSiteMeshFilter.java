@@ -14,7 +14,7 @@ public class WebSiteMeshFilter extends ConfigurableSiteMeshFilter {
 
     /** 需要装饰的访问路径 */
 
-    private String contentPath="/sys/user,/sys/menu,/sys/dict,/sys/role,/sys/,/index,/monitor/*,/404";
+    private String contentPath="/sys/user,/sys/menu,/sys/dict,/sys/role,/sys/office,/sys/,/index,/monitor/*,/404";
 
     /** 装饰器页面路径 */
 

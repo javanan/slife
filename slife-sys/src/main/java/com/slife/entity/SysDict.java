@@ -22,6 +22,18 @@ public class SysDict extends TreeEntity<SysDict> {
 
     private String type;
 
+    @TableField(exist = false)
+    protected String name;
+
+    @Override
+    public String getName() {
+        return name;
+    }
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
     /**
      * 是否有效 Y 表示是   N表示否
      */

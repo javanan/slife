@@ -18,10 +18,19 @@ import java.util.List;
  */
 public interface ISysMenuService extends IBaseService<SysMenu> {
 
+    /**
+     * 获取用户的 私人菜单
+     * @param userId
+     * @return
+     */
      List<SysMenu> selectMenusByUserId(Long userId);
 
      List<SysMenu> CaseMenu(Long userId);
 
+    /**
+     * 获取菜单树
+     * @return
+     */
      List<JsTree> getMenuTree();
 
     /**

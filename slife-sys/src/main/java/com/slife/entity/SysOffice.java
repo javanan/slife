@@ -9,7 +9,9 @@ import org.hibernate.validator.constraints.Length;
 import java.io.Serializable;
 
 /**
- * Created by chen on 2017/3/2.
+ *
+ * @author chen
+ * @date 2017/3/2
  * <p>
  * Email 122741482@qq.com
  * <p>
@@ -17,6 +19,9 @@ import java.io.Serializable;
  */
 @TableName("sys_office")
 public class SysOffice extends TreeEntity<SysOffice> {
+
+
+    private static final long serialVersionUID = -6092918829825347960L;
 
 
     /**
@@ -69,4 +74,7 @@ public class SysOffice extends TreeEntity<SysOffice> {
     protected Serializable pkVal() {
         return this.id;
     }
+
+
+
 }

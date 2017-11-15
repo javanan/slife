@@ -38,11 +38,6 @@ public class AuthRealm extends AuthorizingRealm {
 
 
 
-/*    @Autowired
-    private ISysUserService sysUserService;
-    @Autowired
-    private ISysRoleService sysRoleService;*/
-
     private  Logger logger= LoggerFactory.getLogger(getClass());
 
     @Autowired

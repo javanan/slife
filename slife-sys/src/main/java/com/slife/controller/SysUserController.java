@@ -123,12 +123,11 @@ public class SysUserController extends BaseController {
     @PostMapping(value = "/list")
     @ResponseBody
     public DataTable<SysUser> list(@RequestBody DataTable dt, ServletRequest request) {
-        System.out.println(sysUserService);
-        System.out.println(AopUtils.isAopProxy(sysUserService));
-        System.out.println(AopUtils.isCglibProxy(sysUserService));
-        System.out.println(AopUtils.isJdkDynamicProxy(sysUserService));
         return sysUserService.pageSearch(dt);
     }
+
+
+
 
 
     /**

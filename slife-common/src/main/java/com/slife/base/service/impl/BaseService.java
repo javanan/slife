@@ -5,15 +5,21 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.mybatisplus.mapper.Condition;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.slife.base.entity.TreeEntity;
 import com.slife.base.service.IBaseService;
 import com.slife.base.vo.DataTable;
+import com.slife.base.vo.JsTree;
 import com.slife.constant.SearchParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import static javafx.scene.input.KeyCode.F;
 
 
 /**
@@ -24,6 +30,26 @@ public class BaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> i
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
+
+    /**
+     * 排序菜单树
+     * @param ts
+     * @return
+     */
+    protected <F extends TreeEntity>  List<JsTree>  makeTree( List<F> ts){
+        List<JsTree> res = new ArrayList();
+        ts.stream().parallel().forEach(t->{
+            JsTree jt = new JsTree();
+            jt.setId(t.getId().toString());
+            jt.setParent(t.getParentId() == null ? "#" : (t.getParentId().compareTo(0L) > 0 ? t
+                    .getParentId().toString() : "#"));
+            jt.setText(t.getName());
+            jt.setIcon(t.getIcon());
+            res.add(jt);
+        });
+
+        return res;
+    }
 
     /**
      * 是否加载 查询条件

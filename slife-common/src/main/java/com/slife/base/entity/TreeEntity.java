@@ -36,6 +36,17 @@ public abstract class TreeEntity<T extends Model> extends DataEntity<T> {
      */
     protected String icon;
 
+
+    protected String name;
+    @Length(min = 0, max = 100, message = "名称长度必须介于 1 和 100 之间")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     @Length(min = 0, max = 1000, message = "icon长度必须介于 1 和 1000 之间")
     public String getIcon() {
         return icon;

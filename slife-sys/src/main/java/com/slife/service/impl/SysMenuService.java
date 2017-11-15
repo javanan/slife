@@ -137,18 +137,7 @@ public class SysMenuService extends BaseService<SysMenuDao, SysMenu> implements 
     public List<JsTree> getMenuTree() {
 
         List<SysMenu> sysMenus = selectList(null);
-
-        List<JsTree> res = new ArrayList();
-        for (SysMenu sysMenu : sysMenus) {
-            JsTree jt = new JsTree();
-            jt.setId(sysMenu.getId().toString());
-            jt.setParent(sysMenu.getParentId() == null ? "#" : (sysMenu.getParentId().compareTo(0L) > 0 ? sysMenu.getParentId().toString
-                    () : "#"));
-            jt.setText(sysMenu.getName());
-            jt.setIcon(sysMenu.getIcon());
-            res.add(jt);
-        }
-        return res;
+        return makeTree(sysMenus);
     }
 
 

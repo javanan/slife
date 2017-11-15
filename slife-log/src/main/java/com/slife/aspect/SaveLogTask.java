@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.util.Date;
 
 /**
  *
@@ -97,8 +98,7 @@ public class SaveLogTask implements Runnable {
         }
 
         slifeLog.setUseTime(time);
-System.out.println("-------------------------->>>>>>>>>>>>>>>>>>");
-        System.out.println(slifeLogDao);
+
 
         // 保存系统日志
         slifeLogDao.insert(slifeLog);
