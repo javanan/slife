@@ -159,6 +159,13 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
 
 
 
+# 项目截图介绍
+
+![](https://github.com/javanan/slife/blob/master/dec/1.jpg?raw=true)
+
+
+
+
 
 
 
