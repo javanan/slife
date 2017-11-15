@@ -28,7 +28,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://xx:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
+    url: jdbc:mysql://xx-:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: chen@123
     druid:
