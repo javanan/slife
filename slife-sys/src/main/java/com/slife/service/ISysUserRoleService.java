@@ -1,6 +1,5 @@
 package com.slife.service;
 
-import com.baomidou.mybatisplus.service.IService;
 import com.slife.base.service.IBaseService;
 import com.slife.entity.SysUserRole;
 

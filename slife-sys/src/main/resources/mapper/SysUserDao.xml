@@ -25,8 +25,6 @@
 
 
 
-
-
     <resultMap id="selectUserAllInfoMap" type="sysUser">
         <id property="id" column="su_id"></id>
         <result property="remark" column="su_remark"></result>

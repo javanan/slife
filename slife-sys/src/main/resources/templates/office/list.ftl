@@ -2,6 +2,12 @@
 <head>
     <title>组织管理</title>
     <link rel="stylesheet" type="text/css" href="${base}/css/plugins/jsTree/style.min.css"/>
+    <link href="${base}/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="${base}/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="${base}/css/animate.css" rel="stylesheet">
+    <script>
+        var url = "/sys/office/user/";
+    </script>
     <style>
         #menu_edit_table .control-label {
             text-align: left !important;
@@ -163,6 +169,23 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-9">
+            <div id="exampleToolbar">
+                <input type="text" class="form-filter input-sm _search" hidden="hidden" name="search_eq_sys_office_id">
+            </div>
+            <div class="row" >
+                <div class="col-md-9">
+                    <table id="exampleTable" data-mobile-responsive="true">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div id="icon_add_div" class="modal fade" tabindex="-1" aria-hidden="true" style="height: 1000px">
         <div class="modal-dialog" style="width:900px;">
             <div class="modal-content">
@@ -237,7 +260,87 @@
 <script src="${base}/js/plugins/validate/messages_zh.min.js"></script>
 <script src="${base}/js/jquery.form.js"></script>
 
+<!-- Bootstrap table -->
+<script src="${base}/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="${base}/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="${base}/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<script src="${base}/js/slife/datatable.js"></script>
 <script type="text/javascript">
+
+
+
+    function getcolumns() {
+        var c = [
+            {
+                checkbox: true
+            },
+            {
+                title: '头像',
+                field: 'photo',
+                align: 'center',
+                formatter: function (value, row, index) {
+
+                    return '<img style="width:30px" src=${base}"'+value+'"/>';
+                }
+            },
+            {
+                field: 'name',
+                title: '姓名'
+            },
+            {
+                field: 'email',
+                title: '邮箱'
+            },
+            {
+                field: 'no',
+                title: '工号'
+            },
+            {
+                field: 'phone',
+                title: '电话'
+            },
+            {
+                field: 'mobile',
+                title: '手机'
+            },
+            {
+                field : 'loginFlag',
+                title : '状态',
+                align : 'center',
+                formatter : function(value, row, index) {
+                    if (value == 'Y') {
+                        return '<span class="label label-primary">正常</span>';
+                    } else if (value == 'N') {
+                        return '<span class="label label-danger">禁用</span>';
+                    }
+                }
+            },
+            {
+                title: '操作',
+                field: 'id',
+                align: 'center',
+                formatter: function (value, row, index) {
+
+                    return dt_edit_button(row)+dt_detail_button(row)+dt_delete_button(row);
+                }
+            }];
+
+        return c;
+    }
+
+    load_data( getcolumns(), null);
+
+
+    function dt_explort_buttont() {
+        export_data( getcolumns(), null);
+    }
+
+
+
+
+
+
 
 
 
@@ -268,6 +371,7 @@
                 type: 'GET',
                 success: function (data) {
                     data=data.office;
+
                     $('input[name=id]').val(data.id);
                     $('input[name=parentId]').val(data.parentId);
                     $('input[name=name]').val(data.name);
@@ -286,9 +390,15 @@
                         $(this).attr("readonly", "true");
                     });
 
+
+
                     $('.btn-children').enable();
                     $('.btn-edit').enable();
                     $('.btn-delete').enable();
+
+                    $('input[name=search_eq_sys_office_id]').val(data.id);
+                    re_load();
+
 
                 }
             });

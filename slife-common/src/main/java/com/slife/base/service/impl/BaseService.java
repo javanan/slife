@@ -99,7 +99,7 @@ public class BaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> i
      */
     private void loadSort(Map<String, String> sorts, Condition cnd) {
 
-        if (null != sorts) {
+        if (null != sorts && sorts.size()>0) {
             StringBuffer stringBuffer = new StringBuffer();
             sorts.forEach((k, v) -> {
                 stringBuffer.append(k);
