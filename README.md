@@ -6,7 +6,7 @@ spring boot 搭建的一个企业级快速开发脚手架。
 3. Freemark <p>
 4. SiteMesh <p>
 5. Shiro  <p>
-6. Boostrapt <p>
+6. Bootstrap <p>
 7. mybatis、mybatisPlus <p>
 8. redis <p>
 9. Activiti <p>
@@ -29,7 +29,7 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
 6. 如果是查询操作用select做前缀
 
 
-#数据库动静分离
+#数据库读写分离
 
 
 
