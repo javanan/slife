@@ -127,17 +127,17 @@
      */
     function selectMenuId() {
         var array = $.jstree.reference('#menuTree').get_selected(true);
-        var ar = new Array();
+        var set = new Set();
         if (array) {
             for (var i = 0; i < array.length; i++) {
                 var a = array[i]
-                ar.push(a.id);
-                if (a.parent != "#") {
-                    ar.push(a.parent);
+                set.add(a.id);
+                if (a.parent !== "#") {
+                    set.add(a.parent);
                 }
             }
         }
-        $('input[name=ids]').val(ar.join(","));
+        $('input[name=ids]').val(Array.from(set).join(","));
     }
 
     function  cusFunction() {
