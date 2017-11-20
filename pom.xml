@@ -44,6 +44,7 @@
         <module>slife-activiti</module>
         <module>slife-log</module>
         <module>slife-test</module>
+        <module>slife-blog</module>
     </modules>
 
     <!--全局依赖-->
@@ -211,6 +212,11 @@
                 <version>${slife.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.slife</groupId>
+                <artifactId>slife-blog</artifactId>
+                <version>${slife.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.slife</groupId>
                 <artifactId>slife-sys</artifactId>

@@ -136,7 +136,7 @@ public class SysMenuService extends BaseService<SysMenuDao, SysMenu> implements 
     @Override
     public List<JsTree> getMenuTree() {
 
-        List<SysMenu> sysMenus = selectList(null);
+        List<SysMenu> sysMenus = selectList(Condition.create().orderBy("sort", true));
         return makeTree(sysMenus);
     }
 

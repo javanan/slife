@@ -38,7 +38,7 @@ public class BaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> i
      */
     protected <F extends TreeEntity>  List<JsTree>  makeTree( List<F> ts){
         List<JsTree> res = new ArrayList();
-        ts.stream().parallel().forEach(t->{
+        ts.stream().forEach(t->{
             JsTree jt = new JsTree();
             jt.setId(t.getId().toString());
             jt.setParent(t.getParentId() == null ? "#" : (t.getParentId().compareTo(0L) > 0 ? t

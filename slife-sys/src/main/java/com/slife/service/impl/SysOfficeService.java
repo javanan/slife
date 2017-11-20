@@ -1,5 +1,6 @@
 package com.slife.service.impl;
 
+import com.baomidou.mybatisplus.mapper.Condition;
 import com.slife.base.service.impl.BaseService;
 import com.slife.base.vo.JsTree;
 import com.slife.constant.Global;
@@ -32,7 +33,7 @@ public class SysOfficeService extends BaseService<SysOfficeDao, SysOffice> imple
      */
     @Override
     public List<JsTree> getOfficeTree() {
-        List<SysOffice> sysOffices = selectList(null);
+        List<SysOffice> sysOffices = selectList(Condition.create().orderBy("sort", true));
         return makeTree(sysOffices);
 
     }

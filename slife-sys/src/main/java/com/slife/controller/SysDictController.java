@@ -34,10 +34,6 @@ public class SysDictController extends BaseController {
      */
     @GetMapping(value = "")
     public String list(Model model) {
-        System.out.println(sysDictService);
-        System.out.println(AopUtils.isAopProxy(sysDictService));
-        System.out.println(AopUtils.isCglibProxy(sysDictService));
-        System.out.println(AopUtils.isJdkDynamicProxy(sysDictService));
         model.addAttribute("dictTrees", JSON.toJSON(sysDictService.getDictTree()).toString());
         return "dict/list";
     }

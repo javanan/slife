@@ -59,16 +59,6 @@ public class SysMenuController extends BaseController{
 
         model.addAttribute("menuTree", JSON.toJSONString(sysMenuService.getMenuTree()));
         model.addAttribute("menuTypes", SysMenuType.values());
-
-        System.out.println(this);
-        System.out.println(AopUtils.isAopProxy(this));
-        System.out.println(AopUtils.isCglibProxy(this));
-        System.out.println(AopUtils.isJdkDynamicProxy(this));
-
-        System.out.println(sysMenuService);
-        System.out.println(AopUtils.isAopProxy(sysMenuService));
-        System.out.println(AopUtils.isCglibProxy(sysMenuService));
-        System.out.println(AopUtils.isJdkDynamicProxy(sysMenuService));
         return "menu/list";
     }
 

@@ -36,7 +36,10 @@
 		</dependency>
 
 
-
+		<dependency>
+			<groupId>com.slife</groupId>
+			<artifactId>slife-blog</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>com.slife</groupId>
 			<artifactId>slife-sys</artifactId>
