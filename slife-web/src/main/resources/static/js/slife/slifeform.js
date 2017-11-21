@@ -7,7 +7,7 @@ $.validator.setDefaults({
  * 提交表单
  */
 function saveForm() {
-    cusFunction();
+    cusFunction(); //回调一个自定义方法，比如修改提交参数。每个form表单都必须定义
     $.ajax({
         cache: true,
         type: "POST",

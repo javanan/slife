@@ -42,6 +42,12 @@
                         <button type="button" class="btn  btn-danger" onclick="batch_remove()">
                             <i class="fa fa-trash" aria-hidden="true"></i>删除
                         </button>
+
+                       <a href="${url}detail/create">
+                           <button type="button" class="btn btn-info">
+                               <i class="fa fa-trash" aria-hidden="true"></i>添加
+                           </button>
+                       </a>
                     </label>
 
 

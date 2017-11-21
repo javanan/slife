@@ -3,6 +3,7 @@ package com.slife.entity;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.slife.base.entity.BaseEntity;
+import com.slife.base.entity.DataEntity;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
@@ -16,7 +17,7 @@ import java.io.Serializable;
  * Describe: 博客
  */
 @TableName("blog_content")
-public class BlogContent extends BaseEntity<BlogContent> {
+public class BlogContent extends DataEntity<BlogContent> {
 
 
     @Override
