@@ -44,8 +44,8 @@ public class BlogContentController extends BaseController {
     }
 
     @ApiOperation(value = "进入博客编辑界面", notes = "进入博客编辑界面")
-    @GetMapping(value = "")
-    public String detail(Model model, HttpServletRequest request) {
+    @GetMapping(value = "/insert")
+    public String create(Model model, HttpServletRequest request) {
         model.addAttribute("url", request.getContextPath() + "/blog/content/");
         return "blog/detail";
     }
