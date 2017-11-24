@@ -3,7 +3,7 @@
     <include resource="org/springframework/boot/logging/logback/base.xml" />
     <logger name="org.springframework.web" level="DEBUG"/>
     <logger name="com.slife" level="DEBUG" />
-
+    <logger name="org.activiti" level="DEBUG" />
 
 
 </configuration>

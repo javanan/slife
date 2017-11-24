@@ -35,6 +35,10 @@
 			<artifactId>sitemesh</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.slife</groupId>
+			<artifactId>slife-activiti</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>com.slife</groupId>
