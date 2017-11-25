@@ -7,9 +7,9 @@ qq群 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=3d00028ad6bec03e9
 
 
 
-#slife
-spring boot 搭建的一个企业级快速开发脚手架。
-###技术栈
+# slife
+    spring boot 搭建的一个企业级快速开发脚手架。
+### 技术栈
 1. Spring Boot <p>
 2. MySQL<p>
 3. Freemark <p>
@@ -21,34 +21,34 @@ spring boot 搭建的一个企业级快速开发脚手架。
 9. Activiti <p>
 
 
-#编码约定
+# 编码约定
 系统分为controller、service、dao层。
 controller主要负责转发、service主要负责业务逻辑、dao主要是数据库的操作。
 
 
-###文件名称约定
+### 文件名称约定
 在页面文件夹中，按照功能模块分别建立不同的文件夹存放页面，如用户的页面就放在user文件夹中，而角色的就放在role文件夹中。
 1. 页面如果是列表类型的。页面的文件名用list.ftl命名。
 2. 页面如果是详情类型的。页面的文件名用detail.ftl命名。
 
-###controller、service、dao方法名称约定
+### controller、service、dao方法名称约定
 1. 如果是增加数据操作用insert做前缀。
 2. 如果是删除操作用delete做前缀
 3. 如果是修改操作用update做前缀
 6. 如果是查询操作用select做前缀
 
 
-#数据库读写分离
+# 数据库读写分离
 
 
 
 
-#缓存ecache、redis
+# 缓存ecache、redis
 
 
 
 
-#新建模块
+# 新建模块
 1. new Module <br>
 2. GroupId --->com.slife  <br>
 3. ArtifactId---> slife-模块名称   如  slife-activiti     <br>
@@ -73,7 +73,7 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
 ```
 
 
-#JDK版本 1.8
+# JDK版本 1.8
 ```
 
     <build>
@@ -100,7 +100,7 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
 
 
 
-#新建一个功能模块
+# 新建一个功能模块
 1、创建数据库
 
 2、创建entity类
