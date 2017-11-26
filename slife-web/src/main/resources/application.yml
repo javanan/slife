@@ -30,7 +30,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
-    password: root
+    password: felix19920320
     druid:
       validationQuery: SELECT 1
       initialSize: 10
@@ -55,7 +55,6 @@ server:
   port: 8081
 
 
-
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.slife.entity
@@ -72,3 +71,6 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+security:
+  basic:
+    enabled: false

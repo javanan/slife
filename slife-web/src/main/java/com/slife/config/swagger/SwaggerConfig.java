@@ -52,7 +52,7 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.slife.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.slife"))
                 .paths(PathSelectors.any())
                 .build().globalOperationParameters(parameter());
 
