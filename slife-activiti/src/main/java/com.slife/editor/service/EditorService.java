@@ -1,5 +1,6 @@
 package com.slife.editor.service;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.activiti.engine.ActivitiException;
@@ -32,10 +33,11 @@ public class EditorService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public String getStencilset() {
+    public Object getStencilset() {
         InputStream stencilsetStream = this.getClass().getClassLoader().getResourceAsStream("stencilset.json");
         try {
-            return IOUtils.toString(stencilsetStream, "utf-8");
+            String s= IOUtils.toString(stencilsetStream, "utf-8");
+           return JSON.parse(s);
         } catch (Exception e) {
             throw new ActivitiException("Error while loading stencil set", e);
         }
