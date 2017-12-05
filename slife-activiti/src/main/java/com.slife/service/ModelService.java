@@ -1,17 +1,23 @@
 package com.slife.service;
 
+import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.slife.base.vo.DataTable;
 import com.slife.enums.HttpCodeEnum;
 import com.slife.exception.SlifeException;
 import org.activiti.editor.constants.ModelDataJsonConstants;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Model;
+import org.activiti.engine.repository.ModelQuery;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * @author: felixu.
@@ -58,5 +64,20 @@ public class ModelService {
         } catch (UnsupportedEncodingException e) {
             throw new SlifeException(HttpCodeEnum.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public DataTable<Model> getMadelByPage(DataTable dt) {
+        ModelQuery modelQuery = repositoryService.createModelQuery().latestVersion().orderByLastUpdateTime().desc();
+        String category = (String) dt.getSearchParams().get("category");
+        if (StringUtils.isNotBlank(category)) {
+            modelQuery.modelCategory(category);
+        }
+        dt.setTotal(((Long)modelQuery.count()).intValue());
+        dt.setRows(modelQuery.listPage((dt.getPageNumber() - 1) * dt.getPageSize(), dt.getPageSize()));
+        return dt;
+    }
+
+    public void delete(List<String> ids) {
+        ids.stream().forEach(id -> repositoryService.deleteModel(id));
     }
 }

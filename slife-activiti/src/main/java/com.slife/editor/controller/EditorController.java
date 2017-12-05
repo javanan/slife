@@ -32,7 +32,7 @@ public class EditorController {
 
     @ApiOperation(value = "根据modelId获取model", notes = "根据modelId获取model")
     @GetMapping(value = "/model/{modelId}/json")
-    public ObjectNode getEditorJson(@PathVariable(value ="modelId" )  String modelId) {
+    public Object getEditorJson(@PathVariable(value ="modelId" )  String modelId) {
         Optional.ofNullable(modelId).orElseThrow(() -> new SlifeException(HttpCodeEnum.INVALID_REQUEST));
         return editorService.getEditorJson(modelId);
     }

@@ -43,7 +43,7 @@ public class EditorService {
         }
     }
 
-    public ObjectNode getEditorJson(String modelId) {
+    public Object getEditorJson(String modelId) {
         ObjectNode modelNode = null;
         Model model = repositoryService.getModel(modelId);
         if (model != null) {
@@ -54,15 +54,16 @@ public class EditorService {
                     modelNode = objectMapper.createObjectNode();
                     modelNode.put(MODEL_NAME, model.getName());
                 }
+                byte[] source = repositoryService.getModelEditorSource(model.getId());
                 modelNode.put(MODEL_ID, model.getId());
-                ObjectNode editorJsonNode = (ObjectNode) objectMapper.readTree(
-                        new String(repositoryService.getModelEditorSource(model.getId()), "utf-8"));
+                ObjectNode editorJsonNode = (ObjectNode) objectMapper.readTree(new String(source, "utf-8"));
                 modelNode.put("model", editorJsonNode);
+                return JSON.parse(modelNode.toString());
             } catch (Exception e) {
                 throw new ActivitiException("Error creating model JSON", e);
             }
         }
-        return modelNode;
+        return null;
     }
 
     public void saveModel(String modelId, String name, String description,
@@ -78,12 +79,13 @@ public class EditorService {
             repositoryService.addModelEditorSource(model.getId(), json_xml.getBytes("utf-8"));
             InputStream svgStream = new ByteArrayInputStream(svg_xml.getBytes("utf-8"));
             TranscoderInput input = new TranscoderInput(svgStream);
-            PNGTranscoder transcoder = new PNGTranscoder();
+
             // Setup output
             ByteArrayOutputStream outStream = new ByteArrayOutputStream();
             TranscoderOutput output = new TranscoderOutput(outStream);
+//            PNGTranscoder transcoder = new PNGTranscoder();
             // Do the transformation
-            transcoder.transcode(input, output);
+//            transcoder.transcode(input, output);
             final byte[] result = outStream.toByteArray();
             repositoryService.addModelEditorSourceExtra(model.getId(), result);
             outStream.close();
