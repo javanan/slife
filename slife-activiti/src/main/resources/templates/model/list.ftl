@@ -19,26 +19,26 @@
 
                 <div id="exampleToolbar" role="group">
 
-                    <label style="margin-left: 10px;">
-                        登录名：
-                        <input type="text" class="form-filter input-sm _search" name="search_eq_login_name">
-                    </label>
-                    <label style="margin-left: 10px;">
-                        动作：
-                        <input type="text" class="form-filter input-sm _search" name="search_eq_msg">
-                    </label>
-                    <label style="margin-left: 10px;">
-                        参数：
-                        <input type="text" class="form-filter input-sm _search" name="search_like_params">
-                    </label>
+                    <#--<label style="margin-left: 10px;">-->
+                        <#--登录名：-->
+                        <#--<input type="text" class="form-filter input-sm _search" name="search_eq_login_name">-->
+                    <#--</label>-->
+                    <#--<label style="margin-left: 10px;">-->
+                        <#--动作：-->
+                        <#--<input type="text" class="form-filter input-sm _search" name="search_eq_msg">-->
+                    <#--</label>-->
+                    <#--<label style="margin-left: 10px;">-->
+                        <#--参数：-->
+                        <#--<input type="text" class="form-filter input-sm _search" name="search_like_params">-->
+                    <#--</label>-->
 
                     <label style="margin-left: 10px;">
-                        <button class="btn btn-success" onclick="re_load()">
-                            <i class="fa fa-search" aria-hidden="true"></i>查询
-                        </button>
-                        <button type="button" class="btn  btn-primary" onclick="reset()">
-                            <i class="fa fa-circle-thin" aria-hidden="true"></i>重置
-                        </button>
+                        <#--<button class="btn btn-success" onclick="re_load()">-->
+                            <#--<i class="fa fa-search" aria-hidden="true"></i>查询-->
+                        <#--</button>-->
+                        <#--<button type="button" class="btn  btn-primary" onclick="reset()">-->
+                            <#--<i class="fa fa-circle-thin" aria-hidden="true"></i>重置-->
+                        <#--</button>-->
                         <button type="button" class="btn  btn-danger" onclick="batch_remove()">
                             <i class="fa fa-trash" aria-hidden="true"></i>删除
                         </button>
@@ -101,7 +101,7 @@
                 field: 'id',
                 align: 'center',
                 formatter: function (value, row, index) {
-                    return dt_delete_button(row);
+                    return dt_delete_button(row)+dt_edit_model_button(row);
                 }
             }];
         return c;

@@ -210,6 +210,16 @@ function dt_edit_button(row) {
 }
 
 /**
+ * 编辑 按钮
+ * @returns {string}
+ */
+function dt_edit_model_button(row) {
+    var uri = url.substring(0, url.length - 1);
+    var editO = '<a class="btn btn-primary btn-sm" href="'+ uri +'er.html?modelId=' + row.id + '" title="编辑"><i class="fa fa-edit"></i></a> ';
+    return editO;
+}
+
+/**
  * 详情按钮
  * @returns {*}
  */
@@ -241,6 +251,23 @@ function dt_update(id) {
  */
 function dt_detail(id) {
     dt_action("详情", "detail/" + id);
+}
+
+/**
+ * 打开模态框
+ * @param title
+ * @param action
+ */
+function dt_action(title, action) {
+    // iframe层
+    layer.open({
+        type: 2,
+        title: title,
+        maxmin: true,
+        shadeClose: false, // 点击遮罩关闭层
+        area: ['800px', '520px'],
+        content: url + action // iframe的url
+    });
 }
 
 /**
