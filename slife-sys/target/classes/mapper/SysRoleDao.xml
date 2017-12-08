@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.slife.dao.SysRoleDao">
+
+    <resultMap id="roleResult" type="sysRole">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="enname" column="enname"/>
+        <result property="roleType" column="role_type"/>
+        <result property="dataScope" column="data_scope"/>
+        <result property="remarks" column="remarks"/>
+        <result property="useable" column="useable"/>
+        <result property="fromSys" column="from_sys"/>
+
+        <collection property="sysMenuList" ofType="sysMenu">
+            <id property="id" column="sysMenuList.id"/>
+        </collection>
+
+        <collection property="sysOfficeList" ofType="sysOffice">
+            <id property="id" column="sysOfficeList.id"/>
+        </collection>
+
+    </resultMap>
+
+    <resultMap id="selectRoleList" type="sysRole">
+        <id  property="id" column="sr_id"></id>
+        <result property="remark" column="sr_remark"></result>
+        <result property="delFlag" column="sr_del_flag"></result>
+        <result property="name" column="sr_name"></result>
+        <result property="code" column="sr_code"></result>
+        <result property="useable" column="sr_useable"></result>
+        <result property="dataScope" column="sr_data_scope"></result>
+
+        <collection property="sysMenus"  resultMap="com.slife.dao.SysMenuDao.selectMenuList">
+        </collection>
+    </resultMap>
+
+
+
+
+
+    <sql id="roleColumns">
+        a.id,
+        a.office_id AS "office.id",
+        a.name,
+        a.enname,
+        a.role_type AS roleType,
+        a.data_scope AS dataScope,
+        a.remarks,
+        a.create_by AS "createBy.id",
+        a.create_date,
+        a.update_by AS "updateBy.id",
+        a.update_date,
+        a.del_flag,
+        o.name AS "office.name",
+        o.code,
+        a.useable AS useable,
+        a.from_sys AS fromSys
+    </sql>
+
+
+    <select id="getById" parameterType="string" resultType="sysRole">
+        SELECT * FROM sys_role WHERE id=#{id}
+    </select>
+
+    <select id="findList" resultMap="roleResult">
+        SELECT <!-- DISTINCT -->
+        <include refid="roleColumns"/>,
+        ro.office_id AS "officeList.id"
+        FROM sys_role a
+        LEFT JOIN sys_office o ON o.id = a.office_id
+        LEFT JOIN sys_user_role ur ON ur.role_id = a.id
+        LEFT JOIN sys_user u ON u.id = ur.user_id
+        LEFT JOIN sys_role_office ro ON ro.role_id = a.id
+        WHERE a.del_flag = #{DEL_FLAG_NORMAL} AND a.useable=#{useable}
+        <if test="sysUser != null and sysUser.id != null and sysUser.id != ''">
+            AND u.id = #{sysUser.id}
+        </if>
+        <if test="sysUser != null and sysUser.loginName != null and sysUser.loginName != ''">
+            AND u.login_name = #{sysUser.loginName}
+        </if>
+        <!-- 数据范围过滤 -->
+        ${sqlMap.dsf}
+        ORDER BY o.code, a.name
+    </select>
+
+
+
+
+    <select id="selectRoleByUserId" resultMap="selectRoleList" parameterType="long">
+        SELECT
+        sr.id AS sr_id, sr.name AS sr_name,sr.code AS sr_code,
+        sm.id AS sm_id,sm.name AS sm_name,sm.permission AS sm_permission
+        FROM sys_user_sys_role susr
+        LEFT JOIN sys_role sr
+        ON susr.sys_role_id=sr.id
+        LEFT JOIN sys_role_sys_menu srsm
+        ON srsm.sys_role_id=sr.id
+        LEFT JOIN sys_menu sm
+        ON sm.id=srsm.sys_menu_id
+        WHERE susr.sys_user_id=#{userId}
+    </select>
+
+
+</mapper>

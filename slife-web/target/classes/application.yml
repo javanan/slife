@@ -1,0 +1,76 @@
+spring:
+  application:
+    name: slife
+  aop:
+    proxy-target-class: true
+  freemarker:
+    template-loader-path: classpath:/templates/
+    prefer-file-system-access: false
+    settings:
+      template_update_delay: 0
+      classic_compatible: true
+      number_format: 0.######
+      template_exception_handler: ignore
+    request-context-attribute: rc
+    charset: UTF-8
+
+  redis:
+    database: 0
+    host: 10.10.20.100
+    port: 6379
+    password: 123456
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 18
+      min-idle: 0
+    timeout: 0
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: felix19920320
+    druid:
+      validationQuery: SELECT 1
+      initialSize: 10
+      minIdle: 10
+      maxActive: 200
+      minEvictableIdleTimeMillis: 180000
+      testOnBorrow: false
+      testWhileIdle: true
+      removeAbandoned: true
+      removeAbandonedTimeout: 1800
+      logAbandoned: true
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 100
+
+
+sitemesh:
+  contentPath: /*
+  decoratorPath: classpath:/layouts/default.jsp
+  excludedPaths: /js/*,/assets/*,/css/*
+
+server:
+  port: 8081
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.slife.entity
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  typeAliasesPackage: com.slife.entity
+  global-config:
+    id-type: 2
+    field-strategy: 2
+    auto-set-db-type: true
+    db-column-underline: true
+    refresh-mapper: true
+    metaObjectHandler: com.slife.config.plus.SysMetaObjectHandler
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+security:
+  basic:
+    enabled: false

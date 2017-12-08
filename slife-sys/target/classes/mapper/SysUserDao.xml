@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.slife.dao.SysUserDao">
+
+
+
+    <sql id="base_select">
+        SELECT * FROM sys_user a
+    </sql>
+
+    <!-- 根据登录名查询用户 -->
+    <select id="selectByLoginName" resultType="sysUser">
+	<include refid="base_select"></include>	WHERE a.login_name = #{loginName} AND  a.del_flag = 'Y'
+	</select>
+
+    <!--根据sysOfficeId获取该office下的所有用户的id，名字和登录名 使用了mybatis的默认二级缓存-->
+    <select id="selectSysUserBySysOfficeId" resultType="sysUser" useCache="true">
+        SELECT u.id,u.name,u.login_name
+        FROM  sys_user AS u
+        WHERE u.del_flag = #{delFlag}
+               AND u.office_id = #{sysOfficeId}
+        ORDER BY u.name
+    </select>
+
+
+
+    <resultMap id="selectUserAllInfoMap" type="sysUser">
+        <id property="id" column="su_id"></id>
+        <result property="remark" column="su_remark"></result>
+        <result property="delFlag" column="su_del_flag"></result>
+        <result property="loginName" column="su_login_name"></result>
+        <result property="no" column="su_no"></result>
+        <result property="name" column="su_name"></result>
+        <result property="email" column="su_email"></result>
+        <result property="phone" column="su_phone"></result>
+        <result property="mobile" column="su_mobile"></result>
+        <result property="photo" column="su_photo"></result>
+        <result property="loginFlag" column="su_login_flag"></result>
+
+        <association property="sysCompany" resultMap="com.slife.dao.SysCompanyDao.selectCompanyInfo"></association>
+
+        <collection property="sysRoles" resultMap="com.slife.dao.SysRoleDao.selectRoleList"></collection>
+    </resultMap>
+
+
+
+
+    <sql id="selectUserAllInfoSql">
+        SELECT
+        su.id AS su_id,su.remark AS us_remark,
+        su.del_flag as su_del_flag,su.login_name as su_login_name,su.no as
+        su_no,su.name as su_name,su.email as su_email,su.phone as su_phone,
+        su.mobile as su_mobile,su.photo as su_photo,su.login_flag as su_login_flag,
+
+        sc.id as sc_id,sc.remark as sc_remark,sc.del_flag as sc_del_flag,sc.address as sc_address
+        ,sc.zip_code as sc_zip_code,sc.master as sc_master,sc.phone as sc_phone,sc.fax as sc_fax,sc.email as sc_email,
+        sc.copyright as as_copyright,sc.name as sc_name,
+
+        sa.id as sa_id,sa.name as sa_name,sa.jkey as sa_jkey,
+
+        sr.id as sr_id,sr.remark as sr_remark,sr.del_flag sr_del_flag,sr.name as sr_name,
+        sr.code as sr_code,sr.useable as sr_useable,sr.data_scope as sr_data_scope,
+
+        sm.id as sm_id,sm.remark as sm_remark,sm.del_flag as sm_del_flag,sm.parent_id as sm_parent_id,
+        sm.name as sm_name,sm.type as sm_type,sm.href as sm_href,sm.target as sm_target,sm.icon as sm_icon,
+        sm.show_flag as sm_show_flag,sm.permission as sm_permission,sm.path as sm_path,sm.sort as sm_sort
+    </sql>
+
+
+    <select id="selectUserAllInfoById" resultMap="selectUserAllInfoMap">
+        <include refid="selectUserAllInfoSql"></include>
+            FROM sys_user AS su
+            LEFT JOIN sys_company AS sc
+            ON sc.id=su.sys_company_id
+            LEFT JOIN sys_area AS sa
+            ON sa.id=sc.area_id
+            LEFT JOIN sys_user_sys_role AS susr
+            ON su.id=susr.sys_user_id
+            LEFT JOIN sys_role AS sr
+            ON susr.sys_role_id=sr.id
+            LEFT JOIN sys_role_sys_menu AS srsm
+            ON srsm.sys_role_id=sr.id
+            LEFT JOIN sys_menu AS sm
+            ON sm.id=srsm.sys_menu_id
+            WHERE su.id=#{id}
+    </select>
+</mapper>

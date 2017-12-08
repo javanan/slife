@@ -1,0 +1,24 @@
+
+
+   SSSSSSSSSSSSSSS LLLLLLLLLLL               iiii     ffffffffffffffff
+ SS:::::::::::::::SL:::::::::L              i::::i   f::::::::::::::::f
+S:::::SSSSSS::::::SL:::::::::L               iiii   f::::::::::::::::::f
+S:::::S     SSSSSSSLL:::::::LL                      f::::::fffffff:::::f
+S:::::S              L:::::L               iiiiiii  f:::::f       ffffffeeeeeeeeeeee
+S:::::S              L:::::L               i:::::i  f:::::f           ee::::::::::::ee
+ S::::SSSS           L:::::L                i::::i f:::::::ffffff    e::::::eeeee:::::ee
+  SS::::::SSSSS      L:::::L                i::::i f::::::::::::f   e::::::e     e:::::e
+    SSS::::::::SS    L:::::L                i::::i f::::::::::::f   e:::::::eeeee::::::e
+       SSSSSS::::S   L:::::L                i::::i f:::::::ffffff   e:::::::::::::::::e
+            S:::::S  L:::::L                i::::i  f:::::f         e::::::eeeeeeeeeee
+            S:::::S  L:::::L         LLLLLL i::::i  f:::::f         e:::::::e
+SSSSSSS     S:::::SLL:::::::LLLLLLLLL:::::Li::::::if:::::::f        e::::::::e
+S::::::SSSSSS:::::SL::::::::::::::::::::::Li::::::if:::::::f         e::::::::eeeeeeee
+S:::::::::::::::SS L::::::::::::::::::::::Li::::::if:::::::f          ee:::::::::::::e
+ SSSSSSSSSSSSSSS   LLLLLLLLLLLLLLLLLLLLLLLLiiiiiiiifffffffff            eeeeeeeeeeeeee
+
+
+
+
+
+

@@ -6,6 +6,7 @@ import com.slife.enums.HttpCodeEnum;
 import com.slife.exception.SlifeException;
 import com.slife.service.ModelService;
 import com.slife.util.ReturnDTOUtil;
+import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.repository.Model;
@@ -29,6 +30,30 @@ public class ModelController {
     @Autowired
     ModelService modelService;
 
+    @ApiOperation(value = "进入模型管理页面", notes = "进入模型管理页面")
+    @GetMapping(value = "")
+    public String list(org.springframework.ui.Model model, HttpServletRequest request) {
+        model.addAttribute("url", request.getContextPath()+"/model/");
+        return "model/list";
+    }
+
+    @ApiOperation(value = "进入模型管理页面", notes = "进入模型管理页面")
+    @GetMapping(value = "/insert")
+    public String insert(org.springframework.ui.Model model, HttpServletRequest request) {
+        model.addAttribute("action", "insert");
+        model.addAttribute("url", request.getContextPath() + "/model/");
+        model.addAttribute("categories", "");
+        return "model/add";
+    }
+
+    @ApiOperation(value = "进入模型管理页面", notes = "进入模型管理页面")
+    @PostMapping(value = "/insert")
+    @ResponseBody
+    public ReturnDTO insertForm(org.springframework.ui.Model model, HttpServletRequest request) {
+
+        return ReturnDTOUtil.success();
+    }
+
     @ApiOperation(value = "添加流程模型", notes = "添加流程模型")
     @PostMapping("")
     @ResponseBody
@@ -39,13 +64,6 @@ public class ModelController {
         }
         Model model = modelService.create(name, key, desc, category);
         return model.getId();
-    }
-
-    @ApiOperation(value = "进入模型管理页面", notes = "进入模型管理页面")
-    @GetMapping(value = "")
-    public String list(org.springframework.ui.Model model, HttpServletRequest request) {
-        model.addAttribute("url", request.getContextPath()+"/model/");
-        return "model/list";
     }
 
     @ApiOperation(value = "获取模型列表数据", notes = "获取模型列表数据:使用约定的DataTable")
