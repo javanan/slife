@@ -91,6 +91,27 @@
 function cusFunction() {
 
 }
+
+
+var form = $('#slifeForm');
+var error = $('.alert-danger', form);
+form.validate({
+    errorElement: 'span',
+    errorClass: 'error',
+    focusInvalid: true,
+    rules: {
+
+        name: {
+            category: true
+        },
+        name: {
+            required: true,
+        },
+        key: {
+            required: true
+        }
+    }
+});
 </script>
 </body>
 </html>
