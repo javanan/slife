@@ -36,9 +36,6 @@
                         <#--<button class="btn btn-success" onclick="re_load()">-->
                             <#--<i class="fa fa-search" aria-hidden="true"></i>查询-->
                         <#--</button>-->
-                        <#--<button type="button" class="btn  btn-primary" onclick="reset()">-->
-                            <#--<i class="fa fa-circle-thin" aria-hidden="true"></i>重置-->
-                        <#--</button>-->
                         <button type="button" class="btn  btn-danger" onclick="batch_remove()">
                             <i class="fa fa-trash" aria-hidden="true"></i>删除
                         </button>
@@ -104,12 +101,35 @@
                 field: 'id',
                 align: 'center',
                 formatter: function (value, row, index) {
-                    return dt_delete_button(row)+dt_edit_model_button(row);
+                    return dt_delete_button(row)+dt_edit_model_button(row)+dt_doploy_button(row);
                 }
             }];
         return c;
     }
     load_data( getcolumns(), {"createDate": "desc"});
+
+    function dt_doploy_button(row) {
+        var editO = '<a class="btn btn-primary btn-sm" href="#" mce_href="#" title="部署" onclick="remove(\''
+                + row.id + '\')"><i class="fa fa-edit"></i></a> ';
+        return editO;
+    }
+
+    function remove(id) {
+        layer.confirm('确定要部署选中的记录？', {
+            btn: ['确定', '取消']
+        }, function () {
+            $.ajax({
+                url: url + "deploy",
+                type: "POST",
+                data: {
+                    'id': id
+                },
+                success: function (r) {
+                    dataTable_rep_message(r)
+                }
+            });
+        })
+    }
 </script>
 </body>
 </html>

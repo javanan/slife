@@ -7,10 +7,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.slife.base.vo.DataTable;
 import com.slife.enums.HttpCodeEnum;
 import com.slife.exception.SlifeException;
+import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.constants.ModelDataJsonConstants;
+import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ModelQuery;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,5 +83,36 @@ public class ModelService {
 
     public void delete(List<String> ids) {
         ids.stream().forEach(id -> repositoryService.deleteModel(id));
+    }
+
+    @Transactional(readOnly = false)
+    public String deploy(String id) {
+        String message = "";
+        try {
+            // 获取模型
+            Model model = repositoryService.getModel(id);
+            ObjectNode objectNode = (ObjectNode) new ObjectMapper().readTree(repositoryService.getModelEditorSource(model.getId()));
+            BpmnModel bpmnModel = new BpmnJsonConverter().convertToBpmnModel(objectNode);
+
+            String processName = model.getName();
+            if (!StringUtils.endsWith(processName, ".bpmn20.xml")){
+                processName += ".bpmn20.xml";
+            }
+            // 部署流程
+            Deployment deployment = repositoryService.createDeployment().name(model.getName())
+                    .addBpmnModel(processName, bpmnModel)
+                    .deploy();
+
+            // 设置流程分类
+            List<ProcessDefinition> list = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).list();
+            if (list.size() == 0){
+                throw new SlifeException(HttpCodeEnum.MODEL_NOT_EXIST);
+            }
+            list.stream().forEach(processDefinition ->
+                    repositoryService.setProcessDefinitionCategory(processDefinition.getId(), model.getCategory()));
+        } catch (Exception e) {
+            throw new SlifeException(HttpCodeEnum.FAIL);
+        }
+        return message;
     }
 }

@@ -33,6 +33,7 @@ public enum HttpCodeEnum {
     UN_KNOW_ERROR(500,"未知错误"),
     FAIL(501,"操作失败"),
 
+    MODEL_NOT_EXIST(1000, "模型不存在"),
 
     USERNAME_OR_PASSWORD_ERR(2000,"用户名或密码错误"),
     DELETE_DEFAULT_PHOTO_ERR(2001,"默认头像不可删除");

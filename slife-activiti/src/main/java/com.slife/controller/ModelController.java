@@ -89,4 +89,12 @@ public class ModelController {
         return ReturnDTOUtil.success();
 
     }
+
+    @ApiOperation(value = "部署流程", notes = "部署流程")
+    @PostMapping("/deploy")
+    @ResponseBody
+    public ReturnDTO deploy(@RequestParam("id") String id) {
+        modelService.deploy(id);
+        return ReturnDTOUtil.success();
+    }
 }
