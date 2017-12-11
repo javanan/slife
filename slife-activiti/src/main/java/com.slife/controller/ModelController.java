@@ -6,6 +6,7 @@ import com.slife.enums.HttpCodeEnum;
 import com.slife.exception.SlifeException;
 import com.slife.service.ModelService;
 import com.slife.util.ReturnDTOUtil;
+import com.slife.vo.ModelForm;
 import com.sun.org.apache.regexp.internal.RE;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -46,11 +48,11 @@ public class ModelController {
         return "model/add";
     }
 
-    @ApiOperation(value = "进入模型管理页面", notes = "进入模型管理页面")
+    @ApiOperation(value = "添加流程模型", notes = "添加流程模型")
     @PostMapping(value = "/insert")
     @ResponseBody
-    public ReturnDTO insertForm(org.springframework.ui.Model model, HttpServletRequest request) {
-
+    public ReturnDTO insertForm(@Valid ModelForm form) {
+        modelService.create(form.getName(), form.getKey(), form.getDesc(), form.getCategory());
         return ReturnDTOUtil.success();
     }
 
