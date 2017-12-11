@@ -195,6 +195,12 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
 ![](https://github.com/javanan/slife/blob/master/dec/4.jpg?raw=true)
 
 
+## Activit工作流
+
+
+
+![](https://github.com/javanan/slife/blob/master/dec/10.jpg?raw=true)
+
 ## API文档
 
     swaggerUi接口文档展示
