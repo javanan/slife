@@ -198,7 +198,6 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
 ## Activit工作流
 
 
-
 ![](https://github.com/javanan/slife/blob/master/dec/10.jpg?raw=true)
 
 ## API文档
