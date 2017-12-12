@@ -24,7 +24,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
- * @author: felixu.
+ * @author: felix.
  * @createTime: 2017/11/26.
  */
 @Service
