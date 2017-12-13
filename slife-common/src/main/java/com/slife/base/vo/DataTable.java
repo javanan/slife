@@ -22,7 +22,7 @@ public class DataTable<T> implements Serializable {
     /**
      * 返回列表
      */
-    private List<T> rows;
+    private List<T> rows = new ArrayList<>();
 
     /**
      * 排序 条件

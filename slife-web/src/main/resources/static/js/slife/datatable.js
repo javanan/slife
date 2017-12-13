@@ -210,16 +210,6 @@ function dt_edit_button(row) {
 }
 
 /**
- * 编辑 按钮
- * @returns {string}
- */
-function dt_edit_model_button(row) {
-    var uri = url.substring(0, url.length - 1);
-    var editO = '<a class="btn btn-primary btn-sm" href="'+ uri +'er.html?modelId=' + row.id + '" title="编辑"><i class="fa fa-edit"></i></a> ';
-    return editO;
-}
-
-/**
  * 详情按钮
  * @returns {*}
  */

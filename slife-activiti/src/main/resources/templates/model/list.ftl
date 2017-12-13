@@ -108,6 +108,12 @@
     }
     load_data( getcolumns(), {"createDate": "desc"});
 
+    function dt_edit_model_button(row) {
+        var uri = url.substring(0, url.length - 1);
+        var editO = '<a class="btn btn-primary btn-sm" href="'+ uri +'er.html?modelId=' + row.id + '" title="编辑"><i class="fa fa-edit"></i></a> ';
+        return editO;
+    }
+
     function dt_doploy_button(row) {
         var editO = '<a class="btn btn-primary btn-sm" href="#" mce_href="#" title="部署" onclick="remove(\''
                 + row.id + '\')"><i class="fa fa-edit"></i></a> ';
