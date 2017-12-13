@@ -2,7 +2,7 @@
 微信0
 qq群 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=3d00028ad6bec03e99d0491e6fb055b3edbd5be3ef9ab5adbafb8a13851ba7eb"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="SLife" title="SLife"></a>
 <br>
-## qq号 421351927
+## qq群 421351927
 
 # **[小福利 点我获取阿里云优惠券](https://promotion.aliyun.com/ntms/act/ambassador/sharetouser.html?userCode=vf2b5zld&utm_source=vf2b5zld)**
 
