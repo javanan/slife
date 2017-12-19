@@ -44,7 +44,7 @@
         <module>slife-wx-applet</module>
         <module>slife-activiti</module>
         <module>slife-log</module>
-        <module>slife-test</module>
+       <!-- <module>slife-test</module>-->
         <module>slife-blog</module>
     </modules>
 
@@ -138,10 +138,12 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
 
+<!--
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

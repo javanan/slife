@@ -1,0 +1,19 @@
+server:
+  port: 8002
+
+
+spring:
+  profiles:
+    active: dev
+  application:
+    name: slife-boot-admin
+
+
+
+
+
+
+
+
+
+

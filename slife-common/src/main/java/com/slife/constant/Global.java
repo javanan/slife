@@ -27,4 +27,8 @@ public class Global {
      * 树的顶级 节点id
      */
     public static final Long TOP_TREE_NODE = 0L;
+    /**
+     * 管理员id
+     */
+    public static final Long ADMIN_ID =1L ;
 }

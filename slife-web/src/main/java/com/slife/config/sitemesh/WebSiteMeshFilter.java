@@ -15,7 +15,7 @@ public class WebSiteMeshFilter extends ConfigurableSiteMeshFilter {
     /** 需要装饰的访问路径 */
 
     private String contentPath="/sys/user,/sys/menu,/sys/dict,/sys/role,/sys/office,/sys/,/index,/monitor/*," +
-            "/blog/content**,/404,/model,/process";
+            "/blog/content**,/404,/model,/druid*";
 
     /** 装饰器页面路径 */
 
@@ -23,7 +23,7 @@ public class WebSiteMeshFilter extends ConfigurableSiteMeshFilter {
 
     /** 不需要装饰的访问路径,多个之间用英文逗号分隔 */
 
-    private String excludedPaths="";
+    private String excludedPaths="*.js,*.css";
 
     @Override
     protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {

@@ -53,10 +53,12 @@ public class SysUserController extends BaseController {
      *
      * @throws Exception
      */
-    @PostMapping(value = "/exportUserList")
+    @GetMapping(value = "/exportUserList")
     @ResponseBody
-    public void exportCollectCustomerList(@RequestBody DataTable dt, HttpServletResponse response) throws Exception {
-        List<SysUser> users = sysUserService.pageSearch(dt).getRows();
+    public void exportCollectCustomerList(HttpServletResponse response) throws Exception {
+
+
+        List<SysUser> users = sysUserService.selectList(null);
 
         //导出数据
         String excelTitle = "用户列表";

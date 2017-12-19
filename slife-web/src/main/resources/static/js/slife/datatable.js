@@ -116,17 +116,7 @@ function export_data(columns, sorts) {
 
     });
     
-
-    var from = $("#export");
-    $("input,select").each(function () {
-        if ($(this).attr("name") != undefined) {
-            from.append("<input name='" + $(this).attr("name") + "'  value='" + $(this).val() + "'/>");
-        }
-    });
-    from.attr("method", "post");
-    from.attr("action", url + "exportUserList");
-    from.submit();
-    from.empty();
+    
 }
 
 

@@ -23,6 +23,13 @@
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+			<version>1.5.5</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.github.drtrang</groupId>
 			<artifactId>druid-spring-boot-starter</artifactId>

@@ -194,6 +194,10 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
 
 ![](https://github.com/javanan/slife/blob/master/dec/4.jpg?raw=true)
 
+## Spring Boot Admin 监控
+![](https://github.com/javanan/slife/blob/master/dec/11.png?raw=true)
+![](https://github.com/javanan/slife/blob/master/dec/11-1.png?raw=true)
+
 
 ## Activit工作流
 

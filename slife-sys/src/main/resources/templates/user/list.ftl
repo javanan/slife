@@ -146,7 +146,8 @@
 
 
     function dt_explort_buttont() {
-        export_data( getcolumns(), {"createDate": "desc"});
+
+        location.href=url + "exportUserList";
     }
 </script>
 </body>

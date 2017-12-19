@@ -177,7 +177,7 @@ public class SysUser extends CompanyLinkEntity<SysUser> {
 
     public static boolean isAdmin(Long id) {
 
-        return id != null && "1".equals(id);
+        return id != null && id.equals(Global.ADMIN_ID);
     }
 
     @Override
