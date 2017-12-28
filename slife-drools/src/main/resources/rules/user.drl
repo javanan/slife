@@ -1,0 +1,9 @@
+package plausibcheck.adress
+
+rule qw
+no-loop true
+    when
+
+    then
+		System.out.println("=========================");
+end

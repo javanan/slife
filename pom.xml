@@ -33,6 +33,7 @@
         <fastjson.version>1.2.36</fastjson.version>
         <sitemesh.version>3.0.1</sitemesh.version>
         <mybatisplus-spring-boot-starter.version>1.0.4</mybatisplus-spring-boot-starter.version>
+        <drools.version>7.5.0.Final</drools.version>
 
     </properties>
 
@@ -46,6 +47,8 @@
         <module>slife-log</module>
        <!-- <module>slife-test</module>-->
         <module>slife-blog</module>
+        <module>slife-drools</module>
+        <module>slife-code</module>
     </modules>
 
     <!--全局依赖-->
@@ -234,6 +237,12 @@
 
             <dependency>
                 <groupId>com.slife</groupId>
+                <artifactId>slife-code</artifactId>
+                <version>${slife.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.slife</groupId>
                 <artifactId>slife-wx-applet</artifactId>
                 <version>${slife.version}</version>
             </dependency>
@@ -249,7 +258,11 @@
                 <artifactId>slife-activiti</artifactId>
                 <version>${slife.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.slife</groupId>
+                <artifactId>slife-drools</artifactId>
+                <version>${slife.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.activiti</groupId>
                 <artifactId>activiti-spring-boot-starter-basic</artifactId>

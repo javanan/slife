@@ -1,0 +1,8 @@
+package plausibcheck.adress
+import com.slife.fact.User
+rule "sf"
+ when
+User(getUserName().equals("d"))
+  then
+	System.out.println("cccccc");
+end
