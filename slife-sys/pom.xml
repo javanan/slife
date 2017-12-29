@@ -12,7 +12,6 @@
     <artifactId>slife-sys</artifactId>
 
     <name>slife-sys</name>
-
     <dependencies>
         <dependency>
             <groupId>com.slife</groupId>
