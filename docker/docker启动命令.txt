@@ -1,0 +1,22 @@
+
+#创建一个网络
+docker network create -d bridge --subnet 172.25.0.0/16 slife_work
+
+
+
+#启动redis
+docker run -v /home/hydratest/redis/redis.conf:/usr/local/etc/redis/redis.conf -p 6379:6379 --network=slife_work --name h-redis redis redis-server /usr/local/etc/redis/redis.conf
+
+
+
+#启动slife集群
+docker build -t slife/web:1.0 .
+
+docker run -d --network=slife_work --name slife-web1 -p 8081:8081 slife/web:1.0
+
+docker run -d --network=slife_work --name slife-web2 -p 8082:8081 slife/web:1.0
+
+
+#启动nginx
+docker run --name slife-nginx -v /home/nginx/conf/nginx.conf:/etc/nginx/nginx.conf --network=slife_work -v
+/home/nginx/logs:/var/log/nginx/ -v /home/nginx/www:/www -p 80:80 --privileged=true -d  nginx
