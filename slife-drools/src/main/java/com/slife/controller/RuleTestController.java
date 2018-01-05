@@ -14,6 +14,7 @@ import javax.annotation.Resource;
  * <p>
  * Describe:
  */
+
 @RestController
 public class RuleTestController {
     @Resource
