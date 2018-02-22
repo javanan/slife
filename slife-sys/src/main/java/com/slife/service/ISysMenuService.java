@@ -50,4 +50,10 @@ public interface ISysMenuService extends IBaseService<SysMenu> {
      * @param id
      */
     void disableMenu(Long id);
+
+    /**
+     * 删除菜单
+     * @param id
+     */
+    Boolean deleteMenu(Long id);
 }

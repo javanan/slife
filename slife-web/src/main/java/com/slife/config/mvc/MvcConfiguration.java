@@ -6,6 +6,7 @@ import com.alibaba.fastjson.serializer.ToStringSerializer;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.slife.config.sitemesh.WebSiteMeshFilter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
@@ -32,20 +33,22 @@ import java.util.List;
 //@EnableWebMvc
 public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
-   @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/attach/**").addResourceLocations("file:E:/ideaword/moban/slife/attach/");
-    }
+    @Value("${attach_path}")
+    private String attachPath;
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/attach/**").addResourceLocations("file:"+attachPath);
+    }
 
 
     /**
      * 装饰器
-     * @return
-     * 2016年8月27日下午12:37:20
+     *
+     * @return 2016年8月27日下午12:37:20
      */
     @Bean
-    public FilterRegistrationBean siteMeshFilter(){
+    public FilterRegistrationBean siteMeshFilter() {
         FilterRegistrationBean fitler = new FilterRegistrationBean();
         WebSiteMeshFilter siteMeshFilter = new WebSiteMeshFilter();
         fitler.setFilter(siteMeshFilter);
@@ -54,7 +57,7 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
     public EmbeddedServletContainerCustomizer containerCustomizer() {
-        return new EmbeddedServletContainerCustomizer(){
+        return new EmbeddedServletContainerCustomizer() {
             @Override
             public void customize(ConfigurableEmbeddedServletContainer container) {
                 container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST, "/400.html"));

@@ -2,26 +2,22 @@ package com.slife.shiro;
 
 import com.slife.constant.Global;
 import com.slife.constant.Setting;
+import com.slife.entity.SysRole;
 import com.slife.entity.SysUser;
 import com.slife.service.ISysRoleService;
 import com.slife.service.ISysUserService;
 import com.slife.util.ApplicationContextRegister;
 import com.slife.util.Encodes;
-import com.slife.vo.SysRoleVO;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.cache.CacheManager;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
@@ -40,11 +36,7 @@ public class AuthRealm extends AuthorizingRealm {
 
     private  Logger logger= LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    public void setCacheManager(EhCacheManager ehCacheManager) {
-        super.setCacheManager(ehCacheManager);
 
-    }
 
     /**
      * 设定密码校验的Hash算法与迭代次数
@@ -71,7 +63,7 @@ public class AuthRealm extends AuthorizingRealm {
                 throw new DisabledAccountException();
             }
             byte[] salt = Encodes.decodeHex(sysUser.getPassword().substring(0, 16));
-            return new SimpleAuthenticationInfo(new ShiroUser(sysUser.getId(),loginName, sysUser.getName()),
+            return new SimpleAuthenticationInfo(new ShiroUser(sysUser.getId(),loginName, sysUser.getName(),sysUser.getPhoto()),
                     sysUser.getPassword().substring(16), ByteSource.Util.bytes(salt),
                     getName());
         } else {
@@ -91,11 +83,11 @@ public class AuthRealm extends AuthorizingRealm {
 
         ISysRoleService sysRoleService = ApplicationContextRegister.getBean(ISysRoleService.class);
 
-        for (SysRoleVO sysRoleVO : sysRoleService.selectRoleByUserId(shiroUser.id)) {
+        for (SysRole sysRole : sysRoleService.selectRoleByUserId(shiroUser.id)) {
             // 基于Role的权限信息
-            info.addRole(sysRoleVO.getCode());
+            info.addRole(sysRole.getCode());
             // 基于Permission的权限信息
-            info.addStringPermissions(sysRoleVO.getPermissionList());
+            info.addStringPermissions(sysRole.getPermissionList());
         }
         return info;
     }

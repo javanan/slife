@@ -16,6 +16,7 @@ import com.slife.service.ISysUserOfficeService;
 import com.slife.shiro.SlifeSysUser;
 import com.slife.util.ReturnDTOUtil;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,6 +50,7 @@ public class SysOfficeController extends BaseController {
     private ISysUserOfficeService sysUserOfficeService;
 
 
+    @RequiresPermissions("sys:office:list")
     @SLog("获取组织用户列表数据")
     @ApiOperation(value = "获取组织用户列表数据", notes = "获取组织用户列表数据:使用约定的DataTable")
     @PostMapping(value = "/user/list")

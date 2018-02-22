@@ -3,9 +3,7 @@ package com.slife.entity;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.slife.base.entity.DataEntity;
 import com.slife.constant.Global;
-import com.slife.vo.SysRoleVO;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 

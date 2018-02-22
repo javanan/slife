@@ -5,7 +5,7 @@
     user.home      – 用户主目录
     user.dir       – 用户当前工作目录
     java.io.tmpdir – 默认临时文件路径 -->
-    <diskStore path="java.io.tmpdir/slife/shiro" />
+    <diskStore path="D:/test/ehcache" />
     <cacheManagerEventListenerFactory class="" properties="" />
     <!--缺省缓存配置。CacheManager 会把这些配置应用到程序中。
         下列属性是 defaultCache 必须的:
@@ -17,5 +17,10 @@
         timeToLiveSeconds - 缓存创建之后，到达该时间(秒)缓存自动销毁
         overflowToDisk    - 当缓存中的数据达到最大值时，是否把缓存数据写入磁盘.
         -->
-    <defaultCache maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="false" diskPersistent="false" diskExpiryThreadIntervalSeconds="120" />
+    <cache name="books"
+           maxElementsInMemory="50000"
+           timeToLiveSeconds="25">
+    </cache>
+    <defaultCache maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="20" timeToLiveSeconds="25"
+                  overflowToDisk="false" diskPersistent="false" diskExpiryThreadIntervalSeconds="20" />
 </ehcache>

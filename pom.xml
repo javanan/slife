@@ -20,7 +20,9 @@
 
     <!--版本说明-->
     <properties>
-        <shiro.version>1.3.2</shiro.version>
+        <ehcache.core.version>2.6.11</ehcache.core.version>
+        <ehcache.version>3.3.1</ehcache.version>
+        <shiro.version>1.4.0</shiro.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <slife.version>1.0-SNAPSHOT</slife.version>
         <swagger.version>2.7.0</swagger.version>
@@ -42,13 +44,13 @@
         <module>slife-common</module>
         <module>slife-sys</module>
         <module>slife-web</module>
-        <module>slife-wx-applet</module>
-        <module>slife-activiti</module>
         <module>slife-log</module>
-       <!-- <module>slife-test</module>-->
-        <module>slife-blog</module>
-        <module>slife-drools</module>
         <module>slife-code</module>
+        <module>slife-drools</module>
+        <module>slife-activiti</module>
+        <module>slife-blog</module>
+        <module>slife-wx-applet</module>
+
     </modules>
 
     <!--全局依赖-->
@@ -98,17 +100,44 @@
             <artifactId>shiro-spring</artifactId>
             <version>${shiro.version}</version>
         </dependency>
+
+        <!--缓存-->
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>${ehcache.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>${ehcache.core.version}</version>
+        </dependency>
         <!-- shiro ehcache -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
             <version>${shiro.version}</version>
         </dependency>
-        <!-- ehchache -->
+        <!-- https://mvnrepository.com/artifact/org.crazycake/shiro-redis -->
+        <dependency>
+            <groupId>org.crazycake</groupId>
+            <artifactId>shiro-redis</artifactId>
+            <version>2.4.6</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cache</artifactId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
@@ -142,14 +171,7 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -231,6 +253,11 @@
                 <artifactId>slife-sys</artifactId>
                 <version>${slife.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.slife</groupId>
+                <artifactId>slife-bkapp</artifactId>
+                <version>${slife.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.slife</groupId>
@@ -310,9 +337,6 @@
                     <useIncrementalCompilation>false</useIncrementalCompilation>
                 </configuration>
             </plugin>
-
-
-
 
         </plugins>
     </build>

@@ -1,11 +1,9 @@
 package com.slife.service;
 
-import com.baomidou.mybatisplus.service.IService;
 import com.slife.base.service.IBaseService;
 import com.slife.base.vo.DataTable;
 import com.slife.base.vo.JsTree;
 import com.slife.entity.SysRole;
-import com.slife.vo.SysRoleVO;
 
 import java.util.List;
 import java.util.Map;
@@ -39,7 +37,7 @@ public interface ISysRoleService extends IBaseService<SysRole> {
      * @param userId
      * @return
      */
-     List<SysRoleVO> selectRoleByUserId(Long userId);
+     List<SysRole> selectRoleByUserId(Long userId);
 
     /**
      * 查询系统中，没有删除，并且是可以使用的角色

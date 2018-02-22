@@ -29,12 +29,25 @@ public class SlifeExceptionHandler {
 
 
 
+
+
         @ExceptionHandler(BindException.class)
         public  ResponseEntity<ReturnDTO> bindExceptionHandler(BindException e){
             return new ResponseEntity(ReturnDTOUtil.custom(HttpCodeEnum.INVALID_REQUEST.getCode(),e.getMessage()),
                     HttpStatus.BAD_REQUEST);
         }
 
+
+    /**
+     * UnauthorizedException 权限异常
+     * @param e
+     * @return
+     */
+/*    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ReturnDTO> handleUnauthorizedException(UnauthorizedException e) {
+        logger.info(e.getError());
+        return new ResponseEntity(e.getReturnDTO(), HttpStatus.UNAUTHORIZED);
+    }*/
 
     /**
      * 业务异常

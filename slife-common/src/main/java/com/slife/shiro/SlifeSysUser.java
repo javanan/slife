@@ -16,6 +16,9 @@ public class SlifeSysUser {
     public static String name() {
         return ShiroUser().getName();
     }
+    public static String photo() {
+        return ShiroUser().getPhoto();
+    }
 
     public static Long id() {
         return ShiroUser().getId();

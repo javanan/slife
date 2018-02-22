@@ -1,99 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<artifactId>slife-web</artifactId>
-	<packaging>jar</packaging>
+    <artifactId>slife-web</artifactId>
+    <packaging>jar</packaging>
 
-	<name>slife-web</name>
+    <name>slife-web</name>
 
-	<description>web  project for Spring Boot</description>
+    <description>web project for Spring Boot</description>
 
-	<parent>
-		<artifactId>slife</artifactId>
-		<groupId>com.slife</groupId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <artifactId>slife</artifactId>
+        <groupId>com.slife</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-	</properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+    </properties>
 
-	<dependencies>
-
-		<dependency>
-			<groupId>de.codecentric</groupId>
-			<artifactId>spring-boot-admin-starter-client</artifactId>
-			<version>1.5.5</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.drtrang</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.0.2</version>
-		</dependency>
+    <dependencies>
 
 
-		<dependency>
-			<groupId>org.sitemesh</groupId>
-			<artifactId>sitemesh</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>com.github.drtrang</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.0.2</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.slife</groupId>
-			<artifactId>slife-activiti</artifactId>
-		</dependency>
 
-		<dependency>
-			<groupId>com.slife</groupId>
-			<artifactId>slife-code</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.sitemesh</groupId>
+            <artifactId>sitemesh</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>com.slife</groupId>
-			<artifactId>slife-blog</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.slife</groupId>
-			<artifactId>slife-sys</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.slife</groupId>
-			<artifactId>slife-wx-applet</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.slife</groupId>
-			<artifactId>slife-log</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.slife</groupId>
-			<artifactId>slife-test</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>com.slife</groupId>
+            <artifactId>slife-code</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>com.slife</groupId>
-			<artifactId>slife-drools</artifactId>
-		</dependency>
 
-	</dependencies>
+        <dependency>
+            <groupId>com.slife</groupId>
+            <artifactId>slife-sys</artifactId>
+        </dependency>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
+        <dependency>
+            <groupId>com.slife</groupId>
+            <artifactId>slife-log</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.slife</groupId>
+            <artifactId>slife-bkapp</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 
 </project>

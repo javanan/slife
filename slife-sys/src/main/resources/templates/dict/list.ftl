@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>数据字典管理</title>
-    <link rel="stylesheet" type="text/css" href="${base}/css/plugins/jsTree/style.min.css"/>
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/css/plugins/jsTree/style.min.css"/>
     <style>
         #dict_edit_table .control-label {
             text-align: left !important;
@@ -53,7 +53,7 @@
                     </div>
 
                     <div class="portlet-body form" id="dict_edit_table">
-                        <form class="form-horizontal m-t" action="${base}/sys/dict/insert" method="POST" id="dictForm">
+                        <form class="form-horizontal m-t" action="${rc.contextPath}/sys/dict/insert" method="POST" id="dictForm">
                             <input type="hidden" name="id"/>
                             <input type="hidden" name="dicPid" value="0"/>
                             <input type="hidden" name="path"/>
@@ -163,10 +163,10 @@
     </div>
 </div>
 </div>
-<script src="${base}/js/plugins/jsTree/jstree.min.js" type="text/javascript"></script>
-<script src="${base}/js/plugins/validate/jquery.validate.min.js"></script>
-<script src="${base}/js/plugins/validate/messages_zh.min.js"></script>
-<script src="${base}/js/jquery.form.js"></script>
+<script src="${rc.contextPath}/js/plugins/jsTree/jstree.min.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="${rc.contextPath}/js/plugins/validate/messages_zh.min.js"></script>
+<script src="${rc.contextPath}/js/jquery.form.js"></script>
 
 
 <script type="text/javascript">
@@ -194,7 +194,7 @@
         text = selectd.node.text;
         if (dic_id) {
             $.ajax({
-                url: '${base}/sys/dict/select/' + dic_id,
+                url: '${rc.contextPath}/sys/dict/select/' + dic_id,
                 type: 'GET',
                 success: function (msg) {
                     var data = msg.dict;
@@ -303,7 +303,7 @@
             btn: ['是', '否']
         },function () {
             $.ajax({
-                url: '${base}/sys/dict/delete/' + dic_id,
+                url: '${rc.contextPath}/sys/dict/delete/' + dic_id,
                 type: 'DELETE',
                 success: function (data) {
                     if (data.success) {
@@ -321,7 +321,7 @@
     $('.btn-rush').click(function () {
 
         $.ajax({
-            url: '${base}/sys/dict/rush',
+            url: '${rc.contextPath}/sys/dict/rush',
             type: 'GET',
             success: function (data) {
                layer.msg('刷新成功');

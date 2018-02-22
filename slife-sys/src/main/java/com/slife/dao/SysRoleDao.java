@@ -24,6 +24,6 @@ public interface SysRoleDao extends CrudDao<SysRole> {
      * @param userId
      * @return
      */
-    List<SysRoleVO> selectRoleByUserId(Long userId);
+    List<SysRole> selectRoleByUserId(Long userId);
 
 }

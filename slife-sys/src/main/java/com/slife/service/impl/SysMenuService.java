@@ -11,10 +11,15 @@ import com.slife.entity.SysMenu;
 import com.slife.enums.HttpCodeEnum;
 import com.slife.exception.SlifeException;
 import com.slife.service.ISysMenuService;
+import com.slife.service.ISysRoleMenuService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author chen
@@ -28,6 +33,8 @@ import java.util.*;
 @Transactional(readOnly = true, rollbackFor = Exception.class)
 public class SysMenuService extends BaseService<SysMenuDao, SysMenu> implements ISysMenuService {
 
+    @Autowired
+    private ISysRoleMenuService sysRoleMenuService;
 
     /**
      * 把菜单设置为失效
@@ -45,6 +52,26 @@ public class SysMenuService extends BaseService<SysMenuDao, SysMenu> implements 
         updateBatchById(delList);
         //TODO 判断是否有角色，有角色要清理角色与资源关系
 
+    }
+
+    /**
+     * 删除菜单和子菜单
+     *
+     * @param id
+     * @return
+     */
+    @Transactional(readOnly = false, rollbackFor = Exception.class)
+    @Override
+    public Boolean deleteMenu(Long id) {
+        SysMenu sysMenu = selectById(id);
+        Optional.ofNullable(sysMenu).orElseThrow(() -> new SlifeException(HttpCodeEnum.NOT_FOUND));
+
+        List<SysMenu> delList = selectList(Condition.create().like("path", sysMenu.getPath(), SqlLike.RIGHT));
+        List<Long> ids = delList.stream().parallel().map(menu -> menu.getId()).collect(Collectors.toList());
+        deleteBatchIds(ids);
+        //删除对应的角色关联
+        sysRoleMenuService.delete(Condition.create().in("sys_menu_id", ids));
+        return true;
     }
 
     /**
@@ -96,6 +123,8 @@ public class SysMenuService extends BaseService<SysMenuDao, SysMenu> implements 
      * @param userId
      * @return
      */
+
+    @Cacheable(cacheNames="books", key="#userId")
     @Override
     public List<SysMenu> CaseMenu(Long userId) {
         Map<Long, List<SysMenu>> map = new HashMap();

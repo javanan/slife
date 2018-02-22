@@ -1,10 +1,10 @@
 <html>
 <head>
     <title>组织管理</title>
-    <link rel="stylesheet" type="text/css" href="${base}/css/plugins/jsTree/style.min.css"/>
-    <link href="${base}/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="${base}/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-    <link href="${base}/css/animate.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/css/plugins/jsTree/style.min.css"/>
+    <link href="${rc.contextPath}/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="${rc.contextPath}/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="${rc.contextPath}/css/animate.css" rel="stylesheet">
     <script>
         var url = "/sys/office/user/";
     </script>
@@ -63,7 +63,7 @@
 
                         </div>
                         <div class="portlet-body form" id="menu_edit_table">
-                            <form id="officeForm" action="${base}/sys/office/insert" class="form-horizontal form-bordered"
+                            <form id="officeForm" action="${rc.contextPath}/sys/office/insert" class="form-horizontal form-bordered"
                                   method="POST">
                                 <input type="hidden" name="id"/>
                                 <input type="hidden" name="parentId" value="0"/>
@@ -255,17 +255,17 @@
     </div>
 </div>
 
-<script src="${base}/js/plugins/jsTree/jstree.min.js" type="text/javascript"></script>
-<script src="${base}/js/plugins/validate/jquery.validate.min.js"></script>
-<script src="${base}/js/plugins/validate/messages_zh.min.js"></script>
-<script src="${base}/js/jquery.form.js"></script>
+<script src="${rc.contextPath}/js/plugins/jsTree/jstree.min.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="${rc.contextPath}/js/plugins/validate/messages_zh.min.js"></script>
+<script src="${rc.contextPath}/js/jquery.form.js"></script>
 
 <!-- Bootstrap table -->
-<script src="${base}/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="${base}/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-<script src="${base}/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="${rc.contextPath}/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="${rc.contextPath}/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="${rc.contextPath}/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 
-<script src="${base}/js/slife/datatable.js"></script>
+<script src="${rc.contextPath}/js/slife/datatable.js"></script>
 <script type="text/javascript">
 
 
@@ -281,7 +281,7 @@
                 align: 'center',
                 formatter: function (value, row, index) {
 
-                    return '<img style="width:30px" src=${base}"'+value+'"/>';
+                    return '<img style="width:30px" src=${rc.contextPath}"'+value+'"/>';
                 }
             },
             {
@@ -367,7 +367,7 @@
         text = selectd.node.text;
         if (menuid) {
             $.ajax({
-                url: '${base}/sys/office/select/' + menuid,
+                url: '${rc.contextPath}/sys/office/select/' + menuid,
                 type: 'GET',
                 success: function (data) {
                     data=data.office;
@@ -495,7 +495,7 @@
                 btn: ['确定', '取消']
             }, function () {
                 $.ajax({
-                    url: '${base}/sys/office/disable/' + menuid,
+                    url: '${rc.contextPath}/sys/office/disable/' + menuid,
                     type: "POST",
 
                     success: function (r) {
@@ -523,7 +523,7 @@
             dataType: "json",
             cache: true,
             type: "GET",
-            url: "${base}/js/icon.json",
+            url: "${rc.contextPath}/js/icon.json",
             traditional: true,
             success: function (data) {
                 //  stop_request_load();

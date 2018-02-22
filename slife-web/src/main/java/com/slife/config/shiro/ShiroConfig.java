@@ -9,7 +9,7 @@ package com.slife.config.shiro;
  */
 
 import com.slife.shiro.AuthRealm;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -22,7 +22,6 @@ import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreato
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 
 import java.util.LinkedHashMap;
 
@@ -39,10 +38,10 @@ public class ShiroConfig {
    private Logger logger = org.slf4j.LoggerFactory.getLogger(getClass());
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilter(@Qualifier("authRealm")AuthRealm authRealm) {
-        SecurityManager manager= securityManager(authRealm);
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
+        //SecurityManager manager= securityManager(authRealm);
         ShiroFilterFactoryBean bean=new ShiroFilterFactoryBean();
-        bean.setSecurityManager(manager);
+        bean.setSecurityManager(securityManager);
         //配置登录的url和登录成功的url
         bean.setLoginUrl("/login");
         bean.setSuccessUrl("/index");
@@ -86,16 +85,11 @@ public class ShiroConfig {
         return bean;
     }
 
-/*    @Bean
-    public AuthRealm authRealm(){
-        AuthRealm authRealm=new AuthRealm();
-        authRealm.setCacheManager(getEhCacheManager());
-        return authRealm;
-    }*/
 
     //配置核心安全事务管理器
     @Bean
-    public SecurityManager securityManager(@Qualifier("authRealm")AuthRealm authRealm) {
+    public SecurityManager securityManager(@Qualifier("authRealm")AuthRealm authRealm,@Qualifier("redisCacheManager")CacheManager
+            cacheManager) {
 
        logger.info("--------------shiro已经加载----------------");
         DefaultWebSecurityManager manager=new DefaultWebSecurityManager();
@@ -104,7 +98,7 @@ public class ShiroConfig {
 
         //注入缓存管理器;
         //注意:开发时请先关闭，如不关闭热启动会报错
-        manager.setCacheManager(getEhCacheManager());//这个如果执行多次，也是同样的一个对象;
+        manager.setCacheManager(cacheManager);//这个如果执行多次，也是同样的一个对象;
         //注入记住我管理器;
         manager.setRememberMeManager(rememberMeManager());
 
@@ -121,14 +115,9 @@ public class ShiroConfig {
      * @return
      */
 
-    @Bean
-    public EhCacheManager getEhCacheManager() {
-        logger.info("--------------ehCacheManager init---------------");
-        EhCacheManager cacheManager = new EhCacheManager();
-        cacheManager.setCacheManagerConfigFile("classpath:cache/ehcache-shiro.xml");
-        logger.info("--------------ehCacheManager init---------------"+cacheManager);
-        return cacheManager;
-    }
+
+
+
 
     /**
      * cookie对象;
@@ -178,10 +167,10 @@ public class ShiroConfig {
         return creator;
     }
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("authRealm")AuthRealm authRealm) {
-        SecurityManager manager= securityManager(authRealm);
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+      //  SecurityManager manager= securityManager(authRealm);
         AuthorizationAttributeSourceAdvisor advisor=new AuthorizationAttributeSourceAdvisor();
-        advisor.setSecurityManager(manager);
+        advisor.setSecurityManager(securityManager);
         return advisor;
     }
 }

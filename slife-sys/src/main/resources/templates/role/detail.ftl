@@ -2,29 +2,29 @@
 <head>
     <title>系统用户编辑</title>
 
-    <link href="${base}/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="${base}/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-    <link href="${base}/css/animate.css" rel="stylesheet">
-    <link href="${base}/css/style.css?v=4.1.0" rel="stylesheet">
-    <link href="${base}/css/slife.css" rel="stylesheet">
+    <link href="${rc.contextPath}/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="${rc.contextPath}/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="${rc.contextPath}/css/animate.css" rel="stylesheet">
+    <link href="${rc.contextPath}/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="${rc.contextPath}/css/slife.css" rel="stylesheet">
 
 
-    <link rel="stylesheet" type="text/css" href="${base}/css/plugins/jsTree/style.min.css"/>
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/css/plugins/jsTree/style.min.css"/>
     <!-- 全局js -->
-    <script src="${base}/js/jquery.min.js?v=2.1.4"></script>
-    <script src="${base}/js/bootstrap.min.js?v=3.3.6"></script>
-    <script src="${base}/js/plugins/validate/jquery.validate.min.js"></script>
-    <script src="${base}/js/plugins/validate/messages_zh.min.js"></script>
-    <script src="${base}/js/plugins/layer/layer.min.js"></script>
-    <script src="${base}/js/jquery.form.js"></script>
+    <script src="${rc.contextPath}/js/jquery.min.js?v=2.1.4"></script>
+    <script src="${rc.contextPath}/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="${rc.contextPath}/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="${rc.contextPath}/js/plugins/validate/messages_zh.min.js"></script>
+    <script src="${rc.contextPath}/js/plugins/layer/layer.min.js"></script>
+    <script src="${rc.contextPath}/js/jquery.form.js"></script>
 
 
     <script>
         var url = "${url}", action = "${action}";
 
     </script>
-    <script src="${base}/js/slife/slife.js"></script>
-    <script src="${base}/js/slife/slifeform.js"></script>
+    <script src="${rc.contextPath}/js/slife/slife.js"></script>
+    <script src="${rc.contextPath}/js/slife/slifeform.js"></script>
 </head>
 
 <body class="gray-bg">
@@ -100,7 +100,7 @@
     </div>
 </div>
 
-<script src="${base}/js/plugins/jsTree/jstree.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/plugins/jsTree/jstree.js" type="text/javascript"></script>
 <script type="text/javascript">
     var tree = $("#menuTree").jstree({
         "checkbox": {"keep_selected_style": false},
@@ -157,7 +157,7 @@
             code: {
                 maxlength: 64,
                 required: true,
-                remote: '${base}/sys/role/check/${role.id}'
+                remote: '${rc.contextPath}/sys/role/check/${role.id}'
             },
             name: {
                 maxlength: 64,

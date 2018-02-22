@@ -36,7 +36,7 @@ public enum HttpCodeEnum {
     MODEL_NOT_EXIST(1000, "模型不存在"),
 
     USERNAME_OR_PASSWORD_ERR(2000,"用户名或密码错误"),
-    DELETE_DEFAULT_PHOTO_ERR(2001,"默认头像不可删除");
+    DELETE_DEFAULT_PHOTO_ERR(2001,"默认头像不可删除"), TOKEN_ERR(200, "token无效");
 
     private final int code;
     private final String message;

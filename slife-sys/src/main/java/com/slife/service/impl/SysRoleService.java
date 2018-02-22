@@ -16,7 +16,6 @@ import com.slife.service.ISysMenuService;
 import com.slife.service.ISysRoleMenuService;
 import com.slife.service.ISysRoleService;
 import com.slife.service.ISysUserRoleService;
-import com.slife.vo.SysRoleVO;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,8 +108,9 @@ public class SysRoleService extends BaseService<SysRoleDao, SysRole>  implements
      * @return
      */
     @Override
-    public List<SysRoleVO> selectRoleByUserId(Long userId) {
-        return this.baseMapper.selectRoleByUserId(userId);
+    public  List<SysRole> selectRoleByUserId(Long userId) {
+        List<SysRole> sysRoleList=this.baseMapper.selectRoleByUserId(userId);
+        return sysRoleList;
     }
 
     /**

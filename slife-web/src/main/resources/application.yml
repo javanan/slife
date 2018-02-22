@@ -1,6 +1,9 @@
 spring:
   application:
     name: slife
+  profiles:
+    active: dev
+
   aop:
     proxy-target-class: true
   freemarker:
@@ -14,15 +17,9 @@ spring:
     request-context-attribute: rc
     charset: UTF-8
 
-  boot:
-    admin:
-      url: http://localhost:8002
-      client:
-        enabled: true
-
   redis:
     database: 0
-    host: 127.0.0.1
+    host: 119.29.53.182
     port: 6379
     password: 123456
     pool:
@@ -32,41 +29,18 @@ spring:
       min-idle: 0
     timeout: 0
 
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/slife?useUnicode=true&characterEncoding=utf8&useSSL=false
-    username: root
-    password: root
-    druid:
-      validationQuery: SELECT 1
-      initialSize: 10
-      minIdle: 10
-      maxActive: 200
-      minEvictableIdleTimeMillis: 180000
-      testOnBorrow: false
-      testWhileIdle: true
-      removeAbandoned: true
-      removeAbandonedTimeout: 1800
-      logAbandoned: true
-      poolPreparedStatements: true
-      maxOpenPreparedStatements: 100
-
 
 sitemesh:
   contentPath: /*
   decoratorPath: classpath:/layouts/default.jsp
   excludedPaths: /js/*,/assets/*,/css/*
 
-server:
-  port: 8081
+
 
 management:
   security:
     enabled: false
 
-
-logging:
-  file: "logs/slife.log"
 
 logging.level.project.user.UserClient: DEBUG
 

@@ -14,10 +14,12 @@ public class ShiroUser implements Serializable{
     public Long id;
     public String username;
     public String name;
-    public ShiroUser(Long id, String username, String name){
+    public String photo;
+    public ShiroUser(Long id, String username, String name,String photo){
         this.id=id;
         this.username=username;
         this.name=name;
+        this.photo=photo;
     }
 
     public Long getId() {
@@ -42,6 +44,14 @@ public class ShiroUser implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     /**

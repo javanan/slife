@@ -1,7 +1,7 @@
 <html>
 <head>
     <title>菜单管理</title>
-    <link rel="stylesheet" type="text/css" href="${base}/css/plugins/jsTree/style.min.css"/>
+    <link rel="stylesheet" type="text/css" href="${rc.contextPath}/css/plugins/jsTree/style.min.css"/>
     <style>
         #menu_edit_table .control-label {
             text-align: left !important;
@@ -50,14 +50,17 @@
                                 <span class="hidden-480">编辑此菜单</span>
                             </button>
 
-                            <button type="button" class="btn red btn-delete btn-danger" disabled="disabled">
+<#--                            <button type="button" class="btn red btn-delete btn-danger" disabled="disabled">
                                 <i class="fa fa-trash-o"></i>
                                 <span class="hidden-480">禁用此菜单</span>
+                            </button>-->
+                            <button type="button" class="btn red btn-delete btn-danger" disabled="disabled">
+                                <i class="fa fa-trash-o"></i>
+                                <span class="hidden-480">删除此菜单</span>
                             </button>
-
                         </div>
                         <div class="portlet-body form" id="menu_edit_table">
-                            <form id="menuForm" action="${base}/sys/menu/insert" class="form-horizontal form-bordered"
+                            <form id="menuForm" action="${rc.contextPath}/sys/menu/insert" class="form-horizontal form-bordered"
                                   method="POST">
                                 <input type="hidden" name="id"/>
                                 <input type="hidden" name="parentId" value="0"/>
@@ -262,10 +265,10 @@
     </div>
 </div>
 
-<script src="${base}/js/plugins/jsTree/jstree.min.js" type="text/javascript"></script>
-<script src="${base}/js/plugins/validate/jquery.validate.min.js"></script>
-<script src="${base}/js/plugins/validate/messages_zh.min.js"></script>
-<script src="${base}/js/jquery.form.js"></script>
+<script src="${rc.contextPath}/js/plugins/jsTree/jstree.min.js" type="text/javascript"></script>
+<script src="${rc.contextPath}/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="${rc.contextPath}/js/plugins/validate/messages_zh.min.js"></script>
+<script src="${rc.contextPath}/js/jquery.form.js"></script>
 
 <script type="text/javascript">
 
@@ -294,7 +297,7 @@
         text = selectd.node.text;
         if (menuid) {
             $.ajax({
-                url: '${base}/sys/menu/select/' + menuid,
+                url: '${rc.contextPath}/sys/menu/select/' + menuid,
                 type: 'GET',
                 success: function (data) {
                     data=data.menu;
@@ -422,12 +425,12 @@
     });
     $('.btn-delete').click(function () {
         if (menuid){
-            layer.confirm('确认要禁用此菜单及其下级所有资源吗？', {
+            layer.confirm('确认要删除此菜单及其下级所有资源吗？', {
                 btn: ['确定', '取消']
             }, function () {
                 $.ajax({
-                    url: '${base}/sys/menu/disable/' + menuid,
-                    type: "POST",
+                    url: '${rc.contextPath}/sys/menu/delete/' + menuid,
+                    type: "DELETE",
 
                     success: function (r) {
                         window.location.reload();
@@ -454,7 +457,7 @@
             dataType: "json",
             cache: true,
             type: "GET",
-            url: "${base}/js/icon.json",
+            url: "${rc.contextPath}/js/icon.json",
             traditional: true,
             success: function (data) {
               //  stop_request_load();

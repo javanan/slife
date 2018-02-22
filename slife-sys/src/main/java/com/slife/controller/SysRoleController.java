@@ -10,6 +10,7 @@ import com.slife.service.ISysMenuService;
 import com.slife.service.ISysRoleService;
 import com.slife.util.ReturnDTOUtil;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,30 +38,13 @@ public class SysRoleController extends BaseController {
 
 
 
-    @PostMapping(value = "/tf")
-    @ResponseBody
-    public ReturnDTO tf() {
-        System.out.println("==================");
-        System.out.println(sysRoleService);
-        System.out.println(AopUtils.isAopProxy(sysRoleService));
-        System.out.println(AopUtils.isCglibProxy(sysRoleService));
-        System.out.println(AopUtils.isJdkDynamicProxy(sysRoleService));
-
-        System.out.println("==================");
-        System.out.println(this);
-        System.out.println(AopUtils.isAopProxy(this));
-        System.out.println(AopUtils.isCglibProxy(this));
-        System.out.println(AopUtils.isJdkDynamicProxy(this));
-        sysRoleService.tf();
-
-        return ReturnDTOUtil.success();
-    }
     /**
      * 进入系统角色列表
      *
      * @param model
      * @return
      */
+    @RequiresPermissions("sys:role:list")
     @GetMapping(value = "")
     public String list(Model model, HttpServletRequest request) {
         model.addAttribute("url", request.getContextPath() + "/sys/role/");

@@ -18,32 +18,32 @@
     <meta http-equiv="refresh" content="0;ie.html"/>
     <![endif]-->
     <sitemesh:write property='head'/>
-    <link rel="shortcut icon" href="${base}/favicon.ico">
-    <link href="${base}/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="${base}/css/font-awesome.min.css?v=4.4.0" rel="stylesheet"/>
-    <link href="${base}/css/animate.css" rel="stylesheet"/>
-    <link href="${base}/css/style.css?v=4.1.0" rel="stylesheet"/>
-    <link href="${base}/css/slife.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="${rc.contextPath}/favicon.ico">
+    <link href="${rc.contextPath}/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="${rc.contextPath}/css/font-awesome.min.css?v=4.4.0" rel="stylesheet"/>
+    <link href="${rc.contextPath}/css/animate.css" rel="stylesheet"/>
+    <link href="${rc.contextPath}/css/style.css?v=4.1.0" rel="stylesheet"/>
+    <link href="${rc.contextPath}/css/slife.css" rel="stylesheet"/>
 
-    <script src="${base}/js/jquery.min.js?v=2.1.4"></script>
-    <script src="${base}/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="${rc.contextPath}/js/jquery.min.js?v=2.1.4"></script>
+    <script src="${rc.contextPath}/js/bootstrap.min.js?v=3.3.6"></script>
 
-    <script src="${base}/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="${base}/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="${base}/js/plugins/layer/layer.min.js"></script>
+    <script src="${rc.contextPath}/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="${rc.contextPath}/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="${rc.contextPath}/js/plugins/layer/layer.min.js"></script>
 
-    <script src="${base}/js/hplus.js?v=4.1.0"></script>
-    <script type="text/javascript" src="${base}/js/contabs.js"></script>
+    <script src="${rc.contextPath}/js/hplus.js?v=4.1.0"></script>
+    <script type="text/javascript" src="${rc.contextPath}/js/contabs.js"></script>
 
-    <script src="${base}/js/websocket/sockjs.min.js" type="text/javascript"></script>
-    <script src="${base}/js/websocket/stomp.min.js" type="text/javascript"></script>
-    <script src="${base}/js/websocket/sliescoket.js" type="text/javascript"></script>
+    <script src="${rc.contextPath}/js/websocket/sockjs.min.js" type="text/javascript"></script>
+    <script src="${rc.contextPath}/js/websocket/stomp.min.js" type="text/javascript"></script>
+    <script src="${rc.contextPath}/js/websocket/sliescoket.js" type="text/javascript"></script>
 
 <script>
-    var slifebase="${base}";
+    var slifebase="${rc.contextPath}";
 </script>
-    <script src="${base}/js/plugins/pace/pace.min.js"></script>
-    <script src="${base}/js/slife/slife.js"></script>
+    <script src="${rc.contextPath}/js/plugins/pace/pace.min.js"></script>
+    <script src="${rc.contextPath}/js/slife/slife.js"></script>
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow: hidden">
@@ -60,7 +60,7 @@
                 <li class="nav-header">
                     <div class="dropdown profile-element">
 							<span>
-                                <img alt="image" class="img-circle" src="${base}/img/log9.png"/>
+                                <img alt="image" class="img-circle" style="max-width: 50px" src="${rc.contextPath}${slife.photo}"/>
                             </span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear">
@@ -77,7 +77,7 @@
                             <li><a class="J_menuItem" href="contacts.html">联系我们</a></li>
                             <li><a class="J_menuItem" href="mailbox.html" id="connect">信箱</a></li>
                             <li class="divider"></li>
-                            <li><a href="${base}/logout">安全退出</a></li>
+                            <li><a href="${rc.contextPath}/logout">安全退出</a></li>
                         </ul>
                     </div>
                     <div class="logo-element">Slife</div>
@@ -86,30 +86,28 @@
 
             <#if menus??>
             <#else>
-                <script>location.href = '${base}/login'</script>
+                <script>location.href = '${rc.contextPath}/login'</script>
             </#if>
 
 
             <#list menus as menu>
-                <#if "/index"?starts_with(menu.href)>
-                    <li class="${menu.href?starts_with(url)?string('active','')}">
-                        <a href="${base}${menu.href}"><i class="${menu.icon}"></i><span
+                <#if "/index"?contains(menu.href)>
+                    <li class="${"${rc.requestUri}"?contains(menu.href)?string('active','')}">
+                        <a href="${rc.contextPath}${menu.href}"><i class="${menu.icon}"></i><span
                                 class="title nav-label">${menu.name}</span><span class="selected"></span></a>
                     </li>
                 <#else>
-                    <li class="${url?starts_with(menu.href)?string('active open','')}">
+                    <li class="${"${rc.requestUri}"?contains(menu.href)?string('active open','')}">
                         <a href="javascript:void(0);"><i class="${menu.icon}"></i><span
                                 class="title">${menu.name}</span>
-                            <#if menu.href?starts_with(url)>
+                            <#if menu.href?ends_with("${rc.requestUri}")>
                                 <span class='selected'></span>
                             </#if>
-                            <span class="arrow ${menu.href?starts_with(url)?string('open','')}"></span> <span
-                                    class="fa arrow">
-                        </a>
+                            <span class="arrow ${menu.href?ends_with("${rc.requestUri}")?string('open','')}"></span> <span class="fa arrow"></span></a>
                         <ul class='nav nav-second-level'>
                             <#list menu.children as ch >
-                                <li class="${url?contains(ch.href)?string('active','')}">
-                                    <a href="${base}${ch.href}"><i class="${ch.icon}"></i>${ch.name}</a>
+                                <li class="${"${rc.requestUri}"?contains(ch.href)?string('active','')}">
+                                    <a href="${rc.contextPath}${ch.href}"><i class="${ch.icon}"></i>${ch.name}</a>
                                 </li>
                             </#list>
                         </ul>
@@ -215,7 +213,7 @@
                             class="fa fa-tasks"></i> 主题
                     </a></li>
                     <li class="dropdown hidden-xs">
-                        <a href="${base}/logout" class="right-sidebar-toggle" aria-expanded="false"> <i
+                        <a href="${rc.contextPath}/logout" class="right-sidebar-toggle" aria-expanded="false"> <i
                                 class="fa fa-tasks"></i> 退出</a>
                     </li>
                 </ul>
@@ -363,12 +361,8 @@
     console.log("===========================");
     console.log(window.location.href);
     if (typeof console == "object") {
-        /* if($.browser.safari){
-             console.info("%c SB 的 life ","color: #0677c8; font-size: 18px; font-family: 'Helvetica-Neue', Helvetica, Arial, sans-serif;");
-         }else{*/
-        console.info("SB 的 life ");
-        console.info("系统博客地址 http://guan2ye.com");
-        /* }*/
+        console.info("邦客 app");
+
     }
 
 </script>

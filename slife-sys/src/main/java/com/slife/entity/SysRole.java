@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.slife.constant.Global;
 import com.slife.enums.DataScopeEnum;
+import com.slife.vo.SysMenuVO;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
@@ -39,6 +40,18 @@ public class SysRole extends CompanyLinkEntity<SysRole> {
      */
     @TableField(exist = false)
     private List<SysMenu> sysMenus;
+
+
+
+    public List<String> getPermissionList() {
+        List<String> permiss = new ArrayList<String>();
+        if (getSysMenus() != null && getSysMenus().size() > 0) {
+            for (SysMenu sysMenu : getSysMenus()) {
+                permiss.add(sysMenu.getPermission());
+            }
+        }
+        return permiss;
+    }
 
     /**
      * varchar(64) NULL是否可用

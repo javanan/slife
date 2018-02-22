@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.slife.base.controller.BaseController;
 import com.slife.base.vo.PCAjaxVO;
 import com.slife.service.ISysDictService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ public class SysDictController extends BaseController {
      *
      * @return
      */
+    @RequiresPermissions("sys:dict:list")
     @GetMapping(value = "")
     public String list(Model model) {
         model.addAttribute("dictTrees", JSON.toJSON(sysDictService.getDictTree()).toString());
