@@ -2,9 +2,9 @@
 <html>
 <head>
     <title>模型管理</title>
-    <link href="${base}/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="${base}/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-    <link href="${base}/css/animate.css" rel="stylesheet">
+    <link href="${rc.contextPath}/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="${rc.contextPath}/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="${rc.contextPath}/css/animate.css" rel="stylesheet">
     <script>
         var url = "${url}";
     </script>
@@ -57,11 +57,11 @@
 </div>
 
 <!-- Bootstrap table -->
-<script src="${base}/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<script src="${base}/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-<script src="${base}/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="${rc.contextPath}/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="${rc.contextPath}/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="${rc.contextPath}/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 
-<script src="${base}/js/slife/datatable.js"></script>
+<script src="${rc.contextPath}/js/slife/datatable.js"></script>
 <script type="text/javascript">
     function getcolumns() {
         var c = [

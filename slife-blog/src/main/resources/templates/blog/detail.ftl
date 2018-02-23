@@ -1,11 +1,11 @@
 <html>
 <head>
     <title>博客编辑</title>
-    <link href="${base}/css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="${base}/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-    <link href="${base}/css/animate.css" rel="stylesheet">
+    <link href="${rc.contextPath}/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="${rc.contextPath}/css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="${rc.contextPath}/css/animate.css" rel="stylesheet">
     <!--summernote css -->
-    <link href="${base}/css/plugins/summernote/summernote-0.8.8.css" rel="stylesheet">
+    <link href="${rc.contextPath}/css/plugins/summernote/summernote-0.8.8.css" rel="stylesheet">
     <script>
         var url = "${url}",  action = "${action}";
     </script>
@@ -66,7 +66,7 @@
                             <input id="status" name="status" type="hidden">
                         </div>
                         <div class="text-right form-group">
-                            <a class="btn btn-default waves-effect waves-light" href="${base}/blog/content">返回列表</a>
+                            <a class="btn btn-default waves-effect waves-light" href="${rc.contextPath}/blog/content">返回列表</a>
                             <button type="button"
                                     class="btn btn-primary waves-effect waves-light" type="submit">保存文章</button>
                             <button type="button"
@@ -80,10 +80,10 @@
     </div>
 </div>
 <!--summernote-->
-<script src="${base}/js/plugins/summernote/summernote.js"></script>
-<script src="${base}/js/plugins/summernote/summernote-zh-CN.min.js"></script>
-<script src="${base}/js/plugins/validate/jquery.validate.min.js"></script>
-<script src="${base}/js/plugins/validate/messages_zh.min.js"></script>
+<script src="${rc.contextPath}/js/plugins/summernote/summernote.js"></script>
+<script src="${rc.contextPath}/js/plugins/summernote/summernote-zh-CN.min.js"></script>
+<script src="${rc.contextPath}/js/plugins/validate/jquery.validate.min.js"></script>
+<script src="${rc.contextPath}/js/plugins/validate/messages_zh.min.js"></script>
 
 <script type="text/javascript">
     $().ready(function() {
