@@ -253,11 +253,6 @@
                 <artifactId>slife-sys</artifactId>
                 <version>${slife.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.slife</groupId>
-                <artifactId>slife-bkapp</artifactId>
-                <version>${slife.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>com.slife</groupId>
