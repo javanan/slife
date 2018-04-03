@@ -19,7 +19,7 @@ spring:
 
   redis:
     database: 0
-    host: localhost
+    host: 1.1.1.1
     port: 6379
     password: 123456
     pool:

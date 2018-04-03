@@ -43,6 +43,10 @@
             <artifactId>slife-code</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.slife</groupId>
+            <artifactId>slife-drools</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.slife</groupId>
