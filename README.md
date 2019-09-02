@@ -233,7 +233,10 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
 
 
 
+**个人微信公众号**
+   欢迎关注
 
+![](https://github.com/javanan/slife/blob/master/attach/wx1.jpg)
 
 
 
