@@ -4,7 +4,7 @@ qq群 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=3d00028ad6bec03e9
 <br>
 ## qq群 421351927
 
-# **[小福利 点我获取阿里云优惠券](https://promotion.aliyun.com/ntms/act/ambassador/sharetouser.html?userCode=vf2b5zld&utm_source=vf2b5zld)**
+# **[阿里云服务器89一年，新老用户共享，但是最便宜的机器是要新用户，你完全可以用女朋友 或者家人的 支付宝注册一个，服务器可以用来学习，部署应用，练手](https://www.aliyun.com/minisite/goods?userCode=vf2b5zld&share_source=copy_link)**
 
 
 
