@@ -5,7 +5,7 @@
 
 
 
-# **[阿里云服务器89一年，新老用户共享，但是最便宜的机器是要新用户，你完全可以用女朋友 或者家人的 支付宝注册一个，服务器可以用来学习，部署应用，练手](https://www.aliyun.com/minisite/goods?userCode=vf2b5zld&share_source=copy_link)**
+# **[阿里云服务器89一年，新老用户共享，但是最便宜的机器是要新用户，你完全可以用女朋友 或者家人的 支付宝注册一个，服务器可以用来学习，部署应用，练手，比学生机便宜](https://www.aliyun.com/minisite/goods?userCode=vf2b5zld&share_source=copy_link)**
 
 
 
@@ -231,24 +231,6 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
     把不同的模块打包成jar，对应的freemark文件也打包在对应的模块jar中。实现了功能模块的可插拔式部署。
 
 ![](https://github.com/javanan/slife/blob/master/dec/8.jpg?raw=true)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
