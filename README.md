@@ -1,8 +1,9 @@
-## 联系方式
-微信0
-qq群 <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=3d00028ad6bec03e99d0491e6fb055b3edbd5be3ef9ab5adbafb8a13851ba7eb"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="SLife" title="SLife"></a>
-<br>
-## qq群 421351927
+**个人微信公众号**
+   欢迎关注
+
+![](https://github.com/javanan/slife/blob/master/attach/wx1.jpg)
+
+
 
 # **[阿里云服务器89一年，新老用户共享，但是最便宜的机器是要新用户，你完全可以用女朋友 或者家人的 支付宝注册一个，服务器可以用来学习，部署应用，练手](https://www.aliyun.com/minisite/goods?userCode=vf2b5zld&share_source=copy_link)**
 
@@ -232,11 +233,6 @@ controller主要负责转发、service主要负责业务逻辑、dao主要是数
 ![](https://github.com/javanan/slife/blob/master/dec/8.jpg?raw=true)
 
 
-
-**个人微信公众号**
-   欢迎关注
-
-![](https://github.com/javanan/slife/blob/master/attach/wx1.jpg)
 
 
 
